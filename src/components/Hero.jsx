@@ -28,7 +28,7 @@ export default function Hero() {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <a
             href="#projects"
-            className="px-8 py-3 bg-accent text-sand-950 font-medium rounded-full hover:bg-accent-dark transition-colors"
+            className="px-8 py-3 bg-accent text-sand-50 font-medium rounded-full hover:bg-accent-dark transition-colors"
           >
             View Work
           </a>

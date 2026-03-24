@@ -69,7 +69,7 @@ export default function Contact() {
             />
             <button
               type="submit"
-              className="w-full px-6 py-3 bg-accent text-sand-950 font-medium rounded-xl hover:bg-accent-dark transition-colors flex items-center justify-center gap-2"
+              className="w-full px-6 py-3 bg-accent text-sand-50 font-medium rounded-xl hover:bg-accent-dark transition-colors flex items-center justify-center gap-2"
             >
               Send Message <Send size={16} />
             </button>
