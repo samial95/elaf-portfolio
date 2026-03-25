@@ -16,6 +16,7 @@ const projects = [
     category: 'Branding',
     color: 'from-teal-900/40 to-cyan-950/20',
     image: '/Tajassam.png',
+    pdf: '/tajassam-profile.pdf',
     description:
       'Founded Tajassam 3D Production Agency — a Saudi-based studio specialising in CGI advertising and 3D content. Developed the full brand identity including logo, Arabic typography system, and visual language that bridges tech and craft.',
   },
@@ -117,6 +118,28 @@ function ProjectModal({ project, onClose }) {
           <p className="text-sand-400 leading-relaxed mt-4">
             {project.description}
           </p>
+
+          {/* PDF Viewer */}
+          {project.pdf && (
+            <div className="mt-8">
+              <p className="text-sand-400 text-xs uppercase tracking-widest mb-3">Project PDF</p>
+              <div className="rounded-xl overflow-hidden border border-sand-700/50" style={{ height: '70vh' }}>
+                <iframe
+                  src={`${project.pdf}#toolbar=1&navpanes=0&view=FitH`}
+                  className="w-full h-full"
+                  title={`${project.title} PDF`}
+                />
+              </div>
+              <a
+                href={project.pdf}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block mt-3 text-xs text-sand-400 hover:text-sand-100 uppercase tracking-widest transition-colors"
+              >
+                Open in new tab ↗
+              </a>
+            </div>
+          )}
         </div>
       </motion.div>
     </motion.div>
