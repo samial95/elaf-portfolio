@@ -1,34 +1,139 @@
-import { motion } from 'framer-motion'
-import { ArrowUpRight } from 'lucide-react'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { X } from 'lucide-react'
 
 const projects = [
   {
-    title: 'Brand Reimagined',
+    title: 'PwC Emerging Tech Lab',
+    category: 'Innovation Lab',
+    color: 'from-accent/40 to-rose-900/20',
+    description:
+      'Spearheaded the emerging tech labs in KSA, leading a team to create high-value tech projects and prototypes. Developed GenAI-powered experiences, AR/VR demos, and interactive content. Projects presented in 50+ lab tours for PwC\'s priority clients across sectors including education, real estate, and tourism.',
+  },
+  {
+    title: 'Visual Identity Design',
     category: 'Branding',
-    description: 'A complete brand identity overhaul for a modern lifestyle company.',
-    color: 'from-amber-900/40 to-orange-900/20',
-  },
-  {
-    title: 'Digital Experience',
-    category: 'UI/UX Design',
-    description: 'An immersive web experience for an art gallery exhibition.',
-    color: 'from-emerald-900/40 to-teal-900/20',
-  },
-  {
-    title: 'Visual Identity',
-    category: 'Logo Design',
-    description: 'Minimal and timeless logo design for a luxury fashion brand.',
     color: 'from-violet-900/40 to-purple-900/20',
+    description:
+      'Crafted unique visual identity systems for clients ranging from startups to government entities. Delivered comprehensive brand guidelines, logo systems, and collateral design that resonate with target audiences.',
   },
   {
-    title: 'App Interface',
-    category: 'Mobile Design',
-    description: 'Clean and intuitive mobile app design for a wellness platform.',
-    color: 'from-rose-900/40 to-pink-900/20',
+    title: 'MG Taylor Visual Systems',
+    category: 'Visual Systems',
+    color: 'from-emerald-900/40 to-teal-900/20',
+    description:
+      'Designed and implemented visual systems for MG Taylor, integrating physical design, storytelling, and digital touchpoints to support seamless workshops and strategic conversations.',
+  },
+  {
+    title: 'COP25 Sustainability Experience',
+    category: 'Event Design',
+    color: 'from-sky-900/40 to-blue-900/20',
+    description:
+      'Oversaw end-to-end creative delivery for a high-profile sustainability event — including AV setup, creative content, and on-site coordination for immersive experiences with over 100 attendees.',
+  },
+  {
+    title: '3D Printing',
+    category: 'Creative Technology',
+    color: 'from-amber-900/40 to-orange-900/20',
+    description:
+      'Explored and delivered 3D printing projects as part of creative technology prototyping, translating digital designs into physical outputs for client demonstrations and innovation showcases.',
+  },
+  {
+    title: 'Large-Scale Event Design',
+    category: 'Event Design',
+    color: 'from-pink-900/40 to-rose-900/20',
+    description:
+      'Designed and executed PwC\'s presence at high-profile regional events such as COP28, Dubai Metaverse Assembly, AlUla Capacity Building Programme, and RUYA Careers 2024. End-to-end planning, AV setup, creative content, and on-site coordination.',
+  },
+  {
+    title: '3D Concept Design',
+    category: 'CGI & 3D',
+    color: 'from-indigo-900/40 to-violet-900/20',
+    description:
+      'Founded Tajassm 3D Production Agency, specializing in CGI advertising videos and campaigns. Served notable clients including PNU, ZAN, and various government entities with high-quality 3D concept work.',
+  },
+  {
+    title: 'Interactive Environment',
+    category: 'Experience Design',
+    color: 'from-teal-900/40 to-cyan-900/20',
+    description:
+      'Co-created three innovation lab spaces across the Middle East, integrating physical design, storytelling, and digital touchpoints. Designed experience flows and interactive environments for executive engagements and strategic client visits.',
+  },
+  {
+    title: 'Digital Design Textbook',
+    subtitle: 'Saudi High School Curriculum',
+    category: 'Education',
+    color: 'from-rose-900/40 to-accent/20',
+    description:
+      'Authored lessons for the digital design book used in the Saudi high school curriculum, covering essential topics such as 3D modeling, advertising, motion graphics, and digital photography. Led workshops for Ministry of Education employees and teachers.',
   },
 ]
 
+function ProjectModal({ project, onClose }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.9, y: 20 }}
+        transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+        className="relative max-w-4xl w-full bg-sand-900 border border-sand-800/80 rounded-2xl overflow-y-auto max-h-[90vh]"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Gradient header */}
+        <div
+          className={`aspect-video bg-gradient-to-br ${project.color} flex items-center justify-center relative`}
+        >
+          <span className="text-sand-400/60 text-sm uppercase tracking-widest">
+            Images & Videos Coming Soon
+          </span>
+          <button
+            onClick={onClose}
+            className="absolute top-4 right-4 p-2 rounded-full bg-sand-950/60 text-sand-300 hover:text-accent hover:bg-sand-950/80 transition-colors"
+          >
+            <X size={20} />
+          </button>
+        </div>
+
+        {/* Content */}
+        <div className="p-8">
+          <p className="text-accent text-xs uppercase tracking-widest mb-2">
+            {project.category}
+          </p>
+          <h3 className="font-display text-2xl md:text-3xl font-semibold text-sand-50 mb-1">
+            {project.title}
+          </h3>
+          {project.subtitle && (
+            <p className="text-sand-400 text-sm mb-4">{project.subtitle}</p>
+          )}
+          <p className="text-sand-400 leading-relaxed mt-4">
+            {project.description}
+          </p>
+        </div>
+      </motion.div>
+    </motion.div>
+  )
+}
+
 export default function Projects() {
+  const [selected, setSelected] = useState(null)
+
+  const openModal = (project) => {
+    setSelected(project)
+    document.body.style.overflow = 'hidden'
+  }
+
+  const closeModal = () => {
+    setSelected(null)
+    document.body.style.overflow = ''
+  }
+
   return (
     <section id="projects" className="py-24 px-6">
       <div className="max-w-6xl mx-auto">
@@ -39,52 +144,64 @@ export default function Projects() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <p className="text-accent text-sm uppercase tracking-[0.3em] mb-4">Portfolio</p>
+          <p className="text-accent text-sm uppercase tracking-[0.3em] mb-4">
+            Portfolio
+          </p>
           <h2 className="font-display text-4xl md:text-5xl font-semibold text-sand-50">
-            Selected <span className="italic text-accent">Works</span>
+            Selected <span className="italic text-accent">Work</span>
           </h2>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((project, i) => (
             <motion.div
               key={project.title}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="group relative rounded-2xl overflow-hidden border border-sand-800/50 hover:border-accent/30 transition-all duration-300"
+              transition={{ duration: 0.5, delay: i * 0.07 }}
+              onClick={() => openModal(project)}
+              className="group relative rounded-2xl overflow-hidden border border-sand-800/50 hover:border-accent/30 transition-all duration-300 cursor-pointer"
             >
-              {/* Gradient placeholder for project image */}
-              <div className={`aspect-[4/3] bg-gradient-to-br ${project.color} flex items-center justify-center`}>
-                <span className="text-sand-500/50 text-sm uppercase tracking-widest">
-                  Project Image
+              {/* Gradient placeholder */}
+              <div
+                className={`aspect-[4/3] bg-gradient-to-br ${project.color} flex items-center justify-center`}
+              >
+                <span className="text-sand-500/40 text-xs uppercase tracking-widest">
+                  Click to Explore
                 </span>
               </div>
 
               {/* Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-sand-950 via-sand-950/60 to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
+              <div className="absolute inset-0 bg-gradient-to-t from-sand-950 via-sand-950/50 to-transparent opacity-70 group-hover:opacity-90 transition-opacity" />
 
               {/* Content */}
               <div className="absolute bottom-0 left-0 right-0 p-6">
                 <p className="text-accent text-xs uppercase tracking-widest mb-2">
                   {project.category}
                 </p>
-                <h3 className="text-sand-50 text-xl font-display font-semibold mb-2 flex items-center gap-2">
+                <h3 className="text-sand-50 text-lg font-display font-semibold">
                   {project.title}
-                  <ArrowUpRight
-                    size={18}
-                    className="opacity-0 group-hover:opacity-100 transition-opacity text-accent"
-                  />
                 </h3>
-                <p className="text-sand-400 text-sm opacity-0 group-hover:opacity-100 transition-opacity">
-                  {project.description}
-                </p>
+                {project.subtitle && (
+                  <p className="text-sand-400 text-xs mt-1">
+                    {project.subtitle}
+                  </p>
+                )}
               </div>
             </motion.div>
           ))}
         </div>
       </div>
+
+      <AnimatePresence>
+        {selected && (
+          <ProjectModal
+            project={selected}
+            onClose={closeModal}
+          />
+        )}
+      </AnimatePresence>
     </section>
   )
 }
