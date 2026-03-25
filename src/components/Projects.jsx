@@ -5,18 +5,19 @@ import { X } from 'lucide-react'
 const projects = [
   {
     title: 'Solvent',
-    category: 'Visual Identity Design',
+    category: 'Branding',
     color: 'from-amber-900/40 to-yellow-900/20',
     image: '/solvent.png',
     description:
       'Full brand identity system for Solvent Art Supplies Store — logo design, colour system, typography, stationery, and brand collateral. Crafted a bold visual language that balances artistic expression with commercial clarity.',
   },
   {
-    title: 'Visual Identity Design',
+    title: 'Tajassam',
     category: 'Branding',
-    color: 'from-violet-900/40 to-purple-900/20',
+    color: 'from-teal-900/40 to-cyan-950/20',
+    image: '/Tajassam.png',
     description:
-      'Crafted unique visual identity systems for clients ranging from startups to government entities. Delivered comprehensive brand guidelines, logo systems, and collateral design that resonate with target audiences.',
+      'Founded Tajassam 3D Production Agency — a Saudi-based studio specialising in CGI advertising and 3D content. Developed the full brand identity including logo, Arabic typography system, and visual language that bridges tech and craft.',
   },
   {
     title: 'MG Taylor Visual Systems',
