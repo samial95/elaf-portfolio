@@ -4,11 +4,12 @@ import { X } from 'lucide-react'
 
 const projects = [
   {
-    title: 'PwC Emerging Tech Lab',
-    category: 'Innovation Lab',
-    color: 'from-accent/40 to-rose-900/20',
+    title: 'Solvent',
+    category: 'Visual Identity Design',
+    color: 'from-amber-900/40 to-yellow-900/20',
+    image: '/solvent.png',
     description:
-      'Spearheaded the emerging tech labs in KSA, leading a team to create high-value tech projects and prototypes. Developed GenAI-powered experiences, AR/VR demos, and interactive content. Projects presented in 50+ lab tours for PwC\'s priority clients across sectors including education, real estate, and tourism.',
+      'Full brand identity system for Solvent Art Supplies Store — logo design, colour system, typography, stationery, and brand collateral. Crafted a bold visual language that balances artistic expression with commercial clarity.',
   },
   {
     title: 'Visual Identity Design',
@@ -152,7 +153,7 @@ export default function Projects() {
           </h2>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           {projects.map((project, i) => (
             <motion.div
               key={project.title}
@@ -161,30 +162,55 @@ export default function Projects() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.07 }}
               onClick={() => openModal(project)}
-              className="group relative rounded-2xl overflow-hidden border border-sand-800/50 hover:border-accent/30 transition-all duration-300 cursor-pointer"
+              className="group relative rounded-xl overflow-hidden border border-white/10 hover:border-white/30 transition-all duration-500 cursor-pointer"
+              style={{ boxShadow: '0 0 0 0 rgba(255,210,130,0)' }}
+              onMouseEnter={e => {
+                e.currentTarget.style.boxShadow =
+                  '0 0 18px 4px rgba(255,195,100,0.22), 0 0 40px 8px rgba(255,160,60,0.10)'
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.boxShadow = '0 0 0 0 rgba(255,210,130,0)'
+              }}
             >
-              {/* Gradient placeholder */}
-              <div
-                className={`aspect-[4/3] bg-gradient-to-br ${project.color} flex items-center justify-center`}
-              >
-                <span className="text-sand-500/40 text-xs uppercase tracking-widest">
-                  Click to Explore
-                </span>
+              {/* Image or gradient placeholder */}
+              <div className={`aspect-[5/4] relative overflow-hidden ${project.image ? '' : `bg-gradient-to-br ${project.color}`}`}>
+                {project.image ? (
+                  <>
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    {/* Glass shimmer on hover */}
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                      style={{
+                        background: 'linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.04) 40%, rgba(255,255,255,0.0) 60%, rgba(255,220,150,0.08) 100%)',
+                        backdropFilter: 'blur(0px)',
+                      }}
+                    />
+                  </>
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center">
+                    <span className="text-sand-500/40 text-xs uppercase tracking-widest">
+                      Click to Explore
+                    </span>
+                  </div>
+                )}
               </div>
 
-              {/* Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-sand-950 via-sand-950/50 to-transparent opacity-70 group-hover:opacity-90 transition-opacity" />
+              {/* Dark gradient bottom overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity duration-300" />
 
               {/* Content */}
-              <div className="absolute bottom-0 left-0 right-0 p-6">
-                <p className="text-accent text-xs uppercase tracking-widest mb-2">
+              <div className="absolute bottom-0 left-0 right-0 p-5">
+                <p className="text-sand-400 text-xs uppercase tracking-widest mb-1">
                   {project.category}
                 </p>
-                <h3 className="text-sand-50 text-lg font-display font-semibold">
+                <h3 className="text-sand-50 text-base font-display font-semibold leading-snug">
                   {project.title}
                 </h3>
                 {project.subtitle && (
-                  <p className="text-sand-400 text-xs mt-1">
+                  <p className="text-sand-400 text-xs mt-0.5">
                     {project.subtitle}
                   </p>
                 )}

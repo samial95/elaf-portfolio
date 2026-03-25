@@ -21,7 +21,7 @@ export default function Navbar() {
           className="font-display text-sm font-semibold text-sand-100 tracking-widest uppercase nav-glow"
           style={glowStyle}
         >
-          Elaf Al salman
+          Portfolio
         </a>
 
         {/* Centre — links */}
