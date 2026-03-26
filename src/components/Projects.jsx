@@ -84,15 +84,16 @@ function ProjectModal({ project, onClose }) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+      className="fixed inset-0 z-[100] overflow-y-auto bg-black/85 backdrop-blur-sm"
       onClick={onClose}
     >
+      <div className="min-h-screen flex items-start justify-center px-4 pt-10 pb-0">
       <motion.div
-        initial={{ opacity: 0, scale: 0.9, y: 20 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.9, y: 20 }}
-        transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-        className="relative max-w-4xl w-full bg-[#050505] border border-white/5 rounded-2xl overflow-y-auto max-h-[90vh]"
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 20 }}
+        transition={{ type: 'spring', damping: 28, stiffness: 280 }}
+        className="relative w-full max-w-[90vw] bg-[#050505] border border-white/5 rounded-t-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close button */}
@@ -180,6 +181,7 @@ function ProjectModal({ project, onClose }) {
           )}
         </div>
       </motion.div>
+      </div>
     </motion.div>
   )
 }
