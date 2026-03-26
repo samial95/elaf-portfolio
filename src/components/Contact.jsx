@@ -76,7 +76,7 @@ export default function Contact() {
               <div>
                 <p className="text-sand-500 text-sm">LinkedIn</p>
                 <a
-                  href="https://linkedin.com/in/elaf-alsalman"
+                  href="https://www.linkedin.com/in/elaf-alsalman-%D8%A5%D9%8A%D9%84%D8%A7%D9%81-%D8%A2%D9%84-%D8%B3%D9%84%D9%85%D8%A7%D9%86-004b78197/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-sand-100 hover:text-accent transition-colors"

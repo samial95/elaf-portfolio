@@ -88,28 +88,28 @@ I handled all visual design elements, including the infographic, layout, icons, 
   {
     title: '3D Printing',
     category: 'Creative Technology',
-    color: 'from-amber-900/40 to-orange-900/20',
+    color: 'from-zinc-800 to-neutral-900',
     description:
       'Explored and delivered 3D printing projects as part of creative technology prototyping, translating digital designs into physical outputs for client demonstrations and innovation showcases.',
   },
   {
     title: 'Large-Scale Event Design',
     category: 'Event Design',
-    color: 'from-pink-900/40 to-rose-900/20',
+    color: 'from-zinc-800 to-neutral-900',
     description:
       'Designed and executed PwC\'s presence at high-profile regional events such as COP28, Dubai Metaverse Assembly, AlUla Capacity Building Programme, and RUYA Careers 2024. End-to-end planning, AV setup, creative content, and on-site coordination.',
   },
   {
     title: '3D Concept Design',
     category: 'CGI & 3D',
-    color: 'from-indigo-900/40 to-violet-900/20',
+    color: 'from-zinc-800 to-neutral-900',
     description:
       'Founded Tajassm 3D Production Agency, specializing in CGI advertising videos and campaigns. Served notable clients including PNU, ZAN, and various government entities with high-quality 3D concept work.',
   },
   {
     title: 'Interactive Environment',
     category: 'Experience Design',
-    color: 'from-teal-900/40 to-cyan-900/20',
+    color: 'from-zinc-800 to-neutral-900',
     description:
       'Co-created three innovation lab spaces across the Middle East, integrating physical design, storytelling, and digital touchpoints. Designed experience flows and interactive environments for executive engagements and strategic client visits.',
   },
@@ -117,7 +117,7 @@ I handled all visual design elements, including the infographic, layout, icons, 
     title: 'Digital Design Textbook',
     subtitle: 'Saudi High School Curriculum',
     category: 'Education',
-    color: 'from-rose-900/40 to-accent/20',
+    color: 'from-zinc-800 to-neutral-900',
     description:
       'Authored lessons for the digital design book used in the Saudi high school curriculum, covering essential topics such as 3D modeling, advertising, motion graphics, and digital photography. Led workshops for Ministry of Education employees and teachers.',
   },

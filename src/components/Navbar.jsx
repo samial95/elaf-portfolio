@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Globe, Menu, X } from 'lucide-react'
 
-const links = ['Projects', 'About', 'Timeline', 'Toolkit', 'Clients', 'Contact']
+const links = ['Projects', 'About', 'Timeline', 'Toolkit', 'Contact']
 
 const glowStyle = {
   transition: 'color 0.2s ease, text-shadow 0.2s ease',
@@ -84,13 +84,13 @@ export default function Navbar() {
       {/* Glow-on-hover global style */}
       <style>{`
         .nav-glow:hover {
-          color: #FFE8C8 !important;
+          color: #e8a0a5 !important;
           text-shadow:
-            0 0 6px rgba(255, 220, 160, 1),
-            0 0 16px rgba(255, 195, 110, 0.85),
-            0 0 35px rgba(240, 160, 60, 0.5),
-            0 0 60px rgba(210, 120, 20, 0.25);
-          filter: drop-shadow(0 0 5px rgba(255, 210, 130, 0.75));
+            0 0 6px rgba(192, 114, 120, 1),
+            0 0 16px rgba(192, 114, 120, 0.85),
+            0 0 35px rgba(192, 114, 120, 0.5),
+            0 0 60px rgba(192, 114, 120, 0.25);
+          filter: drop-shadow(0 0 5px rgba(192, 114, 120, 0.75));
         }
       `}</style>
     </nav>
