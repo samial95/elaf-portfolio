@@ -72,18 +72,18 @@ I handled all visual design elements, including the infographic, layout, icons, 
     description: 'Sustainable design project exploring how ceramic construction waste can be recycled into urban design elements. Full visual identity, infographic system, and editorial layout — all designed to communicate research and solutions with clarity.',
   },
   {
-    title: 'MG Taylor Visual Systems',
-    category: 'Visual Systems',
-    color: 'from-emerald-900/40 to-teal-900/20',
+    title: 'Saudi Sports',
+    category: 'Experience Design',
+    color: 'from-zinc-800 to-neutral-900',
     description:
-      'Designed and implemented visual systems for MG Taylor, integrating physical design, storytelling, and digital touchpoints to support seamless workshops and strategic conversations.',
+      'Visual and experience design work for Saudi sports initiatives — combining spatial design, brand storytelling, and audience engagement to deliver immersive sports experiences.',
   },
   {
-    title: 'COP25 Sustainability Experience',
-    category: 'Event Design',
-    color: 'from-sky-900/40 to-blue-900/20',
+    title: 'EmTech Labs',
+    category: 'Innovation & Technology',
+    color: 'from-zinc-800 to-neutral-950',
     description:
-      'Oversaw end-to-end creative delivery for a high-profile sustainability event — including AV setup, creative content, and on-site coordination for immersive experiences with over 100 attendees.',
+      'Design and creative direction for an Emerging Technology Lab — translating complex AI, data, and immersive technology concepts into engaging visual narratives and interactive experiences.',
   },
   {
     title: '3D Printing',

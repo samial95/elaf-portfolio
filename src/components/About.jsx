@@ -5,12 +5,12 @@ const mediaFeatures = [
   {
     name: 'The National',
     desc: 'Leading Middle East newspaper',
-    url: '#',
+    url: 'https://www.thenationalnews.com/gulf-news/2023/03/08/saudi-women-leading-tech-in-the-kingdom/',
   },
   {
     name: 'AboutHer',
     desc: 'Platform highlighting influential women leaders',
-    url: '#',
+    url: 'https://www.abouther.com/node/57241/people/leading-ladies/meet-forward-thinking-saudi-arab-women-pwc-middle-east-ksa#slide/1',
   },
 ]
 
