@@ -92,7 +92,7 @@ function ProjectModal({ project, onClose }) {
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.9, y: 20 }}
         transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-        className="relative max-w-4xl w-full bg-sand-900 border border-sand-800/80 rounded-2xl overflow-y-auto max-h-[90vh]"
+        className="relative max-w-4xl w-full bg-[#050505] border border-white/5 rounded-2xl overflow-y-auto max-h-[90vh]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close button */}
@@ -130,13 +130,19 @@ function ProjectModal({ project, onClose }) {
 
           {/* Brand Background text */}
           {project.brandBackground && (
-            <div className="mt-6">
-              <p className="text-sand-300 text-xs uppercase tracking-widest mb-3">Brand Background</p>
-              {project.brandBackground.split('\n\n').map((para, i) => (
-                <p key={i} className="text-sand-400 leading-relaxed mb-4">
-                  {para}
-                </p>
-              ))}
+            <div className="mt-10 flex flex-col md:flex-row gap-8 md:gap-12 border-t border-white/5 pt-10">
+              <div className="md:w-2/5 flex-shrink-0">
+                <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-sand-50 uppercase leading-none tracking-tight">
+                  BACKGROUND
+                </h2>
+              </div>
+              <div className="md:w-3/5">
+                {project.brandBackground.split('\n\n').map((para, i) => (
+                  <p key={i} className="text-sand-300 text-sm leading-relaxed mb-4 last:mb-0">
+                    {para}
+                  </p>
+                ))}
+              </div>
             </div>
           )}
 
