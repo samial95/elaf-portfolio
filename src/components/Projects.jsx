@@ -45,6 +45,23 @@ The logo combines illustration and typography in both Arabic and English, using 
     description: 'Complete visual identity for Sara Cheese — a local dessert brand blending traditional sweets with a modern aesthetic. Logo design in Arabic and English, colour system, and brand collateral.',
   },
   {
+    title: 'Ethara',
+    category: 'Report Design',
+    color: 'from-purple-800/50 to-teal-700/30',
+    image: '/ETHARA-02.jpg',
+    images: ['/ETHARA-02.jpg', '/ETHARA-03.jpg'],
+    modalBg: '#eae8ef',
+    modalText: '#390084',
+    brandBackground: `Project Overview
+
+A Change Management report analyzing the challenges facing a large events and entertainment organization and proposing a shift toward a knowledge-driven innovation model. The report introduces an Emerging Technology Lab (ETL) to develop internal capabilities in areas such as AI, data, and immersive technologies, and outlines an implementation approach using Kotter's 8-Step Change Model.
+
+Graphic Design Overview
+
+The report uses a clean editorial layout with strong visual hierarchy to organize complex information clearly. Color, typography, imagery, and structured grids are used to guide the reader through sections such as challenges, solutions, and implementation, creating a professional and visually engaging document.`,
+    description: 'Change management report design for Ethara — a large-scale events and entertainment organization. Editorial layout system combining strong typography, structured grids, and visual hierarchy to communicate complex strategic content.',
+  },
+  {
     title: 'MG Taylor Visual Systems',
     category: 'Visual Systems',
     color: 'from-emerald-900/40 to-teal-900/20',
@@ -111,84 +128,99 @@ function ProjectModal({ project, onClose }) {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 20 }}
         transition={{ type: 'spring', damping: 28, stiffness: 280 }}
-        className={`relative w-full max-w-[90vw] rounded-t-2xl ${project.lightModal ? 'bg-[#F5F0EA] border border-black/8' : 'bg-[#050505] border border-white/5'}`}
+        className="relative w-full max-w-[90vw] rounded-t-2xl"
+        style={{
+          backgroundColor: project.modalBg || (project.lightModal ? '#F5F0EA' : '#050505'),
+          border: `1px solid ${project.modalBg ? 'rgba(0,0,0,0.08)' : project.lightModal ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.05)'}`,
+        }}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Close button */}
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 z-10 p-2 rounded-full bg-black/60 text-sand-300 hover:text-white hover:bg-black/80 transition-colors"
-        >
-          <X size={20} />
-        </button>
+        {/* Derive text colours: custom > lightModal > dark */}
+        {(() => {
+          const isLight = !!(project.modalBg || project.lightModal)
+          const txtMain  = project.modalText || (isLight ? '#1c1917' : '#f5f5f4')
+          const txtSub   = project.modalText ? project.modalText + 'aa' : (isLight ? '#57534e' : '#a8a29e')
+          const txtMuted = project.modalText ? project.modalText + '88' : (isLight ? '#78716c' : '#78716c')
+          const borderC  = isLight ? 'rgba(0,0,0,0.10)' : 'rgba(255,255,255,0.08)'
 
-        {/* Hero image or gradient — full bleed */}
-        {project.images ? (
-          <img src={project.images[0]} alt={`${project.title} hero`} className="w-full object-cover rounded-t-2xl block" />
-        ) : (
-          <div className={`aspect-video bg-gradient-to-br ${project.color} flex items-center justify-center rounded-t-2xl`}>
-            <span className="text-sand-400/60 text-sm uppercase tracking-widest">Images Coming Soon</span>
-          </div>
-        )}
+          return (
+            <>
+              {/* Close button */}
+              <button onClick={onClose} className="absolute top-4 right-4 z-10 p-2 rounded-full bg-black/60 text-white hover:bg-black/80 transition-colors">
+                <X size={20} />
+              </button>
 
-        {/* Text content */}
-        <div className="px-10 md:px-16 py-12">
-          <p className={`text-xs uppercase tracking-widest mb-2 ${project.lightModal ? 'text-stone-400' : 'text-sand-500'}`}>{project.category}</p>
-          <h3 className={`font-display text-3xl md:text-4xl font-semibold mb-1 ${project.lightModal ? 'text-stone-800' : 'text-sand-50'}`}>{project.title}</h3>
-          {project.subtitle && <p className={`text-sm mt-1 ${project.lightModal ? 'text-stone-500' : 'text-sand-400'}`}>{project.subtitle}</p>}
+              {/* Hero image or gradient — full bleed */}
+              {project.images ? (
+                <img src={project.images[0]} alt={`${project.title} hero`} className="w-full object-cover rounded-t-2xl block" />
+              ) : (
+                <div className={`aspect-video bg-gradient-to-br ${project.color} flex items-center justify-center rounded-t-2xl`}>
+                  <span className="text-white/40 text-sm uppercase tracking-widest">Images Coming Soon</span>
+                </div>
+              )}
 
-          {/* Brand Background — two column */}
-          {project.brandBackground && (
-            <div className={`mt-12 pt-10 flex flex-col md:flex-row gap-10 md:gap-16 border-t ${project.lightModal ? 'border-black/10' : 'border-white/8'}`}>
-              <div className="md:w-[38%] flex-shrink-0">
-                <h2 className={`font-display text-4xl md:text-5xl font-bold uppercase leading-none tracking-tight ${project.lightModal ? 'text-stone-800' : 'text-sand-50'}`}>
-                  BACKGROUND
-                </h2>
-              </div>
-              <div className="md:w-[62%] space-y-4">
-                {project.brandBackground.split('\n\n').map((para, i) => (
-                  <p key={i} className={`text-sm leading-relaxed ${project.lightModal ? 'text-stone-600' : 'text-sand-300'}`}>{para}</p>
-                ))}
-              </div>
-            </div>
-          )}
+              {/* Text content */}
+              <div className="px-10 md:px-16 py-12">
+                <p className="text-xs uppercase tracking-widest mb-2" style={{ color: txtMuted }}>{project.category}</p>
+                <h3 className="font-display text-3xl md:text-4xl font-semibold mb-1" style={{ color: txtMain }}>{project.title}</h3>
+                {project.subtitle && <p className="text-sm mt-1" style={{ color: txtSub }}>{project.subtitle}</p>}
 
-          {/* Brand Colour Palette */}
-          {project.brandColors && (
-            <div className={`mt-12 pt-10 border-t ${project.lightModal ? 'border-black/10' : 'border-white/8'}`}>
-              <p className={`text-xs uppercase tracking-widest mb-6 ${project.lightModal ? 'text-stone-400' : 'text-sand-500'}`}>Colour Palette</p>
-              <div className="flex gap-4 flex-wrap">
-                {project.brandColors.map((c) => (
-                  <div key={c.hex} className="flex flex-col items-start gap-2">
-                    <div className={`w-24 h-12 rounded-lg ${c.border ? 'border border-black/15' : ''}`} style={{ backgroundColor: c.hex }} />
-                    <span className={`text-xs font-mono ${project.lightModal ? 'text-stone-500' : (c.dark ? 'text-sand-500' : 'text-sand-400')}`}>{c.label}</span>
+                {/* Brand Background — two column */}
+                {project.brandBackground && (
+                  <div className="mt-12 pt-10 flex flex-col md:flex-row gap-10 md:gap-16" style={{ borderTop: `1px solid ${borderC}` }}>
+                    <div className="md:w-[38%] flex-shrink-0">
+                      <h2 className="font-display text-4xl md:text-5xl font-bold uppercase leading-none tracking-tight" style={{ color: txtMain }}>
+                        BACKGROUND
+                      </h2>
+                    </div>
+                    <div className="md:w-[62%] space-y-4">
+                      {project.brandBackground.split('\n\n').map((para, i) => (
+                        <p key={i} className="text-sm leading-relaxed" style={{ color: txtSub }}>{para}</p>
+                      ))}
+                    </div>
                   </div>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
+                )}
 
-        {/* Remaining images — full bleed, no padding */}
-        {project.images?.slice(1).map((src, i) => (
-          <img key={i} src={src} alt={`${project.title} ${i + 2}`} className="w-full object-cover block" />
-        ))}
-
-        {/* PDF Viewer */}
-        {project.pdf && (
-          <div className="px-10 md:px-16 pb-12">
-            <div className={`pt-10 border-t ${project.lightModal ? 'border-black/10' : 'border-white/8'}`}>
-              <p className={`text-xs uppercase tracking-widest mb-4 ${project.lightModal ? 'text-stone-400' : 'text-sand-500'}`}>Project PDF</p>
-              <div className={`rounded-xl overflow-hidden border ${project.lightModal ? 'border-black/10' : 'border-white/8'}`} style={{ height: '80vh' }}>
-                <iframe src={`${project.pdf}#toolbar=1&navpanes=0&view=FitH`} className="w-full h-full" title={`${project.title} PDF`} />
+                {/* Brand Colour Palette */}
+                {project.brandColors && (
+                  <div className="mt-12 pt-10" style={{ borderTop: `1px solid ${borderC}` }}>
+                    <p className="text-xs uppercase tracking-widest mb-6" style={{ color: txtMuted }}>Colour Palette</p>
+                    <div className="flex gap-4 flex-wrap">
+                      {project.brandColors.map((c) => (
+                        <div key={c.hex} className="flex flex-col items-start gap-2">
+                          <div className={`w-24 h-12 rounded-lg ${c.border ? 'border border-black/15' : ''}`} style={{ backgroundColor: c.hex }} />
+                          <span className="text-xs font-mono" style={{ color: txtMuted }}>{c.label}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
-              <a href={project.pdf} target="_blank" rel="noopener noreferrer"
-                className={`inline-block mt-3 text-xs uppercase tracking-widest transition-colors ${project.lightModal ? 'text-stone-400 hover:text-stone-800' : 'text-sand-500 hover:text-sand-100'}`}>
-                Open in new tab ↗
-              </a>
-            </div>
-          </div>
-        )}
+
+              {/* Remaining images — full bleed */}
+              {project.images?.slice(1).map((src, i) => (
+                <img key={i} src={src} alt={`${project.title} ${i + 2}`} className="w-full object-cover block" />
+              ))}
+
+              {/* PDF Viewer */}
+              {project.pdf && (
+                <div className="px-10 md:px-16 pb-12">
+                  <div className="pt-10" style={{ borderTop: `1px solid ${borderC}` }}>
+                    <p className="text-xs uppercase tracking-widest mb-4" style={{ color: txtMuted }}>Project PDF</p>
+                    <div className="rounded-xl overflow-hidden" style={{ height: '80vh', border: `1px solid ${borderC}` }}>
+                      <iframe src={`${project.pdf}#toolbar=1&navpanes=0&view=FitH`} className="w-full h-full" title={`${project.title} PDF`} />
+                    </div>
+                    <a href={project.pdf} target="_blank" rel="noopener noreferrer"
+                      className="inline-block mt-3 text-xs uppercase tracking-widest transition-opacity hover:opacity-60"
+                      style={{ color: txtMuted }}>
+                      Open in new tab ↗
+                    </a>
+                  </div>
+                </div>
+              )}
+            </>
+          )
+        })()}
       </motion.div>
       </div>
     </motion.div>
