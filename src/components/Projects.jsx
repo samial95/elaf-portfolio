@@ -14,6 +14,12 @@ const projects = [
 The name Solvent comes from a painting medium used to mix and adjust paint for application on canvas, symbolizing the brand's role as a fundamental part of the creative process.
 
 The logo combines a paintbrush and a thumbprint, representing artistic creation and individuality highlighting the idea that every artist leaves their own imprint. The color palette uses red, blue, and yellow, the primary colors in painting, reflecting the brand's vision of being an essential foundation for artists to create endless possibilities.`,
+    brandColors: [
+      { hex: '#990A2E', label: '#990A2E' },
+      { hex: '#E6AE17', label: '#E6AE17' },
+      { hex: '#2272A4', label: '#2272A4' },
+      { hex: '#EFEFEF', label: '#EFEFEF', dark: true },
+    ],
     description:
       'Full brand identity system for Solvent Art Supplies Store — logo design, colour system, typography, stationery, and brand collateral. Crafted a bold visual language that balances artistic expression with commercial clarity.',
   },
@@ -104,11 +110,11 @@ function ProjectModal({ project, onClose }) {
           <X size={20} />
         </button>
 
-        {/* First image or gradient placeholder */}
+        {/* Hero image or gradient */}
         {project.images ? (
           <img
             src={project.images[0]}
-            alt={`${project.title} 1`}
+            alt={`${project.title} hero`}
             className="w-full object-cover rounded-t-2xl"
           />
         ) : (
@@ -118,51 +124,59 @@ function ProjectModal({ project, onClose }) {
         )}
 
         {/* Content */}
-        <div className="p-8">
-          <p className="text-sand-400 text-xs uppercase tracking-widest mb-2">
-            {project.category}
-          </p>
-          <h3 className="font-display text-2xl md:text-3xl font-semibold text-sand-50 mb-1">
-            {project.title}
-          </h3>
-          {project.subtitle && (
-            <p className="text-sand-400 text-sm mb-4">{project.subtitle}</p>
-          )}
+        <div className="px-10 md:px-16 py-12">
 
-          {/* Brand Background text */}
+          {/* Category + Title */}
+          <p className="text-sand-500 text-xs uppercase tracking-widest mb-2">{project.category}</p>
+          <h3 className="font-display text-3xl md:text-4xl font-semibold text-sand-50 mb-1">{project.title}</h3>
+          {project.subtitle && <p className="text-sand-400 text-sm mt-1">{project.subtitle}</p>}
+
+          {/* Brand Background — two column */}
           {project.brandBackground && (
-            <div className="mt-10 flex flex-col md:flex-row gap-8 md:gap-12 border-t border-white/5 pt-10">
-              <div className="md:w-2/5 flex-shrink-0">
-                <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-sand-50 uppercase leading-none tracking-tight">
+            <div className="mt-12 pt-10 border-t border-white/8 flex flex-col md:flex-row gap-10 md:gap-16">
+              <div className="md:w-[38%] flex-shrink-0">
+                <h2 className="font-display text-4xl md:text-5xl font-bold text-sand-50 uppercase leading-none tracking-tight">
                   BACKGROUND
                 </h2>
               </div>
-              <div className="md:w-3/5">
+              <div className="md:w-[62%] space-y-4">
                 {project.brandBackground.split('\n\n').map((para, i) => (
-                  <p key={i} className="text-sand-300 text-sm leading-relaxed mb-4 last:mb-0">
-                    {para}
-                  </p>
+                  <p key={i} className="text-sand-300 text-sm leading-relaxed">{para}</p>
                 ))}
               </div>
             </div>
           )}
 
-          {/* Second image */}
-          {project.images?.[1] && (
-            <div className="mt-6">
-              <img
-                src={project.images[1]}
-                alt={`${project.title} 2`}
-                className="w-full object-cover rounded-xl"
-              />
+          {/* Brand Colour Palette */}
+          {project.brandColors && (
+            <div className="mt-12 pt-10 border-t border-white/8">
+              <p className="text-sand-500 text-xs uppercase tracking-widest mb-6">Colour Palette</p>
+              <div className="flex gap-4 flex-wrap">
+                {project.brandColors.map((c) => (
+                  <div key={c.hex} className="flex flex-col items-start gap-2">
+                    <div
+                      className="w-24 h-12 rounded-lg border border-white/10"
+                      style={{ backgroundColor: c.hex }}
+                    />
+                    <span className={`text-xs font-mono ${c.dark ? 'text-sand-500' : 'text-sand-400'}`}>{c.label}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
 
+          {/* Remaining images */}
+          {project.images?.slice(1).map((src, i) => (
+            <div key={i} className="mt-10">
+              <img src={src} alt={`${project.title} ${i + 2}`} className="w-full object-cover rounded-xl" />
+            </div>
+          ))}
+
           {/* PDF Viewer */}
           {project.pdf && (
-            <div className="mt-8">
-              <p className="text-sand-400 text-xs uppercase tracking-widest mb-3">Project PDF</p>
-              <div className="rounded-xl overflow-hidden border border-sand-700/50" style={{ height: '70vh' }}>
+            <div className="mt-10 pt-10 border-t border-white/8">
+              <p className="text-sand-500 text-xs uppercase tracking-widest mb-4">Project PDF</p>
+              <div className="rounded-xl overflow-hidden border border-white/8" style={{ height: '80vh' }}>
                 <iframe
                   src={`${project.pdf}#toolbar=1&navpanes=0&view=FitH`}
                   className="w-full h-full"
@@ -173,7 +187,7 @@ function ProjectModal({ project, onClose }) {
                 href={project.pdf}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block mt-3 text-xs text-sand-400 hover:text-sand-100 uppercase tracking-widest transition-colors"
+                className="inline-block mt-3 text-xs text-sand-500 hover:text-sand-100 uppercase tracking-widest transition-colors"
               >
                 Open in new tab ↗
               </a>
