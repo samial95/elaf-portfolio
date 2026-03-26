@@ -22,7 +22,10 @@ The logo combines a paintbrush and a thumbprint, representing artistic creation 
     category: 'Branding',
     color: 'from-teal-900/40 to-cyan-950/20',
     image: '/Tajassam.png',
-    pdf: '/tajassam-profile.pdf',
+    images: ['/Tajassm-01.jpg', '/Tajassm-02.jpg'],
+    brandBackground: `A portfolio for a 3D production studio specializing in 3D modeling, 3D video production, and social media visuals. The studio worked with multiple clients to create visual content that translates concepts into clear and engaging 3D experiences for brands and campaigns.
+
+All visual elements of the portfolio were designed, including layout, typography, and visual direction. The design uses 3D renders, strong lighting, and structured layouts to highlight the studio's capabilities while maintaining a consistent visual identity across Arabic and English content.`,
     description:
       'Founded Tajassam 3D Production Agency — a Saudi-based studio specialising in CGI advertising and 3D content. Developed the full brand identity including logo, Arabic typography system, and visual language that bridges tech and craft.',
   },
