@@ -8,6 +8,12 @@ const projects = [
     category: 'Branding',
     color: 'from-amber-900/40 to-yellow-900/20',
     image: '/solvent.png',
+    images: ['/Solvent-01.jpg', '/Solvent-02.jpg'],
+    brandBackground: `Solvent is an art supply store that supports artists by providing essential materials and organizing art competitions that encourage creativity and self-expression. The brand is built around the idea that every artist leaves a unique mark on the world through their art.
+
+The name Solvent comes from a painting medium used to mix and adjust paint for application on canvas, symbolizing the brand's role as a fundamental part of the creative process.
+
+The logo combines a paintbrush and a thumbprint, representing artistic creation and individuality highlighting the idea that every artist leaves their own imprint. The color palette uses red, blue, and yellow, the primary colors in painting, reflecting the brand's vision of being an essential foundation for artists to create endless possibilities.`,
     description:
       'Full brand identity system for Solvent Art Supplies Store — logo design, colour system, typography, stationery, and brand collateral. Crafted a bold visual language that balances artistic expression with commercial clarity.',
   },
@@ -89,24 +95,30 @@ function ProjectModal({ project, onClose }) {
         className="relative max-w-4xl w-full bg-sand-900 border border-sand-800/80 rounded-2xl overflow-y-auto max-h-[90vh]"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Gradient header */}
-        <div
-          className={`aspect-video bg-gradient-to-br ${project.color} flex items-center justify-center relative`}
+        {/* Close button */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 z-10 p-2 rounded-full bg-black/60 text-sand-300 hover:text-white hover:bg-black/80 transition-colors"
         >
-          <span className="text-sand-400/60 text-sm uppercase tracking-widest">
-            Images & Videos Coming Soon
-          </span>
-          <button
-            onClick={onClose}
-            className="absolute top-4 right-4 p-2 rounded-full bg-sand-950/60 text-sand-300 hover:text-accent hover:bg-sand-950/80 transition-colors"
-          >
-            <X size={20} />
-          </button>
-        </div>
+          <X size={20} />
+        </button>
+
+        {/* First image or gradient placeholder */}
+        {project.images ? (
+          <img
+            src={project.images[0]}
+            alt={`${project.title} 1`}
+            className="w-full object-cover rounded-t-2xl"
+          />
+        ) : (
+          <div className={`aspect-video bg-gradient-to-br ${project.color} flex items-center justify-center rounded-t-2xl`}>
+            <span className="text-sand-400/60 text-sm uppercase tracking-widest">Images Coming Soon</span>
+          </div>
+        )}
 
         {/* Content */}
         <div className="p-8">
-          <p className="text-accent text-xs uppercase tracking-widest mb-2">
+          <p className="text-sand-400 text-xs uppercase tracking-widest mb-2">
             {project.category}
           </p>
           <h3 className="font-display text-2xl md:text-3xl font-semibold text-sand-50 mb-1">
@@ -115,9 +127,29 @@ function ProjectModal({ project, onClose }) {
           {project.subtitle && (
             <p className="text-sand-400 text-sm mb-4">{project.subtitle}</p>
           )}
-          <p className="text-sand-400 leading-relaxed mt-4">
-            {project.description}
-          </p>
+
+          {/* Brand Background text */}
+          {project.brandBackground && (
+            <div className="mt-6">
+              <p className="text-sand-300 text-xs uppercase tracking-widest mb-3">Brand Background</p>
+              {project.brandBackground.split('\n\n').map((para, i) => (
+                <p key={i} className="text-sand-400 leading-relaxed mb-4">
+                  {para}
+                </p>
+              ))}
+            </div>
+          )}
+
+          {/* Second image */}
+          {project.images?.[1] && (
+            <div className="mt-6">
+              <img
+                src={project.images[1]}
+                alt={`${project.title} 2`}
+                className="w-full object-cover rounded-xl"
+              />
+            </div>
+          )}
 
           {/* PDF Viewer */}
           {project.pdf && (
