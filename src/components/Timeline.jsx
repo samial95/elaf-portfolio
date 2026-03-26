@@ -146,7 +146,7 @@ export default function Timeline() {
             Journey
           </p>
           <h2 className="font-display text-4xl md:text-5xl font-semibold text-sand-50">
-            Career <span className="italic text-accent">Timeline</span>
+            Career <span className="italic text-accent accent-glow">Timeline</span>
           </h2>
         </motion.div>
 

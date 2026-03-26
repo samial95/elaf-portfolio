@@ -264,7 +264,7 @@ export default function Projects() {
             Portfolio
           </p>
           <h2 className="font-display text-4xl md:text-5xl font-semibold text-sand-50">
-            Selected <span className="italic text-accent">Work</span>
+            Selected <span className="italic text-accent accent-glow">Work</span>
           </h2>
         </motion.div>
 
@@ -281,10 +281,10 @@ export default function Projects() {
               style={{ boxShadow: '0 0 0 0 rgba(255,210,130,0)' }}
               onMouseEnter={e => {
                 e.currentTarget.style.boxShadow =
-                  '0 0 18px 4px rgba(255,195,100,0.22), 0 0 40px 8px rgba(255,160,60,0.10)'
+                  '0 0 18px 4px rgba(192,114,120,0.28), 0 0 40px 8px rgba(192,114,120,0.12)'
               }}
               onMouseLeave={e => {
-                e.currentTarget.style.boxShadow = '0 0 0 0 rgba(255,210,130,0)'
+                e.currentTarget.style.boxShadow = '0 0 0 0 rgba(192,114,120,0)'
               }}
             >
               {/* Image or gradient placeholder */}
@@ -307,7 +307,7 @@ export default function Projects() {
                 ) : (
                   <div className="w-full h-full flex items-center justify-center">
                     <span className="text-sand-500/40 text-xs uppercase tracking-widest">
-                      Click to Explore
+                      Coming Soon
                     </span>
                   </div>
                 )}

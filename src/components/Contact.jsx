@@ -16,7 +16,7 @@ export default function Contact() {
             Contact
           </p>
           <h2 className="font-display text-4xl md:text-5xl font-semibold text-sand-50 mb-4">
-            Let's <span className="italic text-accent">Connect</span>
+            Let's <span className="italic text-accent accent-glow">Connect</span>
           </h2>
           <p className="text-sand-400 max-w-lg mx-auto">
             Have a project in mind or want to collaborate? I'd love to hear from you.
@@ -33,7 +33,7 @@ export default function Contact() {
           {/* Info */}
           <div className="space-y-6">
             <div className="flex items-center gap-4">
-              <div className="p-3 rounded-xl bg-accent/10 text-accent">
+              <div className="p-3 rounded-xl bg-accent/10 text-accent icon-glow">
                 <Mail size={20} />
               </div>
               <div>
@@ -47,7 +47,7 @@ export default function Contact() {
               </div>
             </div>
             <div className="flex items-center gap-4">
-              <div className="p-3 rounded-xl bg-accent/10 text-accent">
+              <div className="p-3 rounded-xl bg-accent/10 text-accent icon-glow">
                 <Phone size={20} />
               </div>
               <div>
@@ -61,7 +61,7 @@ export default function Contact() {
               </div>
             </div>
             <div className="flex items-center gap-4">
-              <div className="p-3 rounded-xl bg-accent/10 text-accent">
+              <div className="p-3 rounded-xl bg-accent/10 text-accent icon-glow">
                 <MapPin size={20} />
               </div>
               <div>
@@ -70,7 +70,7 @@ export default function Contact() {
               </div>
             </div>
             <div className="flex items-center gap-4">
-              <div className="p-3 rounded-xl bg-accent/10 text-accent">
+              <div className="p-3 rounded-xl bg-accent/10 text-accent icon-glow">
                 <ExternalLink size={20} />
               </div>
               <div>

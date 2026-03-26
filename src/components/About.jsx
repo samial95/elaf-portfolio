@@ -29,7 +29,7 @@ export default function About() {
             About
           </p>
           <h2 className="font-display text-4xl md:text-5xl font-semibold text-sand-50">
-            About <span className="italic text-accent">Elaf</span>
+            About <span className="italic text-accent accent-glow">Elaf</span>
           </h2>
         </motion.div>
 

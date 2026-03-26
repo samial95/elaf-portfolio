@@ -19,6 +19,21 @@
 }
 
 @layer components {
+  /* Accent-coloured italic title words — soft rose glow */
+  .accent-glow {
+    text-shadow:
+      0 0 8px rgba(192, 114, 120, 0.7),
+      0 0 20px rgba(192, 114, 120, 0.4),
+      0 0 40px rgba(192, 114, 120, 0.2);
+  }
+
+  /* Contact icons — rose glow */
+  .icon-glow {
+    filter:
+      drop-shadow(0 0 4px rgba(192, 114, 120, 0.8))
+      drop-shadow(0 0 10px rgba(192, 114, 120, 0.4));
+  }
+
   /* Glowing pill button — black bg, subtle border, accent glow on hover */
   .glow-btn {
     background-color: #0a0a0a;

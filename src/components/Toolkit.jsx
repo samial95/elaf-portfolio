@@ -121,7 +121,7 @@ export default function Toolkit() {
             Software
           </p>
           <h2 className="font-display text-4xl md:text-5xl font-semibold text-sand-50">
-            Skills & <span className="italic text-accent">Toolkit</span>
+            Skills & <span className="italic text-accent accent-glow">Toolkit</span>
           </h2>
         </motion.div>
 
