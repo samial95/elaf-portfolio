@@ -35,16 +35,16 @@ const timelineData = [
   },
   {
     year: '2022',
-    title: 'PwC — Experience Centre',
-    role: 'Riyadh Experience Centre Manager',
-    detail: 'Led 15+ Experience Centre tours for C-suite stakeholders. Managed a team of 8.',
+    title: 'PwC — Emerging Tech Lab',
+    role: 'KSA Emerging Tech Lab Lead & Creative Design Lead',
+    detail: '50+ immersive lab tours, GenAI experiences, AR/VR demos. Led a team of 4.',
     type: 'work',
   },
   {
     year: '2022',
-    title: 'PwC — Emerging Tech',
-    role: 'KSA Emerging Tech Lab Lead & Creative Design Lead',
-    detail: '50+ immersive lab tours, GenAI experiences, AR/VR demos. Led a team of 4.',
+    title: 'PwC — Experience Centre',
+    role: 'Riyadh Experience Centre Manager',
+    detail: 'Led 15+ Experience Centre tours for C-suite stakeholders. Managed a team of 8.',
     type: 'work',
   },
   {

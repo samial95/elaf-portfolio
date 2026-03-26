@@ -4,7 +4,6 @@ import Projects from './components/Projects'
 import About from './components/About'
 import Timeline from './components/Timeline'
 import Toolkit from './components/Toolkit'
-import Clients from './components/Clients'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 
@@ -17,7 +16,6 @@ export default function App() {
       <About />
       <Timeline />
       <Toolkit />
-      <Clients />
       <Contact />
       <Footer />
     </div>
