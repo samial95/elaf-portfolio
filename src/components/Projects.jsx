@@ -56,6 +56,19 @@ The report uses a clean editorial layout with strong visual hierarchy to organiz
     description: 'Change management report design for Ethara — a large-scale events and entertainment organization. Editorial layout system combining strong typography, structured grids, and visual hierarchy to communicate complex strategic content.',
   },
   {
+    title: 'Revive',
+    category: 'Project Design',
+    color: 'from-orange-900/40 to-amber-900/20',
+    image: '/Revive.png',
+    images: ['/Revive-01.jpg', '/Revive-02.jpg'],
+    modalBg: '#f2ddc7',
+    modalText: '#171717',
+    brandBackground: `A sustainable design project exploring how ceramic waste from construction can be recycled into urban design elements such as outdoor shading structures, seating, and architectural screens, reducing landfill waste and supporting a circular use of materials.
+
+I handled all visual design elements, including the infographic, layout, icons, and logo design. I named the project Revive, representing the idea of restoring ceramic waste back to life by repurposing it into new functional products that can be reused repeatedly. The colour palette is inspired by natural ceramic tones, and the design uses clear hierarchy and infographics to communicate the research and solution visually.`,
+    description: 'Sustainable design project exploring how ceramic construction waste can be recycled into urban design elements. Full visual identity, infographic system, and editorial layout — all designed to communicate research and solutions with clarity.',
+  },
+  {
     title: 'MG Taylor Visual Systems',
     category: 'Visual Systems',
     color: 'from-emerald-900/40 to-teal-900/20',
