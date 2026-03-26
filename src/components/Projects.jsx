@@ -42,13 +42,6 @@ The logo combines a paintbrush and a thumbprint, representing artistic creation 
     brandBackground: `Sarah Cheese is a local dessert brand that presents traditional sweets in a modern way.
 
 The logo combines illustration and typography in both Arabic and English, using a consistent style across both languages. A small bite detail in the illustration reflects how the dessert is typically eaten, adding a simple and relevant visual cue.`,
-    brandColors: [
-      { hex: '#FFFFFF', label: '#FFFFFF', dark: true, border: true },
-      { hex: '#EFD3D3', label: '#EFD3D3', dark: true },
-      { hex: '#DAA462', label: '#DAA462', dark: true },
-      { hex: '#618C88', label: '#618C88' },
-      { hex: '#386165', label: '#386165' },
-    ],
     description: 'Complete visual identity for Sara Cheese — a local dessert brand blending traditional sweets with a modern aesthetic. Logo design in Arabic and English, colour system, and brand collateral.',
   },
   {
@@ -129,23 +122,17 @@ function ProjectModal({ project, onClose }) {
           <X size={20} />
         </button>
 
-        {/* Hero image or gradient */}
+        {/* Hero image or gradient — full bleed */}
         {project.images ? (
-          <img
-            src={project.images[0]}
-            alt={`${project.title} hero`}
-            className="w-full object-cover rounded-t-2xl"
-          />
+          <img src={project.images[0]} alt={`${project.title} hero`} className="w-full object-cover rounded-t-2xl block" />
         ) : (
           <div className={`aspect-video bg-gradient-to-br ${project.color} flex items-center justify-center rounded-t-2xl`}>
             <span className="text-sand-400/60 text-sm uppercase tracking-widest">Images Coming Soon</span>
           </div>
         )}
 
-        {/* Content */}
+        {/* Text content */}
         <div className="px-10 md:px-16 py-12">
-
-          {/* Category + Title */}
           <p className={`text-xs uppercase tracking-widest mb-2 ${project.lightModal ? 'text-stone-400' : 'text-sand-500'}`}>{project.category}</p>
           <h3 className={`font-display text-3xl md:text-4xl font-semibold mb-1 ${project.lightModal ? 'text-stone-800' : 'text-sand-50'}`}>{project.title}</h3>
           {project.subtitle && <p className={`text-sm mt-1 ${project.lightModal ? 'text-stone-500' : 'text-sand-400'}`}>{project.subtitle}</p>}
@@ -166,13 +153,6 @@ function ProjectModal({ project, onClose }) {
             </div>
           )}
 
-          {/* Remaining images */}
-          {project.images?.slice(1).map((src, i) => (
-            <div key={i} className="mt-10">
-              <img src={src} alt={`${project.title} ${i + 2}`} className="w-full object-cover rounded-xl" />
-            </div>
-          ))}
-
           {/* Brand Colour Palette */}
           {project.brandColors && (
             <div className={`mt-12 pt-10 border-t ${project.lightModal ? 'border-black/10' : 'border-white/8'}`}>
@@ -180,39 +160,35 @@ function ProjectModal({ project, onClose }) {
               <div className="flex gap-4 flex-wrap">
                 {project.brandColors.map((c) => (
                   <div key={c.hex} className="flex flex-col items-start gap-2">
-                    <div
-                      className={`w-24 h-12 rounded-lg ${c.border ? 'border border-black/15' : ''}`}
-                      style={{ backgroundColor: c.hex }}
-                    />
+                    <div className={`w-24 h-12 rounded-lg ${c.border ? 'border border-black/15' : ''}`} style={{ backgroundColor: c.hex }} />
                     <span className={`text-xs font-mono ${project.lightModal ? 'text-stone-500' : (c.dark ? 'text-sand-500' : 'text-sand-400')}`}>{c.label}</span>
                   </div>
                 ))}
               </div>
             </div>
           )}
+        </div>
 
-          {/* PDF Viewer */}
-          {project.pdf && (
-            <div className={`mt-10 pt-10 border-t ${project.lightModal ? 'border-black/10' : 'border-white/8'}`}>
+        {/* Remaining images — full bleed, no padding */}
+        {project.images?.slice(1).map((src, i) => (
+          <img key={i} src={src} alt={`${project.title} ${i + 2}`} className="w-full object-cover block" />
+        ))}
+
+        {/* PDF Viewer */}
+        {project.pdf && (
+          <div className="px-10 md:px-16 pb-12">
+            <div className={`pt-10 border-t ${project.lightModal ? 'border-black/10' : 'border-white/8'}`}>
               <p className={`text-xs uppercase tracking-widest mb-4 ${project.lightModal ? 'text-stone-400' : 'text-sand-500'}`}>Project PDF</p>
               <div className={`rounded-xl overflow-hidden border ${project.lightModal ? 'border-black/10' : 'border-white/8'}`} style={{ height: '80vh' }}>
-                <iframe
-                  src={`${project.pdf}#toolbar=1&navpanes=0&view=FitH`}
-                  className="w-full h-full"
-                  title={`${project.title} PDF`}
-                />
+                <iframe src={`${project.pdf}#toolbar=1&navpanes=0&view=FitH`} className="w-full h-full" title={`${project.title} PDF`} />
               </div>
-              <a
-                href={project.pdf}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`inline-block mt-3 text-xs uppercase tracking-widest transition-colors ${project.lightModal ? 'text-stone-400 hover:text-stone-800' : 'text-sand-500 hover:text-sand-100'}`}
-              >
+              <a href={project.pdf} target="_blank" rel="noopener noreferrer"
+                className={`inline-block mt-3 text-xs uppercase tracking-widest transition-colors ${project.lightModal ? 'text-stone-400 hover:text-stone-800' : 'text-sand-500 hover:text-sand-100'}`}>
                 Open in new tab ↗
               </a>
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </motion.div>
       </div>
     </motion.div>
