@@ -18,7 +18,7 @@ export default function Navbar() {
         {/* Left — name */}
         <a
           href="#"
-          className="font-display text-sm font-semibold text-sand-100 tracking-widest uppercase nav-glow"
+          className="font-display text-base md:text-lg font-semibold text-sand-100 tracking-widest uppercase nav-glow"
           style={glowStyle}
         >
           Portfolio

@@ -41,7 +41,7 @@ const timelineData = [
     type: 'work',
   },
   {
-    year: '2022',
+    year: '2025',
     title: 'PwC — Experience Centre',
     role: 'Riyadh Experience Centre Manager',
     detail: 'Led 15+ Experience Centre tours for C-suite stakeholders. Managed a team of 8.',
