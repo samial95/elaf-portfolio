@@ -49,7 +49,7 @@ The logo combines illustration and typography in both Arabic and English, using 
     category: 'Report Design',
     color: 'from-purple-800/50 to-teal-700/30',
     image: '/ETHARA-Laptop.png',
-    images: ['/ETHARA-02.jpg', '/ETHARA-03.jpg'],
+    images: ['/ETHARA-03.jpg', '/ETHARA-02.jpg'],
     modalBg: '#eae8ef',
     modalText: '#390084',
     brandBackground: `Project Overview
