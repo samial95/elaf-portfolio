@@ -14,12 +14,6 @@ const projects = [
 The name Solvent comes from a painting medium used to mix and adjust paint for application on canvas, symbolizing the brand's role as a fundamental part of the creative process.
 
 The logo combines a paintbrush and a thumbprint, representing artistic creation and individuality highlighting the idea that every artist leaves their own imprint. The color palette uses red, blue, and yellow, the primary colors in painting, reflecting the brand's vision of being an essential foundation for artists to create endless possibilities.`,
-    brandColors: [
-      { hex: '#990A2E', label: '#990A2E' },
-      { hex: '#E6AE17', label: '#E6AE17' },
-      { hex: '#2272A4', label: '#2272A4' },
-      { hex: '#EFEFEF', label: '#EFEFEF', dark: true },
-    ],
     description:
       'Full brand identity system for Solvent Art Supplies Store — logo design, colour system, typography, stationery, and brand collateral. Crafted a bold visual language that balances artistic expression with commercial clarity.',
   },
