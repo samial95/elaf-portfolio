@@ -33,6 +33,25 @@ The logo combines a paintbrush and a thumbprint, representing artistic creation 
       'Founded Tajassam 3D Production Agency — a Saudi-based studio specialising in CGI advertising and 3D content. Developed the full brand identity including logo, Arabic typography system, and visual language that bridges tech and craft.',
   },
   {
+    title: 'Sara Cheese',
+    category: 'Branding',
+    color: 'from-teal-700/40 to-amber-800/20',
+    image: '/sarah cheese logo.png',
+    images: ['/Sarah cheese-01.jpg', '/Sarah cheese-02.jpg'],
+    lightModal: true,
+    brandBackground: `Sarah Cheese is a local dessert brand that presents traditional sweets in a modern way.
+
+The logo combines illustration and typography in both Arabic and English, using a consistent style across both languages. A small bite detail in the illustration reflects how the dessert is typically eaten, adding a simple and relevant visual cue.`,
+    brandColors: [
+      { hex: '#FFFFFF', label: '#FFFFFF', dark: true, border: true },
+      { hex: '#EFD3D3', label: '#EFD3D3', dark: true },
+      { hex: '#DAA462', label: '#DAA462', dark: true },
+      { hex: '#618C88', label: '#618C88' },
+      { hex: '#386165', label: '#386165' },
+    ],
+    description: 'Complete visual identity for Sara Cheese — a local dessert brand blending traditional sweets with a modern aesthetic. Logo design in Arabic and English, colour system, and brand collateral.',
+  },
+  {
     title: 'MG Taylor Visual Systems',
     category: 'Visual Systems',
     color: 'from-emerald-900/40 to-teal-900/20',
@@ -99,7 +118,7 @@ function ProjectModal({ project, onClose }) {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 20 }}
         transition={{ type: 'spring', damping: 28, stiffness: 280 }}
-        className="relative w-full max-w-[90vw] bg-[#050505] border border-white/5 rounded-t-2xl"
+        className={`relative w-full max-w-[90vw] rounded-t-2xl ${project.lightModal ? 'bg-[#F5F0EA] border border-black/8' : 'bg-[#050505] border border-white/5'}`}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close button */}
@@ -127,39 +146,21 @@ function ProjectModal({ project, onClose }) {
         <div className="px-10 md:px-16 py-12">
 
           {/* Category + Title */}
-          <p className="text-sand-500 text-xs uppercase tracking-widest mb-2">{project.category}</p>
-          <h3 className="font-display text-3xl md:text-4xl font-semibold text-sand-50 mb-1">{project.title}</h3>
-          {project.subtitle && <p className="text-sand-400 text-sm mt-1">{project.subtitle}</p>}
+          <p className={`text-xs uppercase tracking-widest mb-2 ${project.lightModal ? 'text-stone-400' : 'text-sand-500'}`}>{project.category}</p>
+          <h3 className={`font-display text-3xl md:text-4xl font-semibold mb-1 ${project.lightModal ? 'text-stone-800' : 'text-sand-50'}`}>{project.title}</h3>
+          {project.subtitle && <p className={`text-sm mt-1 ${project.lightModal ? 'text-stone-500' : 'text-sand-400'}`}>{project.subtitle}</p>}
 
           {/* Brand Background — two column */}
           {project.brandBackground && (
-            <div className="mt-12 pt-10 border-t border-white/8 flex flex-col md:flex-row gap-10 md:gap-16">
+            <div className={`mt-12 pt-10 flex flex-col md:flex-row gap-10 md:gap-16 border-t ${project.lightModal ? 'border-black/10' : 'border-white/8'}`}>
               <div className="md:w-[38%] flex-shrink-0">
-                <h2 className="font-display text-4xl md:text-5xl font-bold text-sand-50 uppercase leading-none tracking-tight">
+                <h2 className={`font-display text-4xl md:text-5xl font-bold uppercase leading-none tracking-tight ${project.lightModal ? 'text-stone-800' : 'text-sand-50'}`}>
                   BACKGROUND
                 </h2>
               </div>
               <div className="md:w-[62%] space-y-4">
                 {project.brandBackground.split('\n\n').map((para, i) => (
-                  <p key={i} className="text-sand-300 text-sm leading-relaxed">{para}</p>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Brand Colour Palette */}
-          {project.brandColors && (
-            <div className="mt-12 pt-10 border-t border-white/8">
-              <p className="text-sand-500 text-xs uppercase tracking-widest mb-6">Colour Palette</p>
-              <div className="flex gap-4 flex-wrap">
-                {project.brandColors.map((c) => (
-                  <div key={c.hex} className="flex flex-col items-start gap-2">
-                    <div
-                      className="w-24 h-12 rounded-lg border border-white/10"
-                      style={{ backgroundColor: c.hex }}
-                    />
-                    <span className={`text-xs font-mono ${c.dark ? 'text-sand-500' : 'text-sand-400'}`}>{c.label}</span>
-                  </div>
+                  <p key={i} className={`text-sm leading-relaxed ${project.lightModal ? 'text-stone-600' : 'text-sand-300'}`}>{para}</p>
                 ))}
               </div>
             </div>
@@ -172,11 +173,29 @@ function ProjectModal({ project, onClose }) {
             </div>
           ))}
 
+          {/* Brand Colour Palette */}
+          {project.brandColors && (
+            <div className={`mt-12 pt-10 border-t ${project.lightModal ? 'border-black/10' : 'border-white/8'}`}>
+              <p className={`text-xs uppercase tracking-widest mb-6 ${project.lightModal ? 'text-stone-400' : 'text-sand-500'}`}>Colour Palette</p>
+              <div className="flex gap-4 flex-wrap">
+                {project.brandColors.map((c) => (
+                  <div key={c.hex} className="flex flex-col items-start gap-2">
+                    <div
+                      className={`w-24 h-12 rounded-lg ${c.border ? 'border border-black/15' : ''}`}
+                      style={{ backgroundColor: c.hex }}
+                    />
+                    <span className={`text-xs font-mono ${project.lightModal ? 'text-stone-500' : (c.dark ? 'text-sand-500' : 'text-sand-400')}`}>{c.label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* PDF Viewer */}
           {project.pdf && (
-            <div className="mt-10 pt-10 border-t border-white/8">
-              <p className="text-sand-500 text-xs uppercase tracking-widest mb-4">Project PDF</p>
-              <div className="rounded-xl overflow-hidden border border-white/8" style={{ height: '80vh' }}>
+            <div className={`mt-10 pt-10 border-t ${project.lightModal ? 'border-black/10' : 'border-white/8'}`}>
+              <p className={`text-xs uppercase tracking-widest mb-4 ${project.lightModal ? 'text-stone-400' : 'text-sand-500'}`}>Project PDF</p>
+              <div className={`rounded-xl overflow-hidden border ${project.lightModal ? 'border-black/10' : 'border-white/8'}`} style={{ height: '80vh' }}>
                 <iframe
                   src={`${project.pdf}#toolbar=1&navpanes=0&view=FitH`}
                   className="w-full h-full"
@@ -187,7 +206,7 @@ function ProjectModal({ project, onClose }) {
                 href={project.pdf}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block mt-3 text-xs text-sand-500 hover:text-sand-100 uppercase tracking-widest transition-colors"
+                className={`inline-block mt-3 text-xs uppercase tracking-widest transition-colors ${project.lightModal ? 'text-stone-400 hover:text-stone-800' : 'text-sand-500 hover:text-sand-100'}`}
               >
                 Open in new tab ↗
               </a>
