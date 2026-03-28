@@ -7,14 +7,15 @@ export default function Hero() {
       {/* Spline background — full bleed, no overlay so colours stay vibrant */}
       <div className="absolute inset-0 w-full h-full">
         <iframe
-          src="https://my.spline.design/retrofuturismbganimation-pdLCHr9NlmXDVppUE9iMHRS1/?hideLogo=true"
+          src="https://my.spline.design/retrofuturismbganimation-pdLCHr9NlmXDVppUE9iMHRS1/"
           allow="autoplay"
           frameBorder="0"
           width="100%"
-          height="100%"
-          className="w-full h-full"
+          className="w-full"
+          style={{ height: 'calc(100% + 60px)' }}
           title="Spline Background"
         />
+
       </div>
 
       {/* Full-width container matching navbar's max-w-7xl mx-auto px-8 */}
