@@ -4,6 +4,14 @@ import { X } from 'lucide-react'
 
 const projects = [
   {
+    title: 'Saudi FIFA 2034',
+    category: 'UI / UX',
+    color: 'from-blue-950/60 to-slate-900/40',
+    image: '/FIFA Saudi-01.png',
+    images: ['/FIFA Saudi-02.png'],
+    description: 'UI/UX design concept for the Saudi FIFA 2034 World Cup app — covering user flows, wireframes, visual design system, iconography, and interactive screens for match bookings, activities, and event discovery.',
+  },
+  {
     title: 'Solvent',
     category: 'Branding',
     color: 'from-amber-900/40 to-yellow-900/20',
