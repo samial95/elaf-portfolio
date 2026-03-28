@@ -149,7 +149,7 @@ function ProjectModal({ project, onClose }) {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 20 }}
         transition={{ type: 'spring', damping: 28, stiffness: 280 }}
-        className="relative w-full max-w-[90vw] rounded-t-2xl"
+        className="relative w-full max-w-[65vw] rounded-t-2xl"
         style={{
           backgroundColor: project.modalBg || (project.lightModal ? '#F5F0EA' : '#050505'),
           border: `1px solid ${project.modalBg ? 'rgba(0,0,0,0.08)' : project.lightModal ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.05)'}`,
