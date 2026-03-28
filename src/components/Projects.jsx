@@ -9,7 +9,10 @@ const projects = [
     color: 'from-blue-950/60 to-slate-900/40',
     image: '/FIFA Saudi-01.png',
     images: ['/FIFA Saudi-02.png'],
-    description: 'UI/UX design concept for the Saudi FIFA 2034 World Cup app — covering user flows, wireframes, visual design system, iconography, and interactive screens for match bookings, activities, and event discovery.',
+    modalBg: '#ffffff',
+    modalText: '#111111',
+    hideContent: true,
+    description: 'UI/UX design concept for the Saudi FIFA 2034 World Cup app.',
   },
   {
     title: 'Solvent',
@@ -177,8 +180,8 @@ function ProjectModal({ project, onClose }) {
                 </div>
               )}
 
-              {/* Text content */}
-              <div className="px-10 md:px-16 py-12">
+              {/* Text content — hidden when hideContent is set */}
+              {!project.hideContent && <div className="px-10 md:px-16 py-12">
                 <p className="text-xs uppercase tracking-widest mb-2" style={{ color: txtMuted }}>{project.category}</p>
                 <h3 className="font-display text-3xl md:text-4xl font-semibold mb-1" style={{ color: txtMain }}>{project.title}</h3>
                 {project.subtitle && <p className="text-sm mt-1" style={{ color: txtSub }}>{project.subtitle}</p>}
@@ -213,7 +216,7 @@ function ProjectModal({ project, onClose }) {
                     </div>
                   </div>
                 )}
-              </div>
+              </div>}
 
               {/* Remaining images — full bleed */}
               {project.images?.slice(1).map((src, i) => (
