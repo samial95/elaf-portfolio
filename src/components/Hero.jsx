@@ -17,6 +17,9 @@ export default function Hero() {
         />
       </div>
 
+      {/* Cover Spline watermark in bottom-right */}
+      <div className="absolute bottom-0 right-0 w-52 h-14 z-20 bg-[#0a0a0a]" />
+
       {/* Full-width container matching navbar's max-w-7xl mx-auto px-8 */}
       <div className="relative z-10 min-h-screen w-full flex flex-col justify-center">
       <div className="w-full max-w-7xl mx-auto px-8">

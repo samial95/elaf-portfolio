@@ -237,7 +237,10 @@ function ProjectModal({ project, onClose }) {
   )
 }
 
+const INITIAL_COUNT = 6
+
 export default function Projects() {
+  const [showAll, setShowAll] = useState(false)
   const [selected, setSelected] = useState(null)
 
   const openModal = (project) => {
@@ -269,7 +272,7 @@ export default function Projects() {
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {projects.map((project, i) => (
+          {(showAll ? projects : projects.slice(0, INITIAL_COUNT)).map((project, i) => (
             <motion.div
               key={project.title}
               initial={{ opacity: 0, y: 20 }}
@@ -333,6 +336,18 @@ export default function Projects() {
             </motion.div>
           ))}
         </div>
+
+        {/* Load More / Show Less */}
+        {projects.length > INITIAL_COUNT && (
+          <div className="flex justify-center mt-12">
+            <button
+              onClick={() => setShowAll(v => !v)}
+              className="glow-btn px-8 py-3 text-sm font-medium rounded-full text-sand-50 uppercase tracking-widest transition-all duration-300"
+            >
+              {showAll ? 'Show Less' : 'Load More'}
+            </button>
+          </div>
+        )}
       </div>
 
       <AnimatePresence>
