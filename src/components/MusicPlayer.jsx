@@ -9,6 +9,7 @@ export function useMusicPlayer() {
   const playerRef = useRef(null)
   const divRef = useRef(null)
   const fadeRef = useRef(null)
+  const readyRef = useRef(false)
   const unlockedRef = useRef(false)
 
   const clearFade = () => {
@@ -47,6 +48,25 @@ export function useMusicPlayer() {
   }
 
   useEffect(() => {
+    // Register unlock listeners IMMEDIATELY — before the YT player is ready
+    // so we never miss an early interaction
+    const EVENTS = ['click', 'scroll', 'keydown', 'touchstart', 'mousemove', 'pointerdown']
+
+    const unlock = () => {
+      if (unlockedRef.current) return
+      unlockedRef.current = true
+      EVENTS.forEach(evt => document.removeEventListener(evt, unlock))
+
+      if (readyRef.current) {
+        // Player already ready — start immediately
+        fadeIn()
+      }
+      // If player isn't ready yet, onReady will see unlockedRef and start then
+    }
+
+    EVENTS.forEach(evt => document.addEventListener(evt, unlock, { passive: true }))
+
+    // Load YouTube IFrame API
     if (!window.YT) {
       const tag = document.createElement('script')
       tag.src = 'https://www.youtube.com/iframe_api'
@@ -60,7 +80,7 @@ export function useMusicPlayer() {
         videoId: 'n61ULEU7CO0',
         playerVars: {
           autoplay: 1,
-          mute: 1,        // muted autoplay is always allowed by browsers
+          mute: 1,
           start: 0,
           controls: 0,
           loop: 1,
@@ -70,24 +90,16 @@ export function useMusicPlayer() {
         },
         events: {
           onReady: (e) => {
-            // Start muted — this always works
+            readyRef.current = true
+            // Start muted so video is buffered and ready
             e.target.mute()
             e.target.seekTo(0, true)
             e.target.playVideo()
 
-            // On the very first interaction, unmute and fade in
-            const unlock = () => {
-              if (unlockedRef.current) return
-              unlockedRef.current = true
+            // If user already interacted before player was ready, start now
+            if (unlockedRef.current) {
               fadeIn()
-              UNLOCK_EVENTS.forEach(evt =>
-                document.removeEventListener(evt, unlock)
-              )
             }
-            const UNLOCK_EVENTS = ['click', 'scroll', 'keydown', 'touchstart', 'mousemove', 'pointerdown']
-            UNLOCK_EVENTS.forEach(evt =>
-              document.addEventListener(evt, unlock, { passive: true })
-            )
           },
           onStateChange: (e) => {
             setPlaying(e.data === window.YT.PlayerState.PLAYING)
@@ -104,6 +116,7 @@ export function useMusicPlayer() {
 
     return () => {
       clearFade()
+      EVENTS.forEach(evt => document.removeEventListener(evt, unlock))
       if (playerRef.current?.destroy) playerRef.current.destroy()
     }
   }, [])
