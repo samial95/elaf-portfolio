@@ -114,28 +114,37 @@ export function WaveBars({ playing }) {
           100% { height: var(--wave-max-h, 20px); }
         }
         @keyframes rhythmGlow {
-          0%   { box-shadow: 0 0 8px 2px rgba(192,114,120,0.25), 0 0 0 1px rgba(192,114,120,0.2); }
-          40%  { box-shadow: 0 0 22px 8px rgba(192,114,120,0.65), 0 0 40px 16px rgba(192,114,120,0.25), 0 0 0 1px rgba(192,114,120,0.5); }
-          55%  { box-shadow: 0 0 14px 4px rgba(192,114,120,0.4),  0 0 24px 8px rgba(192,114,120,0.15), 0 0 0 1px rgba(192,114,120,0.35); }
-          100% { box-shadow: 0 0 8px 2px rgba(192,114,120,0.25), 0 0 0 1px rgba(192,114,120,0.2); }
+          0%   { filter: drop-shadow(0 0 2px rgba(192,114,120,0.4)); }
+          40%  { filter: drop-shadow(0 0 8px rgba(192,114,120,1)) drop-shadow(0 0 16px rgba(192,114,120,0.6)); }
+          55%  { filter: drop-shadow(0 0 5px rgba(192,114,120,0.7)); }
+          100% { filter: drop-shadow(0 0 2px rgba(192,114,120,0.4)); }
         }
       `}</style>
-      {bars.map((bar, i) => (
-        <span
-          key={i}
-          style={{
-            display: 'block',
-            width: '3px',
-            borderRadius: '3px',
-            backgroundColor: '#c07278',
-            height: playing ? `${bar.maxH}px` : '4px',
-            animation: playing
-              ? `waveBar ${0.7 + i * 0.07}s ease-in-out ${bar.delay} infinite alternate`
-              : 'none',
-            transition: 'height 0.3s ease',
-          }}
-        />
-      ))}
+      <span style={{
+        display: 'flex',
+        alignItems: 'flex-end',
+        gap: '4px',
+        animation: playing ? 'rhythmGlow 0.55s ease-in-out infinite' : 'none',
+        filter: playing ? undefined : 'drop-shadow(0 0 2px rgba(192,114,120,0.3))',
+        transition: 'filter 0.5s',
+      }}>
+        {bars.map((bar, i) => (
+          <span
+            key={i}
+            style={{
+              display: 'block',
+              width: '3px',
+              borderRadius: '3px',
+              backgroundColor: '#c07278',
+              height: playing ? `${bar.maxH}px` : '4px',
+              animation: playing
+                ? `waveBar ${0.7 + i * 0.07}s ease-in-out ${bar.delay} infinite alternate`
+                : 'none',
+              transition: 'height 0.3s ease',
+            }}
+          />
+        ))}
+      </span>
     </>
   )
 }
@@ -160,25 +169,11 @@ export default function MusicPlayer({ playing, toggle, divRef }) {
           display: 'flex',
           alignItems: 'flex-end',
           gap: '4px',
-          padding: '12px 14px',
-          borderRadius: '999px',
-          background: 'rgba(10,10,10,0.75)',
-          backdropFilter: 'blur(12px)',
-          border: '1px solid rgba(192,114,120,0.25)',
+          padding: '8px',
+          background: 'none',
+          border: 'none',
           cursor: 'pointer',
           outline: 'none',
-          // rhythm glow when playing, subtle static glow when paused
-          boxShadow: playing
-            ? undefined
-            : '0 0 6px 1px rgba(192,114,120,0.12)',
-          animation: playing ? 'rhythmGlow 0.55s ease-in-out infinite' : 'none',
-          transition: 'border-color 0.3s, box-shadow 0.5s',
-        }}
-        onMouseEnter={e => {
-          e.currentTarget.style.borderColor = 'rgba(192,114,120,0.7)'
-        }}
-        onMouseLeave={e => {
-          e.currentTarget.style.borderColor = 'rgba(192,114,120,0.25)'
         }}
       >
         <WaveBars playing={playing} />
