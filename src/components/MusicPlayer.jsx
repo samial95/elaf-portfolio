@@ -65,7 +65,32 @@ export function useMusicPlayer() {
           origin: window.location.origin,
         },
         events: {
-          onReady: () => { fadeIn() },
+          onReady: () => {
+            // Try immediate autoplay — works if browser allows it
+            const tryPlay = () => {
+              fadeIn()
+            }
+            tryPlay()
+
+            // Fallback: start on first user interaction if autoplay was blocked
+            const onFirstInteraction = () => {
+              if (!playerRef.current) return
+              const state = playerRef.current.getPlayerState()
+              // -1 = unstarted, 2 = paused — means autoplay was blocked
+              if (state === -1 || state === 2 || state === 5) {
+                fadeIn()
+              }
+              cleanup()
+            }
+            const cleanup = () => {
+              ['click', 'keydown', 'scroll', 'touchstart', 'mousemove'].forEach(evt =>
+                document.removeEventListener(evt, onFirstInteraction, { once: true })
+              )
+            }
+            ;['click', 'keydown', 'scroll', 'touchstart', 'mousemove'].forEach(evt =>
+              document.addEventListener(evt, onFirstInteraction, { once: true, passive: true })
+            )
+          },
           onStateChange: (e) => {
             setPlaying(e.data === window.YT.PlayerState.PLAYING)
           },
