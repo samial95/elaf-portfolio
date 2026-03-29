@@ -14,7 +14,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-sand-950 text-sand-100">
       <StarField />
-      <Navbar musicPlaying={music.playing} musicToggle={music.toggle} />
+      <Navbar />
       <Hero />
       <Projects />
       <About />

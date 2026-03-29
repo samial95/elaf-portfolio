@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
-import { WaveBars } from './MusicPlayer'
 import { playClick } from '../utils/clickSound'
 
 const links = ['Projects', 'About', 'Timeline', 'Toolkit', 'Contact']
@@ -10,7 +9,7 @@ const glowStyle = {
   transition: 'color 0.2s ease, text-shadow 0.2s ease',
 }
 
-export default function Navbar({ musicPlaying, musicToggle }) {
+export default function Navbar() {
   const [open, setOpen] = useState(false)
 
   return (
@@ -42,28 +41,8 @@ export default function Navbar({ musicPlaying, musicToggle }) {
           ))}
         </div>
 
-        {/* Right — wave music button (desktop only) */}
-        <button
-          onClick={() => { playClick(); musicToggle() }}
-          onMouseEnter={playClick}
-          title={musicPlaying ? 'Pause music' : 'Play music'}
-          className="hidden md:flex items-center"
-          style={{
-            gap: '3px',
-            alignItems: 'flex-end',
-            background: 'none',
-            border: 'none',
-            cursor: 'pointer',
-            padding: '4px 6px',
-            borderRadius: '6px',
-            transition: 'opacity 0.2s',
-            opacity: 0.7,
-          }}
-          onMouseEnter={e => e.currentTarget.style.opacity = '1'}
-          onMouseLeave={e => e.currentTarget.style.opacity = '0.7'}
-        >
-          <WaveBars playing={musicPlaying} />
-        </button>
+        {/* Right — spacer to balance layout */}
+        <div className="hidden md:block w-[40px]" />
 
         {/* Mobile hamburger */}
         <button
