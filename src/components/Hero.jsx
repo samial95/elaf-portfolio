@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { ArrowDown } from 'lucide-react'
+import { playClick } from '../utils/clickSound'
 
 export default function Hero() {
   return (
@@ -54,12 +55,16 @@ export default function Hero() {
             {/* Glow button — black bg, accent glow on hover */}
             <a
               href="#projects"
+              onMouseEnter={playClick}
+              onClick={playClick}
               className="glow-btn px-5 py-2 text-xs md:text-sm font-medium rounded-full text-sand-50 transition-all duration-300"
             >
               View Work
             </a>
             <a
               href="#contact"
+              onMouseEnter={playClick}
+              onClick={playClick}
               className="glow-btn px-5 py-2 text-xs md:text-sm font-medium rounded-full text-sand-50 transition-all duration-300"
             >
               Get in Touch

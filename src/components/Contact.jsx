@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { Mail, MapPin, Phone, Send, ExternalLink } from 'lucide-react'
+import { playClick } from '../utils/clickSound'
 
 export default function Contact() {
   return (
@@ -106,6 +107,8 @@ export default function Contact() {
             />
             <button
               type="submit"
+              onMouseEnter={playClick}
+              onClick={playClick}
               className="w-full px-6 py-3 bg-sand-100 text-sand-950 font-medium rounded-xl hover:bg-white transition-colors flex items-center justify-center gap-2"
             >
               Send Message <Send size={16} />

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X } from 'lucide-react'
+import { playClick } from '../utils/clickSound'
 
 const projects = [
   {
@@ -290,10 +291,11 @@ export default function Projects() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.07 }}
-              onClick={() => openModal(project)}
+              onClick={() => { playClick(); openModal(project) }}
               className="group relative rounded-xl overflow-hidden border border-white/10 hover:border-white/30 transition-all duration-500 cursor-pointer"
               style={{ boxShadow: '0 0 0 0 rgba(255,210,130,0)' }}
               onMouseEnter={e => {
+                playClick()
                 e.currentTarget.style.boxShadow =
                   '0 0 18px 4px rgba(192,114,120,0.28), 0 0 40px 8px rgba(192,114,120,0.12)'
               }}
@@ -352,7 +354,8 @@ export default function Projects() {
         {projects.length > INITIAL_COUNT && (
           <div className="flex justify-center mt-12">
             <button
-              onClick={() => setShowAll(v => !v)}
+              onClick={() => { playClick(); setShowAll(v => !v) }}
+              onMouseEnter={playClick}
               className="glow-btn px-8 py-3 text-sm font-medium rounded-full text-sand-50 uppercase tracking-widest transition-all duration-300"
             >
               {showAll ? 'Show Less' : 'Load More'}

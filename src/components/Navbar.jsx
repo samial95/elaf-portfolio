@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Globe, Menu, X } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
+import { WaveBars } from './MusicPlayer'
+import { playClick } from '../utils/clickSound'
 
 const links = ['Projects', 'About', 'Timeline', 'Toolkit', 'Contact']
 
@@ -8,7 +10,7 @@ const glowStyle = {
   transition: 'color 0.2s ease, text-shadow 0.2s ease',
 }
 
-export default function Navbar() {
+export default function Navbar({ musicPlaying, musicToggle }) {
   const [open, setOpen] = useState(false)
 
   return (
@@ -30,6 +32,8 @@ export default function Navbar() {
             <a
               key={link}
               href={`#${link.toLowerCase()}`}
+              onMouseEnter={playClick}
+              onClick={playClick}
               className="text-sand-300 text-xs uppercase tracking-[0.18em] nav-glow"
               style={glowStyle}
             >
@@ -38,13 +42,27 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* Right — globe icon */}
+        {/* Right — wave music button (desktop only) */}
         <button
-          className="hidden md:flex items-center justify-center text-sand-300 nav-glow"
-          style={glowStyle}
-          title="Language"
+          onClick={() => { playClick(); musicToggle() }}
+          onMouseEnter={playClick}
+          title={musicPlaying ? 'Pause music' : 'Play music'}
+          className="hidden md:flex items-center"
+          style={{
+            gap: '3px',
+            alignItems: 'flex-end',
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            padding: '4px 6px',
+            borderRadius: '6px',
+            transition: 'opacity 0.2s',
+            opacity: 0.7,
+          }}
+          onMouseEnter={e => e.currentTarget.style.opacity = '1'}
+          onMouseLeave={e => e.currentTarget.style.opacity = '0.7'}
         >
-          <Globe size={18} strokeWidth={1.5} />
+          <WaveBars playing={musicPlaying} />
         </button>
 
         {/* Mobile hamburger */}
