@@ -61,7 +61,7 @@ export function useMusicPlayer() {
         playerVars: {
           autoplay: 1,
           mute: 1,        // muted autoplay is always allowed by browsers
-          start: 16,
+          start: 0,
           controls: 0,
           loop: 1,
           playlist: 'n61ULEU7CO0',
@@ -72,7 +72,7 @@ export function useMusicPlayer() {
           onReady: (e) => {
             // Start muted — this always works
             e.target.mute()
-            e.target.seekTo(16, true)
+            e.target.seekTo(0, true)
             e.target.playVideo()
 
             // On the very first interaction, unmute and fade in
