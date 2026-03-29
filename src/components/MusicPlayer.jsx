@@ -2,13 +2,14 @@ import { useEffect, useRef, useState } from 'react'
 
 const TARGET_VOLUME = 40
 const FADE_STEPS = 20
-const FADE_INTERVAL_MS = 50 // 50ms × 20 = 1s fade
+const FADE_INTERVAL_MS = 50
 
 export function useMusicPlayer() {
   const [playing, setPlaying] = useState(false)
   const playerRef = useRef(null)
   const divRef = useRef(null)
   const fadeRef = useRef(null)
+  const unlockedRef = useRef(false)
 
   const clearFade = () => {
     if (fadeRef.current) {
@@ -18,9 +19,10 @@ export function useMusicPlayer() {
   }
 
   const fadeIn = () => {
+    if (!playerRef.current) return
     clearFade()
+    playerRef.current.unMute()
     playerRef.current.setVolume(0)
-    playerRef.current.seekTo(16, true)
     playerRef.current.playVideo()
     let vol = 0
     fadeRef.current = setInterval(() => {
@@ -31,6 +33,7 @@ export function useMusicPlayer() {
   }
 
   const fadeOut = () => {
+    if (!playerRef.current) return
     clearFade()
     let vol = TARGET_VOLUME
     fadeRef.current = setInterval(() => {
@@ -57,6 +60,7 @@ export function useMusicPlayer() {
         videoId: 'n61ULEU7CO0',
         playerVars: {
           autoplay: 1,
+          mute: 1,        // muted autoplay is always allowed by browsers
           start: 16,
           controls: 0,
           loop: 1,
@@ -65,30 +69,24 @@ export function useMusicPlayer() {
           origin: window.location.origin,
         },
         events: {
-          onReady: () => {
-            // Try immediate autoplay — works if browser allows it
-            const tryPlay = () => {
-              fadeIn()
-            }
-            tryPlay()
+          onReady: (e) => {
+            // Start muted — this always works
+            e.target.mute()
+            e.target.seekTo(16, true)
+            e.target.playVideo()
 
-            // Fallback: start on first user interaction if autoplay was blocked
-            const onFirstInteraction = () => {
-              if (!playerRef.current) return
-              const state = playerRef.current.getPlayerState()
-              // -1 = unstarted, 2 = paused — means autoplay was blocked
-              if (state === -1 || state === 2 || state === 5) {
-                fadeIn()
-              }
-              cleanup()
-            }
-            const cleanup = () => {
-              ['click', 'keydown', 'scroll', 'touchstart', 'mousemove'].forEach(evt =>
-                document.removeEventListener(evt, onFirstInteraction, { once: true })
+            // On the very first interaction, unmute and fade in
+            const unlock = () => {
+              if (unlockedRef.current) return
+              unlockedRef.current = true
+              fadeIn()
+              UNLOCK_EVENTS.forEach(evt =>
+                document.removeEventListener(evt, unlock)
               )
             }
-            ;['click', 'keydown', 'scroll', 'touchstart', 'mousemove'].forEach(evt =>
-              document.addEventListener(evt, onFirstInteraction, { once: true, passive: true })
+            const UNLOCK_EVENTS = ['click', 'scroll', 'keydown', 'touchstart', 'mousemove', 'pointerdown']
+            UNLOCK_EVENTS.forEach(evt =>
+              document.addEventListener(evt, unlock, { passive: true })
             )
           },
           onStateChange: (e) => {
@@ -115,6 +113,7 @@ export function useMusicPlayer() {
     if (playing) {
       fadeOut()
     } else {
+      unlockedRef.current = true
       fadeIn()
     }
   }
@@ -177,12 +176,10 @@ export function WaveBars({ playing }) {
 export default function MusicPlayer({ playing, toggle, divRef }) {
   return (
     <>
-      {/* Hidden YouTube player mount point */}
       <div
         ref={divRef}
         style={{ position: 'fixed', bottom: 0, left: 0, width: 1, height: 1, opacity: 0, pointerEvents: 'none', zIndex: -1 }}
       />
-
       <button
         onClick={toggle}
         title={playing ? 'Pause music' : 'Play music'}
