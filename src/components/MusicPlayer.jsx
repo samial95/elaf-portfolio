@@ -31,6 +31,7 @@ export default function MusicPlayer() {
         videoId: VIDEO_ID,
         playerVars: {
           autoplay: 1,
+          mute: 1,
           loop: 1,
           playlist: VIDEO_ID,
           controls: 0,
@@ -42,8 +43,14 @@ export default function MusicPlayer() {
         events: {
           onReady(e) {
             setReady(true)
-            e.target.setVolume(35)
+            // Start muted (browsers allow muted autoplay), then immediately unmute
+            e.target.mute()
             e.target.playVideo()
+            // Short delay to let the player buffer/start, then unmute
+            setTimeout(() => {
+              e.target.unMute()
+              e.target.setVolume(35)
+            }, 500)
           },
           onStateChange(e) {
             const s = e.data
