@@ -2,26 +2,24 @@ import { useEffect, useRef, useState } from 'react'
 
 const VIDEO_ID = 'EeRfSNx5RhE'
 
-// Bar heights (min → max) for each of the 4 bars
 const BARS = [
-  { delay: '0ms',   minH: 3, maxH: 14 },
-  { delay: '180ms', minH: 3, maxH: 20 },
-  { delay: '90ms',  minH: 3, maxH: 10 },
-  { delay: '240ms', minH: 3, maxH: 17 },
+  { delay: '0ms',   maxH: 14 },
+  { delay: '180ms', maxH: 20 },
+  { delay: '90ms',  maxH: 10 },
+  { delay: '240ms', maxH: 17 },
 ]
 
 export default function MusicPlayer() {
-  const [playing, setPlaying]   = useState(false)
-  const [ready, setReady]       = useState(false)
-  const [blocked, setBlocked]   = useState(false) // autoplay was blocked
-  const playerRef               = useRef(null)
-  const mountRef                = useRef(null)
+  const [playing, setPlaying] = useState(false)
+  const playerRef             = useRef(null)
+  const mountRef              = useRef(null)
+  const unmutedRef            = useRef(false) // has the user triggered unmute yet
 
   useEffect(() => {
-    // Load the YouTube IFrame API script once
+    // Load YouTube IFrame API once
     if (!document.getElementById('yt-iframe-api')) {
       const tag = document.createElement('script')
-      tag.id = 'yt-iframe-api'
+      tag.id  = 'yt-iframe-api'
       tag.src = 'https://www.youtube.com/iframe_api'
       document.head.appendChild(tag)
     }
@@ -31,8 +29,8 @@ export default function MusicPlayer() {
         videoId: VIDEO_ID,
         playerVars: {
           autoplay: 1,
-          mute: 1,
-          loop: 1,
+          mute:     1,   // muted autoplay always allowed by Chrome
+          loop:     1,
           playlist: VIDEO_ID,
           controls: 0,
           showinfo: 0,
@@ -42,30 +40,13 @@ export default function MusicPlayer() {
         },
         events: {
           onReady(e) {
-            setReady(true)
-            // Start muted (browsers allow muted autoplay), then immediately unmute
             e.target.mute()
             e.target.playVideo()
-            // Short delay to let the player buffer/start, then unmute
-            setTimeout(() => {
-              e.target.unMute()
-              e.target.setVolume(35)
-            }, 500)
           },
           onStateChange(e) {
             const s = e.data
-            if (s === window.YT.PlayerState.PLAYING) {
-              setPlaying(true)
-              setBlocked(false)
-            } else if (
-              s === window.YT.PlayerState.PAUSED ||
-              s === window.YT.PlayerState.ENDED
-            ) {
-              setPlaying(false)
-            } else if (s === -1) {
-              // unstarted → autoplay likely blocked by browser
-              setBlocked(true)
-            }
+            if (s === window.YT.PlayerState.PLAYING) setPlaying(true)
+            else if (s === window.YT.PlayerState.PAUSED || s === window.YT.PlayerState.ENDED) setPlaying(false)
           },
         },
       })
@@ -77,47 +58,53 @@ export default function MusicPlayer() {
       window.onYouTubeIframeAPIReady = initPlayer
     }
 
+    // Chrome requires a real user gesture to allow audio.
+    // On first interaction (scroll / click / key) we unmute once.
+    const unmute = () => {
+      if (unmutedRef.current || !playerRef.current) return
+      unmutedRef.current = true
+      playerRef.current.unMute()
+      playerRef.current.setVolume(35)
+      document.removeEventListener('click',   unmute)
+      document.removeEventListener('scroll',  unmute)
+      document.removeEventListener('keydown', unmute)
+      document.removeEventListener('touchstart', unmute)
+    }
+
+    document.addEventListener('click',      unmute, { once: true, passive: true })
+    document.addEventListener('scroll',     unmute, { once: true, passive: true })
+    document.addEventListener('keydown',    unmute, { once: true, passive: true })
+    document.addEventListener('touchstart', unmute, { once: true, passive: true })
+
     return () => {
-      if (playerRef.current && playerRef.current.destroy) {
-        playerRef.current.destroy()
-      }
+      document.removeEventListener('click',      unmute)
+      document.removeEventListener('scroll',     unmute)
+      document.removeEventListener('keydown',    unmute)
+      document.removeEventListener('touchstart', unmute)
+      if (playerRef.current?.destroy) playerRef.current.destroy()
     }
   }, [])
 
   const toggle = () => {
     if (!playerRef.current) return
-    if (playing) {
-      playerRef.current.pauseVideo()
-    } else {
-      playerRef.current.playVideo()
-      setBlocked(false)
+    // Also make sure we unmute if the user hasn't yet
+    if (!unmutedRef.current) {
+      unmutedRef.current = true
+      playerRef.current.unMute()
+      playerRef.current.setVolume(35)
     }
+    if (playing) playerRef.current.pauseVideo()
+    else         playerRef.current.playVideo()
   }
 
   return (
-    <div
-      style={{
-        position: 'fixed',
-        bottom: '28px',
-        right: '28px',
-        zIndex: 9999,
-      }}
-    >
-      {/* Hidden YouTube player container */}
-      <div
-        style={{
-          position: 'absolute',
-          width: 0,
-          height: 0,
-          overflow: 'hidden',
-          pointerEvents: 'none',
-          opacity: 0,
-        }}
-      >
+    <div style={{ position: 'fixed', bottom: '28px', right: '28px', zIndex: 9999 }}>
+      {/* Hidden YouTube mount */}
+      <div style={{ position: 'absolute', width: 0, height: 0, overflow: 'hidden', pointerEvents: 'none', opacity: 0 }}>
         <div ref={mountRef} />
       </div>
 
-      {/* Visible widget */}
+      {/* Bars button */}
       <button
         onClick={toggle}
         title={playing ? 'Pause music' : 'Play music'}
@@ -126,15 +113,15 @@ export default function MusicPlayer() {
           alignItems: 'flex-end',
           gap: '3px',
           height: '20px',
-          padding: '0',
+          padding: 0,
           background: 'transparent',
           border: 'none',
           cursor: 'pointer',
           opacity: playing ? 1 : 0.45,
           transition: 'opacity 0.3s ease',
         }}
-        onMouseEnter={e => e.currentTarget.style.opacity = '1'}
-        onMouseLeave={e => e.currentTarget.style.opacity = playing ? '1' : '0.45'}
+        onMouseEnter={e => (e.currentTarget.style.opacity = '1')}
+        onMouseLeave={e => (e.currentTarget.style.opacity = playing ? '1' : '0.45')}
       >
         {BARS.map((bar, i) => (
           <span

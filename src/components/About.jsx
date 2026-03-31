@@ -32,10 +32,11 @@ function FeaturedLink({ name, url }) {
         textTransform: 'uppercase',
         textDecoration: 'none',
         color: hovered ? '#000000' : '#f5f5f4',
-        padding: hovered ? '10px 14px' : '10px 0px',
+        padding: '10px 14px',
         background: hovered ? 'rgba(235,235,235,0.95)' : 'transparent',
+        border: hovered ? '1px solid transparent' : '1px solid rgba(255,255,255,0.55)',
         borderRadius: 0,
-        transition: 'background 0.35s ease, padding 0.35s cubic-bezier(0.16,1,0.3,1), color 0.3s ease',
+        transition: 'background 0.35s ease, border-color 0.35s ease, color 0.3s ease',
       }}
     >
       FEATURED IN — {name}
