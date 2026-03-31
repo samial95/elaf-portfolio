@@ -117,11 +117,11 @@ export default function Toolkit() {
           transition={{ duration: 0.6 }}
           className="text-center mb-8"
         >
-          <p className="text-accent text-sm uppercase tracking-[0.3em] mb-4">
+          <p className="text-white text-sm uppercase tracking-[0.3em] mb-4">
             Software
           </p>
           <h2 className="font-display text-4xl md:text-5xl font-semibold text-sand-50">
-            Skills & <span className="italic text-accent accent-glow">Toolkit</span>
+            Skills & <span className="italic text-white accent-glow">Toolkit</span>
           </h2>
         </motion.div>
 
@@ -143,7 +143,7 @@ export default function Toolkit() {
           {tools.map((tool) => (
             <span
               key={tool}
-              className="px-4 py-2 rounded-full bg-sand-900/40 border border-sand-800/40 text-sand-300 text-sm hover:border-accent/30 hover:text-accent transition-colors"
+              className="px-4 py-2 rounded-full bg-sand-900/40 border border-sand-800/40 text-sand-300 text-sm hover:border-accent/30 hover:text-white transition-colors"
             >
               {tool}
             </span>

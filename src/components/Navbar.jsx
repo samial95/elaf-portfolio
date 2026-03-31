@@ -25,8 +25,8 @@ export default function Navbar() {
           Portfolio
         </a>
 
-        {/* Centre — links */}
-        <div className="hidden md:flex items-center gap-10 absolute left-1/2 -translate-x-1/2">
+        {/* Right — links */}
+        <div className="hidden md:flex items-center gap-10">
           {links.map((link) => (
             <a
               key={link}
@@ -41,9 +41,6 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* Right — spacer to balance layout */}
-        <div className="hidden md:block w-[40px]" />
-
         {/* Mobile hamburger */}
         <button
           onClick={() => setOpen(!open)}
@@ -51,6 +48,11 @@ export default function Navbar() {
         >
           {open ? <X size={22} /> : <Menu size={22} />}
         </button>
+      </div>
+
+      {/* Bottom line — spans from P of Portfolio to T of Contact */}
+      <div className="max-w-7xl mx-auto px-8">
+        <div style={{ height: '1px', background: 'rgba(255,255,255,0.18)' }} />
       </div>
 
       {/* Mobile menu */}
@@ -81,13 +83,8 @@ export default function Navbar() {
       {/* Glow-on-hover global style */}
       <style>{`
         .nav-glow:hover {
-          color: #e8a0a5 !important;
-          text-shadow:
-            0 0 6px rgba(192, 114, 120, 1),
-            0 0 16px rgba(192, 114, 120, 0.85),
-            0 0 35px rgba(192, 114, 120, 0.5),
-            0 0 60px rgba(192, 114, 120, 0.25);
-          filter: drop-shadow(0 0 5px rgba(192, 114, 120, 0.75));
+          color: #ffffff !important;
+          opacity: 0.7;
         }
       `}</style>
     </nav>

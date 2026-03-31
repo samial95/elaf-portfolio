@@ -1,9 +1,19 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X } from 'lucide-react'
+import { X, ArrowUpRight } from 'lucide-react'
 import { playClick } from '../utils/clickSound'
 
 const projects = [
+  {
+    title: 'Qasr Al Awani',
+    category: 'Ramadan Campaign',
+    color: 'from-amber-950/60 to-stone-900/40',
+    image: '/3D Qasser - 1.png',
+    images: ['/3D Qasser - 2.png'],
+    youtubeId: '2PBcFUA_69s',
+    hideContent: true,
+    description: 'A conceptual Ramadan campaign created for Qasr Al Awani, showcasing their seasonal offers through a cinematic visual narrative. The concept presents each scene as a curated display, highlighting different moments of Ramadan hospitality — from family gatherings to outdoor travel settings.',
+  },
   {
     title: 'Saudi FIFA 2034',
     category: 'UI / UX',
@@ -87,54 +97,48 @@ I handled all visual design elements, including the infographic, layout, icons, 
     title: 'Saudi Sports',
     category: 'Experience Design',
     color: 'from-zinc-800 to-neutral-900',
-    description:
-      'Visual and experience design work for Saudi sports initiatives — combining spatial design, brand storytelling, and audience engagement to deliver immersive sports experiences.',
+    description: 'Visual and experience design work for Saudi sports initiatives — combining spatial design, brand storytelling, and audience engagement to deliver immersive sports experiences.',
   },
   {
     title: 'EmTech Labs',
     category: 'Innovation & Technology',
     color: 'from-zinc-800 to-neutral-950',
-    description:
-      'Design and creative direction for an Emerging Technology Lab — translating complex AI, data, and immersive technology concepts into engaging visual narratives and interactive experiences.',
+    description: 'Design and creative direction for an Emerging Technology Lab — translating complex AI, data, and immersive technology concepts into engaging visual narratives and interactive experiences.',
   },
   {
     title: '3D Printing',
     category: 'Creative Technology',
     color: 'from-zinc-800 to-neutral-900',
-    description:
-      'Explored and delivered 3D printing projects as part of creative technology prototyping, translating digital designs into physical outputs for client demonstrations and innovation showcases.',
+    description: 'Explored and delivered 3D printing projects as part of creative technology prototyping, translating digital designs into physical outputs for client demonstrations and innovation showcases.',
   },
   {
     title: 'Large-Scale Event Design',
     category: 'Event Design',
     color: 'from-zinc-800 to-neutral-900',
-    description:
-      'Designed and executed PwC\'s presence at high-profile regional events such as COP28, Dubai Metaverse Assembly, AlUla Capacity Building Programme, and RUYA Careers 2024. End-to-end planning, AV setup, creative content, and on-site coordination.',
+    description: "Designed and executed PwC's presence at high-profile regional events such as COP28, Dubai Metaverse Assembly, AlUla Capacity Building Programme, and RUYA Careers 2024. End-to-end planning, AV setup, creative content, and on-site coordination.",
   },
   {
     title: '3D Concept Design',
     category: 'CGI & 3D',
     color: 'from-zinc-800 to-neutral-900',
-    description:
-      'Founded Tajassm 3D Production Agency, specializing in CGI advertising videos and campaigns. Served notable clients including PNU, ZAN, and various government entities with high-quality 3D concept work.',
+    description: 'Founded Tajassm 3D Production Agency, specializing in CGI advertising videos and campaigns. Served notable clients including PNU, ZAN, and various government entities with high-quality 3D concept work.',
   },
   {
     title: 'Interactive Environment',
     category: 'Experience Design',
     color: 'from-zinc-800 to-neutral-900',
-    description:
-      'Co-created three innovation lab spaces across the Middle East, integrating physical design, storytelling, and digital touchpoints. Designed experience flows and interactive environments for executive engagements and strategic client visits.',
+    description: 'Co-created three innovation lab spaces across the Middle East, integrating physical design, storytelling, and digital touchpoints. Designed experience flows and interactive environments for executive engagements and strategic client visits.',
   },
   {
     title: 'Digital Design Textbook',
     subtitle: 'Saudi High School Curriculum',
     category: 'Education',
     color: 'from-zinc-800 to-neutral-900',
-    description:
-      'Authored lessons for the digital design book used in the Saudi high school curriculum, covering essential topics such as 3D modeling, advertising, motion graphics, and digital photography. Led workshops for Ministry of Education employees and teachers.',
+    description: 'Authored lessons for the digital design book used in the Saudi high school curriculum, covering essential topics such as 3D modeling, advertising, motion graphics, and digital photography. Led workshops for Ministry of Education employees and teachers.',
   },
 ]
 
+// ─── Modal (unchanged) ───────────────────────────────────────────────────────
 function ProjectModal({ project, onClose }) {
   return (
     <motion.div
@@ -144,111 +148,196 @@ function ProjectModal({ project, onClose }) {
       className="fixed inset-0 z-[100] overflow-y-auto bg-black/85 backdrop-blur-sm"
       onClick={onClose}
     >
-      <div className="min-h-screen flex items-start justify-center px-4 pt-10 pb-0">
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: 20 }}
-        transition={{ type: 'spring', damping: 28, stiffness: 280 }}
-        className="relative w-full max-w-[65vw] rounded-t-2xl"
-        style={{
-          backgroundColor: project.modalBg || (project.lightModal ? '#F5F0EA' : '#050505'),
-          border: `1px solid ${project.modalBg ? 'rgba(0,0,0,0.08)' : project.lightModal ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.05)'}`,
-        }}
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* Derive text colours: custom > lightModal > dark */}
-        {(() => {
-          const isLight = !!(project.modalBg || project.lightModal)
-          const txtMain  = project.modalText || (isLight ? '#1c1917' : '#f5f5f4')
-          const txtSub   = project.modalText ? project.modalText + 'aa' : (isLight ? '#57534e' : '#a8a29e')
-          const txtMuted = project.modalText ? project.modalText + '88' : (isLight ? '#78716c' : '#78716c')
-          const borderC  = isLight ? 'rgba(0,0,0,0.10)' : 'rgba(255,255,255,0.08)'
-
-          return (
-            <>
-              {/* Close button */}
-              <button onClick={onClose} className="absolute top-4 right-4 z-10 p-2 rounded-full bg-black/60 text-white hover:bg-black/80 transition-colors">
-                <X size={20} />
-              </button>
-
-              {/* Hero image or gradient — full bleed */}
-              {project.images ? (
-                <img src={project.images[0]} alt={`${project.title} hero`} className="w-full object-cover rounded-t-2xl block" />
-              ) : (
-                <div className={`aspect-video bg-gradient-to-br ${project.color} flex items-center justify-center rounded-t-2xl`}>
-                  <span className="text-white/40 text-sm uppercase tracking-widest">Images Coming Soon</span>
-                </div>
-              )}
-
-              {/* Text content — hidden when hideContent is set */}
-              {!project.hideContent && <div className="px-10 md:px-16 py-12">
-                <p className="text-xs uppercase tracking-widest mb-2" style={{ color: txtMuted }}>{project.category}</p>
-                <h3 className="font-display text-3xl md:text-4xl font-semibold mb-1" style={{ color: txtMain }}>{project.title}</h3>
-                {project.subtitle && <p className="text-sm mt-1" style={{ color: txtSub }}>{project.subtitle}</p>}
-
-                {/* Brand Background — two column */}
-                {project.brandBackground && (
-                  <div className="mt-12 pt-10 flex flex-col md:flex-row gap-10 md:gap-16" style={{ borderTop: `1px solid ${borderC}` }}>
-                    <div className="md:w-[38%] flex-shrink-0">
-                      <h2 className="font-display text-4xl md:text-5xl font-bold uppercase leading-none tracking-tight" style={{ color: txtMain }}>
-                        BACKGROUND
-                      </h2>
-                    </div>
-                    <div className="md:w-[62%] space-y-4">
-                      {project.brandBackground.split('\n\n').map((para, i) => (
-                        <p key={i} className="text-sm leading-relaxed" style={{ color: txtSub }}>{para}</p>
-                      ))}
-                    </div>
+      <div className="min-h-screen flex items-start justify-center px-2 md:px-4 pt-10 pb-0">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 20 }}
+          transition={{ type: 'spring', damping: 28, stiffness: 280 }}
+          className="relative w-full max-w-[96vw] md:max-w-[65vw] rounded-t-2xl"
+          style={{
+            backgroundColor: project.modalBg || (project.lightModal ? '#F5F0EA' : '#050505'),
+            border: `1px solid ${project.modalBg ? 'rgba(0,0,0,0.08)' : project.lightModal ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.05)'}`,
+          }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          {(() => {
+            const isLight = !!(project.modalBg || project.lightModal)
+            const txtMain  = project.modalText || (isLight ? '#1c1917' : '#f5f5f4')
+            const txtSub   = project.modalText ? project.modalText + 'aa' : (isLight ? '#57534e' : '#a8a29e')
+            const txtMuted = project.modalText ? project.modalText + '88' : (isLight ? '#78716c' : '#78716c')
+            const borderC  = isLight ? 'rgba(0,0,0,0.10)' : 'rgba(255,255,255,0.08)'
+            return (
+              <>
+                <button onClick={onClose} className="absolute top-4 right-4 z-10 p-2 rounded-full bg-black/60 text-white hover:bg-black/80 transition-colors">
+                  <X size={20} />
+                </button>
+                {project.images ? (
+                  <img src={project.images[0]} alt={`${project.title} hero`} className="w-full object-cover rounded-t-2xl block" />
+                ) : (
+                  <div className={`aspect-video bg-gradient-to-br ${project.color} flex items-center justify-center rounded-t-2xl`}>
+                    <span className="text-white/40 text-sm uppercase tracking-widest">Images Coming Soon</span>
                   </div>
                 )}
-
-                {/* Brand Colour Palette */}
-                {project.brandColors && (
-                  <div className="mt-12 pt-10" style={{ borderTop: `1px solid ${borderC}` }}>
-                    <p className="text-xs uppercase tracking-widest mb-6" style={{ color: txtMuted }}>Colour Palette</p>
-                    <div className="flex gap-4 flex-wrap">
-                      {project.brandColors.map((c) => (
-                        <div key={c.hex} className="flex flex-col items-start gap-2">
-                          <div className={`w-24 h-12 rounded-lg ${c.border ? 'border border-black/15' : ''}`} style={{ backgroundColor: c.hex }} />
-                          <span className="text-xs font-mono" style={{ color: txtMuted }}>{c.label}</span>
+                {!project.hideContent && (
+                  <div className="px-10 md:px-16 py-12">
+                    <p className="text-xs uppercase tracking-widest mb-2" style={{ color: txtMuted }}>{project.category}</p>
+                    <h3 className="font-display text-3xl md:text-4xl font-semibold mb-1" style={{ color: txtMain }}>{project.title}</h3>
+                    {project.subtitle && <p className="text-sm mt-1" style={{ color: txtSub }}>{project.subtitle}</p>}
+                    {project.brandBackground && (
+                      <div className="mt-12 pt-10 flex flex-col md:flex-row gap-10 md:gap-16" style={{ borderTop: `1px solid ${borderC}` }}>
+                        <div className="md:w-[38%] flex-shrink-0">
+                          <h2 className="font-display text-4xl md:text-5xl font-bold uppercase leading-none tracking-tight" style={{ color: txtMain }}>BACKGROUND</h2>
                         </div>
-                      ))}
+                        <div className="md:w-[62%] space-y-4">
+                          {project.brandBackground.split('\n\n').map((para, i) => (
+                            <p key={i} className="text-sm leading-relaxed" style={{ color: txtSub }}>{para}</p>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+                {project.images?.slice(1).map((src, i) => (
+                  <img key={i} src={src} alt={`${project.title} ${i + 2}`} className="w-full object-cover block" />
+                ))}
+
+                {/* YouTube embed */}
+                {project.youtubeId && (
+                  <div className="px-10 md:px-16 pb-12 pt-8">
+                    <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: '8px' }}>
+                      <iframe
+                        src={`https://www.youtube.com/embed/${project.youtubeId}`}
+                        title={`${project.title} video`}
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+                      />
                     </div>
                   </div>
                 )}
-              </div>}
-
-              {/* Remaining images — full bleed */}
-              {project.images?.slice(1).map((src, i) => (
-                <img key={i} src={src} alt={`${project.title} ${i + 2}`} className="w-full object-cover block" />
-              ))}
-
-              {/* PDF Viewer */}
-              {project.pdf && (
-                <div className="px-10 md:px-16 pb-12">
-                  <div className="pt-10" style={{ borderTop: `1px solid ${borderC}` }}>
-                    <p className="text-xs uppercase tracking-widest mb-4" style={{ color: txtMuted }}>Project PDF</p>
-                    <div className="rounded-xl overflow-hidden" style={{ height: '80vh', border: `1px solid ${borderC}` }}>
-                      <iframe src={`${project.pdf}#toolbar=1&navpanes=0&view=FitH`} className="w-full h-full" title={`${project.title} PDF`} />
+                {project.pdf && (
+                  <div className="px-10 md:px-16 pb-12">
+                    <div className="pt-10" style={{ borderTop: `1px solid ${borderC}` }}>
+                      <p className="text-xs uppercase tracking-widest mb-4" style={{ color: txtMuted }}>Project PDF</p>
+                      <div className="rounded-xl overflow-hidden" style={{ height: '80vh', border: `1px solid ${borderC}` }}>
+                        <iframe src={`${project.pdf}#toolbar=1&navpanes=0&view=FitH`} className="w-full h-full" title={`${project.title} PDF`} />
+                      </div>
+                      <a href={project.pdf} target="_blank" rel="noopener noreferrer"
+                        className="inline-block mt-3 text-xs uppercase tracking-widest transition-opacity hover:opacity-60"
+                        style={{ color: txtMuted }}>Open in new tab ↗</a>
                     </div>
-                    <a href={project.pdf} target="_blank" rel="noopener noreferrer"
-                      className="inline-block mt-3 text-xs uppercase tracking-widest transition-opacity hover:opacity-60"
-                      style={{ color: txtMuted }}>
-                      Open in new tab ↗
-                    </a>
                   </div>
-                </div>
-              )}
-            </>
-          )
-        })()}
-      </motion.div>
+                )}
+              </>
+            )
+          })()}
+        </motion.div>
       </div>
     </motion.div>
   )
 }
 
+
+// ─── Grid card ───────────────────────────────────────────────────────────────
+function ProjectCard({ project, onOpen }) {
+  const [hovered, setHovered] = useState(false)
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: 90 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true, amount: 0.1 }}
+      transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+      onClick={() => { playClick(); onOpen(project) }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      className="cursor-pointer"
+    >
+      {/* Image box */}
+      <div
+        className="w-full overflow-hidden mb-4"
+        style={{
+          aspectRatio: '16/9',
+          background: '#0d0d0d',
+          border: 'none',
+          borderRadius: '4px',
+        }}
+      >
+        {project.image ? (
+          <img
+            src={project.image}
+            alt={project.title}
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              transition: 'transform 0.6s ease, opacity 0.4s ease',
+              transform: hovered ? 'scale(1.09)' : 'scale(1)',
+              opacity: hovered ? 1 : 0.7,
+            }}
+          />
+        ) : (
+          <div className={`w-full h-full bg-gradient-to-br ${project.color}`} />
+        )}
+      </div>
+
+      {/* Category */}
+      <p
+        style={{
+          margin: '0 0 6px',
+          fontSize: '0.6rem',
+          letterSpacing: '0.22em',
+          textTransform: 'uppercase',
+          color: 'rgba(255,255,255,0.38)',
+        }}
+      >
+        {project.category}
+      </p>
+
+      {/* Title bar — slides into padded position on hover */}
+      <div
+        className="flex items-center justify-between"
+        style={{
+          padding: hovered ? '10px 14px' : '10px 0px',
+          borderRadius: '0',
+          background: hovered ? 'rgba(235,235,235,0.95)' : 'transparent',
+          transition: 'background 0.35s ease, padding 0.35s cubic-bezier(0.16,1,0.3,1)',
+        }}
+      >
+        <h3
+          className="font-display font-semibold uppercase"
+          style={{
+            fontSize: 'clamp(0.85rem, 1.4vw, 1.1rem)',
+            letterSpacing: '0.06em',
+            lineHeight: 1.2,
+            color: hovered ? '#000000' : '#f5f5f4',
+            margin: 0,
+            transition: 'color 0.3s ease',
+          }}
+        >
+          {project.title}
+        </h3>
+
+        {/* Single arrow — rotates from ↗ to → on hover */}
+        <ArrowUpRight
+          size={16}
+          strokeWidth={1.5}
+          style={{
+            flexShrink: 0,
+            marginLeft: '8px',
+            color: hovered ? '#000000' : '#ffffff',
+            transform: hovered ? 'rotate(45deg)' : 'rotate(0deg)',
+            transition: 'transform 0.35s cubic-bezier(0.16,1,0.3,1), color 0.3s ease',
+          }}
+        />
+      </div>
+    </motion.div>
+  )
+}
+
+// ─── Main section ─────────────────────────────────────────────────────────────
 const INITIAL_COUNT = 6
 
 export default function Projects() {
@@ -259,118 +348,67 @@ export default function Projects() {
     setSelected(project)
     document.body.style.overflow = 'hidden'
   }
-
   const closeModal = () => {
     setSelected(null)
     document.body.style.overflow = ''
   }
 
+  const visible = showAll ? projects : projects.slice(0, INITIAL_COUNT)
+
   return (
-    <section id="projects" className="py-24 px-6">
-      <div className="max-w-6xl mx-auto">
+    <section id="projects" className="py-24" style={{ background: '#000000' }}>
+      <div className="max-w-7xl mx-auto px-8">
+
+        {/* Section header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          transition={{ duration: 0.7 }}
+          className="mb-12"
         >
-          <p className="text-accent text-sm uppercase tracking-[0.3em] mb-4">
-            Portfolio
-          </p>
-          <h2 className="font-display text-4xl md:text-5xl font-semibold text-sand-50">
-            Selected <span className="italic text-accent accent-glow">Work</span>
+          <h2
+            className="font-display font-semibold text-sand-50 uppercase"
+            style={{ fontSize: 'clamp(1.5rem, 2.2vw, 2.2rem)', letterSpacing: '0.06em' }}
+          >
+            Selected Projects
           </h2>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {(showAll ? projects : projects.slice(0, INITIAL_COUNT)).map((project, i) => (
-            <motion.div
+        {/* Project grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-12">
+          {visible.map((project, i) => (
+            <ProjectCard
               key={project.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.07 }}
-              onClick={() => { playClick(); openModal(project) }}
-              className="group relative rounded-xl overflow-hidden border border-white/10 hover:border-white/30 transition-all duration-500 cursor-pointer"
-              style={{ boxShadow: '0 0 0 0 rgba(255,210,130,0)' }}
-              onMouseEnter={e => {
-                playClick()
-                e.currentTarget.style.boxShadow =
-                  '0 0 18px 4px rgba(192,114,120,0.28), 0 0 40px 8px rgba(192,114,120,0.12)'
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.boxShadow = '0 0 0 0 rgba(192,114,120,0)'
-              }}
-            >
-              {/* Image or gradient placeholder */}
-              <div className={`aspect-[5/4] relative overflow-hidden ${project.image ? '' : `bg-gradient-to-br ${project.color}`}`}>
-                {project.image ? (
-                  <>
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
-                    {/* Glass shimmer on hover */}
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                      style={{
-                        background: 'linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.04) 40%, rgba(255,255,255,0.0) 60%, rgba(255,220,150,0.08) 100%)',
-                        backdropFilter: 'blur(0px)',
-                      }}
-                    />
-                  </>
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center">
-                    <span className="text-sand-500/40 text-xs uppercase tracking-widest">
-                      Coming Soon
-                    </span>
-                  </div>
-                )}
-              </div>
-
-              {/* Dark gradient bottom overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity duration-300" />
-
-              {/* Content */}
-              <div className="absolute bottom-0 left-0 right-0 p-5">
-                <p className="text-sand-400 text-xs uppercase tracking-widest mb-1">
-                  {project.category}
-                </p>
-                <h3 className="text-sand-50 text-base font-display font-semibold leading-snug">
-                  {project.title}
-                </h3>
-                {project.subtitle && (
-                  <p className="text-sand-400 text-xs mt-0.5">
-                    {project.subtitle}
-                  </p>
-                )}
-              </div>
-            </motion.div>
+              project={project}
+              index={i}
+              onOpen={openModal}
+            />
           ))}
         </div>
 
-        {/* Load More / Show Less */}
+        {/* Show More */}
         {projects.length > INITIAL_COUNT && (
-          <div className="flex justify-center mt-12">
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="flex justify-center mt-16"
+          >
             <button
               onClick={() => { playClick(); setShowAll(v => !v) }}
               onMouseEnter={playClick}
-              className="glow-btn px-8 py-3 text-sm font-medium rounded-full text-sand-50 uppercase tracking-widest transition-all duration-300"
+              className="glow-btn px-8 py-3 text-xs font-medium rounded-full text-sand-50 uppercase tracking-widest transition-all duration-300"
             >
-              {showAll ? 'Show Less' : 'Load More'}
+              {showAll ? 'Show Less' : 'Show More Projects'}
             </button>
-          </div>
+          </motion.div>
         )}
       </div>
 
+      {/* Modal */}
       <AnimatePresence>
-        {selected && (
-          <ProjectModal
-            project={selected}
-            onClose={closeModal}
-          />
-        )}
+        {selected && <ProjectModal project={selected} onClose={closeModal} />}
       </AnimatePresence>
     </section>
   )

@@ -142,11 +142,11 @@ export default function Timeline() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <p className="text-accent text-sm uppercase tracking-[0.3em] mb-4">
+          <p className="text-white text-sm uppercase tracking-[0.3em] mb-4">
             Journey
           </p>
           <h2 className="font-display text-4xl md:text-5xl font-semibold text-sand-50">
-            Career <span className="italic text-accent accent-glow">Timeline</span>
+            Career <span className="italic text-white accent-glow">Timeline</span>
           </h2>
         </motion.div>
 
@@ -180,7 +180,7 @@ export default function Timeline() {
                     className={`inline-block px-3 py-1 text-xs rounded-full mb-2 ${
                       item.type === 'education'
                         ? 'bg-violet-900/30 text-violet-300 border border-violet-700/30'
-                        : 'bg-accent/10 text-accent border border-accent/20'
+                        : 'bg-accent/10 text-white border border-accent/20'
                     }`}
                   >
                     {item.type === 'education' ? 'Education' : 'Work'}
@@ -188,7 +188,7 @@ export default function Timeline() {
                   <h3 className="font-display text-xl font-semibold text-sand-50 mb-1">
                     {item.title}
                   </h3>
-                  <p className="text-accent text-sm mb-2">{item.role}</p>
+                  <p className="text-white text-sm mb-2">{item.role}</p>
                   <p className="text-sand-500 text-sm">{item.detail}</p>
                 </div>
 

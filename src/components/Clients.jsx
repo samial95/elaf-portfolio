@@ -23,11 +23,11 @@ export default function Clients() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <p className="text-accent text-sm uppercase tracking-[0.3em] mb-4">
+          <p className="text-white text-sm uppercase tracking-[0.3em] mb-4">
             Trusted By
           </p>
           <h2 className="font-display text-4xl md:text-5xl font-semibold text-sand-50">
-            <span className="italic text-accent">Clients</span>
+            <span className="italic text-white">Clients</span>
           </h2>
         </motion.div>
 
@@ -41,7 +41,7 @@ export default function Clients() {
               transition={{ duration: 0.4, delay: i * 0.06 }}
               className="group flex items-center justify-center p-6 rounded-2xl bg-sand-900/40 border border-sand-800/40 hover:border-accent/30 transition-all duration-300"
             >
-              <span className="text-sand-400 text-sm font-medium text-center group-hover:text-accent transition-colors">
+              <span className="text-sand-400 text-sm font-medium text-center group-hover:text-white transition-colors">
                 {client}
               </span>
             </motion.div>

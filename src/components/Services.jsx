@@ -35,9 +35,9 @@ export default function Services() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <p className="text-accent text-sm uppercase tracking-[0.3em] mb-4">Services</p>
+          <p className="text-white text-sm uppercase tracking-[0.3em] mb-4">Services</p>
           <h2 className="font-display text-4xl md:text-5xl font-semibold text-sand-50">
-            What I <span className="italic text-accent">Offer</span>
+            What I <span className="italic text-white">Offer</span>
           </h2>
         </motion.div>
 
@@ -51,7 +51,7 @@ export default function Services() {
               transition={{ duration: 0.5, delay: i * 0.1 }}
               className="p-6 rounded-2xl bg-sand-950/60 border border-sand-800/50 hover:border-accent/30 transition-colors text-center group"
             >
-              <div className="inline-flex p-4 rounded-2xl bg-accent/10 text-accent mb-5 group-hover:bg-accent/20 transition-colors">
+              <div className="inline-flex p-4 rounded-2xl bg-accent/10 text-white mb-5 group-hover:bg-accent/20 transition-colors">
                 <Icon size={24} />
               </div>
               <h3 className="text-sand-100 font-display text-lg font-semibold mb-3">{title}</h3>

@@ -1,90 +1,222 @@
 import { motion } from 'framer-motion'
-import { ArrowDown } from 'lucide-react'
+import { ArrowUpRight } from 'lucide-react'
 import { playClick } from '../utils/clickSound'
+
+const ease = [0.16, 1, 0.3, 1]
+
+const mobileStyles = `
+  @media (max-width: 767px) {
+    .hero-name {
+      font-size: clamp(1.6rem, 9vw, 2.6rem) !important;
+      white-space: normal !important;
+    }
+    .hero-meta {
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      gap: 14px !important;
+    }
+    .hero-ctas {
+      flex-direction: row;
+    }
+  }
+`
 
 export default function Hero() {
   return (
-    <section className="min-h-screen relative overflow-hidden">
-      {/* Spline background — full bleed, no overlay so colours stay vibrant */}
-      <div className="absolute inset-0 w-full h-full">
-        <iframe
-          src="https://my.spline.design/retrofuturismbganimation-pdLCHr9NlmXDVppUE9iMHRS1/"
-          allow="autoplay"
-          frameBorder="0"
-          width="100%"
-          className="w-full"
-          style={{ height: 'calc(100% + 60px)' }}
-          title="Spline Background"
-        />
+    <section
+      id="hero"
+      style={{
+        background: '#000000',
+        height: '100vh',
+        position: 'relative',
+        overflow: 'hidden',
+        zIndex: 1,
+      }}
+    >
+      <style>{mobileStyles}</style>
 
-      </div>
-
-      {/* Full-width container matching navbar's max-w-7xl mx-auto px-8 */}
-      <div className="relative z-10 min-h-screen w-full flex flex-col justify-center">
-      <div className="w-full max-w-7xl mx-auto px-8">
-      <div className="max-w-xl pl-2">
-        <motion.div
-          initial={{ opacity: 0, x: -40 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.9, ease: 'easeOut' }}
+      {/* ── ALIGNED CONTAINER — mirrors navbar max-w-7xl mx-auto px-8 ── */}
+      <div
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: '56px',
+          zIndex: 2,
+          pointerEvents: 'none',
+        }}
+      >
+        <div
+          style={{
+            maxWidth: '80rem',
+            margin: '0 auto',
+            padding: '0 32px',
+            position: 'relative',
+            height: '100%',
+            pointerEvents: 'none',
+          }}
         >
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.7 }}
-            className="font-display text-3xl md:text-5xl lg:text-6xl font-semibold text-sand-50 leading-tight mb-3 whitespace-nowrap uppercase"
-          >
-            Elaf Al Salman
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.45, duration: 0.7 }}
-            className="text-accent text-xs md:text-sm uppercase tracking-[0.2em] mb-8"
-          >
-            Creative Designer &amp; Experience Maker
-          </motion.p>
-
+          {/* ── NAME + SUBTITLE — pinned 65px above the Spline, 26px gap between ── */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.65, duration: 0.7 }}
-            className="flex flex-row items-center gap-3"
+            transition={{ delay: 0.35, duration: 1.0, ease }}
+            style={{
+              position: 'absolute',
+              left: '32px',
+              right: '32px',
+              /* top: always at least 88px below viewport top (clears fixed navbar),
+                 but scales up with vh so it stays close to the Spline on taller screens */
+              top: 'max(88px, calc(38vh - 110px))',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '10px',
+              pointerEvents: 'auto',
+            }}
           >
-            {/* Glow button — black bg, accent glow on hover */}
-            <a
-              href="#projects"
-              onMouseEnter={playClick}
-              onClick={playClick}
-              className="glow-btn px-5 py-2 text-xs md:text-sm font-medium rounded-full text-sand-50 transition-all duration-300"
+            {/* NAME */}
+            <h1
+              className="hero-name"
+              style={{
+                margin: 0,
+                fontFamily: '"OriyaMN", "Playfair Display", Georgia, serif',
+                fontWeight: 700,
+                fontSize: 'clamp(2.8rem, 3.8vw, 3.8rem)',
+                letterSpacing: '-0.025em',
+                lineHeight: 1.02,
+                textTransform: 'uppercase',
+                color: '#ffffff',
+                whiteSpace: 'nowrap',
+              }}
             >
-              View Work
-            </a>
-            <a
-              href="#contact"
-              onMouseEnter={playClick}
-              onClick={playClick}
-              className="glow-btn px-5 py-2 text-xs md:text-sm font-medium rounded-full text-sand-50 transition-all duration-300"
+              Elaf Alsalman
+            </h1>
+
+            {/* SUBTITLE + CTAs */}
+            <div
+              className="hero-meta"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
             >
-              Get in Touch
-            </a>
+              <p
+                style={{
+                  margin: 0,
+                  fontSize: '0.72rem',
+                  letterSpacing: '0.28em',
+                  textTransform: 'uppercase',
+                  color: 'rgba(255,255,255,0.42)',
+                }}
+              >
+                Creative Designer &amp; Experience Maker
+              </p>
+
+              <div style={{ display: 'flex', gap: '28px', flexShrink: 0 }}>
+                <a
+                  href="#projects"
+                  onMouseEnter={playClick}
+                  onClick={playClick}
+                  style={{
+                    textDecoration: 'none',
+                    color: '#ffffff',
+                    fontSize: '0.62rem',
+                    letterSpacing: '0.2em',
+                    textTransform: 'uppercase',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '3px',
+                    transition: 'color 0.2s',
+                  }}
+                  onMouseOver={e => e.currentTarget.style.color = 'rgba(255,255,255,0.6)'}
+                  onMouseOut={e => e.currentTarget.style.color = '#ffffff'}
+                >
+                  View Work <ArrowUpRight size={11} strokeWidth={1.6} />
+                </a>
+                <a
+                  href="#contact"
+                  onMouseEnter={playClick}
+                  onClick={playClick}
+                  style={{
+                    textDecoration: 'none',
+                    color: '#ffffff',
+                    fontSize: '0.62rem',
+                    letterSpacing: '0.2em',
+                    textTransform: 'uppercase',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '3px',
+                    transition: 'color 0.2s',
+                  }}
+                  onMouseOver={e => e.currentTarget.style.color = 'rgba(255,255,255,0.6)'}
+                  onMouseOut={e => e.currentTarget.style.color = '#ffffff'}
+                >
+                  Get in Touch <ArrowUpRight size={11} strokeWidth={1.6} />
+                </a>
+              </div>
+            </div>
           </motion.div>
-        </motion.div>
-      </div>
-      </div>
+        </div>
       </div>
 
-      {/* Scroll arrow */}
-      <motion.a
-        href="#projects"
+      {/* ── SPLINE SCENE ──────────────────────────────────────────── */}
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.3, duration: 0.6 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 text-sand-300 hover:text-accent transition-colors animate-bounce"
+        transition={{ delay: 0.5, duration: 1.2 }}
+        style={{
+          position: 'absolute',
+          top: '38vh',
+          left: 0,
+          right: 0,
+          bottom: '56px',
+          zIndex: 1,
+          pointerEvents: 'auto',
+        }}
       >
-        <ArrowDown size={20} />
-      </motion.a>
+        <iframe
+          src="https://my.spline.design/test-6hmj0ElDdymnkswmGShnb7lc/"
+          frameBorder="0"
+          width="100%"
+          height="100%"
+          style={{ display: 'block', border: 'none' }}
+        />
+        {/* Transparent overlay so scroll events reach the page instead of the iframe */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            zIndex: 10,
+            background: 'transparent',
+          }}
+        />
+      </motion.div>
+
+      {/* ── BOTTOM BAR ─────────────────────────────────────────────── */}
+      <div
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: '56px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '14px',
+          borderTop: '1px solid rgba(255,255,255,0.07)',
+          zIndex: 2,
+          background: '#000000',
+        }}
+      >
+        <span style={{ display: 'block', width: 26, height: 1, background: 'rgba(255,255,255,0.3)' }} />
+        <span style={{ fontSize: '0.58rem', letterSpacing: '0.32em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.32)' }}>
+          Scroll to See More
+        </span>
+        <span style={{ display: 'block', width: 26, height: 1, background: 'rgba(255,255,255,0.3)' }} />
+      </div>
     </section>
   )
 }

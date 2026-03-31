@@ -1,8 +1,16 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'OriyaMN';
+  src: url('/oriya-mn-bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme {
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-display: 'Playfair Display', Georgia, serif;
+  --font-display: 'OriyaMN', 'Playfair Display', Georgia, serif;
   --color-sand-50: #f5f5f5;
   --color-sand-100: #e8e8e8;
   --color-sand-200: #d0d0d0;
@@ -13,42 +21,46 @@
   --color-sand-700: #2e2e2e;
   --color-sand-800: #1e1e1e;
   --color-sand-900: #121212;
-  --color-sand-950: #0a0a0a;
-  --color-accent: #c07278;
-  --color-accent-dark: #a05a60;
+  --color-sand-950: #000000;
+  --color-accent: #ffffff;
+  --color-accent-dark: #cccccc;
 }
 
 @layer components {
-  /* Accent-coloured italic title words — soft rose glow */
   .accent-glow {
     text-shadow:
-      0 0 8px rgba(192, 114, 120, 0.7),
-      0 0 20px rgba(192, 114, 120, 0.4),
-      0 0 40px rgba(192, 114, 120, 0.2);
+      0 0 8px rgba(255,255,255,0.5),
+      0 0 20px rgba(255,255,255,0.2);
   }
 
-  /* Contact icons — rose glow */
   .icon-glow {
     filter:
-      drop-shadow(0 0 4px rgba(192, 114, 120, 0.8))
-      drop-shadow(0 0 10px rgba(192, 114, 120, 0.4));
+      drop-shadow(0 0 4px rgba(255,255,255,0.5))
+      drop-shadow(0 0 10px rgba(255,255,255,0.2));
   }
 
-  /* Glowing pill button — black bg, subtle border, accent glow on hover */
   .glow-btn {
-    background-color: #0a0a0a;
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    background-color: #000000;
+    border: 1px solid rgba(255, 255, 255, 0.15);
     box-shadow: none;
     transition: box-shadow 0.4s ease, border-color 0.4s ease;
   }
   .glow-btn:hover {
-    border-color: rgba(192, 114, 120, 0.7);
+    border-color: rgba(255, 255, 255, 0.6);
     box-shadow:
-      0 0 8px 2px rgba(192, 114, 120, 0.9),
-      0 0 22px 6px rgba(192, 114, 120, 0.55),
-      0 0 50px 12px rgba(192, 114, 120, 0.3),
-      0 8px 40px 6px rgba(192, 114, 120, 0.2);
+      0 0 8px 2px rgba(255,255,255,0.2),
+      0 0 22px 6px rgba(255,255,255,0.1);
   }
+}
+
+/* ── Music player equalizer bars ── */
+@keyframes music-bar-bounce {
+  0%, 100% { height: 3px; }
+  50%       { height: var(--bar-max, 16px); }
+}
+
+.music-bar {
+  animation: music-bar-bounce ease-in-out infinite;
 }
 
 @layer base {
@@ -56,25 +68,12 @@
     scroll-behavior: smooth;
   }
   body {
-    background-color: var(--color-sand-950);
+    background-color: #000000;
     color: var(--color-sand-100);
   }
 
-  /* Film-grain noise overlay — covers every page, pointer-events off so it never blocks clicks */
-  body::after {
-    content: '';
-    position: fixed;
-    inset: 0;
-    z-index: 9998;
-    pointer-events: none;
-    opacity: 0.055;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)'/%3E%3C/svg%3E");
-    background-repeat: repeat;
-    background-size: 200px 200px;
-  }
-
   ::selection {
-    background-color: rgba(255, 220, 160, 0.4);
-    color: var(--color-sand-50);
+    background-color: rgba(255,255,255,0.15);
+    color: #ffffff;
   }
 }
