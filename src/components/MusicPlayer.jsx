@@ -64,7 +64,7 @@ export default function MusicPlayer() {
       if (unmutedRef.current || !playerRef.current) return
       unmutedRef.current = true
       playerRef.current.unMute()
-      playerRef.current.setVolume(35)
+      playerRef.current.setVolume(40)
       document.removeEventListener('click',   unmute)
       document.removeEventListener('scroll',  unmute)
       document.removeEventListener('keydown', unmute)
@@ -91,7 +91,7 @@ export default function MusicPlayer() {
     if (!unmutedRef.current) {
       unmutedRef.current = true
       playerRef.current.unMute()
-      playerRef.current.setVolume(35)
+      playerRef.current.setVolume(40)
     }
     if (playing) playerRef.current.pauseVideo()
     else         playerRef.current.playVideo()

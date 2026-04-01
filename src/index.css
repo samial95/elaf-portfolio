@@ -53,6 +53,12 @@
   }
 }
 
+/* ── Modal image loading bars ── */
+@keyframes modal-bar {
+  0%, 100% { height: 3px; }
+  50%       { height: var(--mmax, 20px); }
+}
+
 /* ── Music player equalizer bars ── */
 @keyframes music-bar-bounce {
   0%, 100% { height: 3px; }

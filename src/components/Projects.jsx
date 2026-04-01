@@ -138,7 +138,37 @@ I handled all visual design elements, including the infographic, layout, icons, 
   },
 ]
 
-// ─── Modal (unchanged) ───────────────────────────────────────────────────────
+// ─── Modal hero image with loader ────────────────────────────────────────────
+function ModalHeroImage({ src, alt }) {
+  const [loaded, setLoaded] = useState(false)
+  return (
+    <div style={{ position: 'relative', width: '100%' }}>
+      {!loaded && (
+        <div style={{
+          position: 'absolute', inset: 0,
+          display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+          gap: '16px', background: '#0a0a0a', zIndex: 1, minHeight: '200px',
+          borderRadius: '1rem 1rem 0 0',
+        }}>
+          <div style={{ display: 'flex', alignItems: 'flex-end', gap: '4px', height: '24px' }}>
+            {[{d:'0ms',m:'18px',t:'650ms'},{d:'140ms',m:'24px',t:'700ms'},{d:'280ms',m:'14px',t:'600ms'},{d:'90ms',m:'20px',t:'680ms'}].map((b,i)=>(
+              <span key={i} style={{ display:'block', width:'3px', borderRadius:'2px', background:'rgba(255,255,255,0.5)', animation:`modal-bar ${b.t} ${b.d} ease-in-out infinite`, '--mmax': b.m }} />
+            ))}
+          </div>
+          <span style={{ fontSize:'0.58rem', letterSpacing:'0.2em', color:'rgba(255,255,255,0.25)', textTransform:'uppercase' }}>Loading…</span>
+        </div>
+      )}
+      <img
+        src={src} alt={alt}
+        onLoad={() => setLoaded(true)}
+        className="w-full object-cover rounded-t-2xl block"
+        style={{ opacity: loaded ? 1 : 0, transition: 'opacity 0.4s ease' }}
+      />
+    </div>
+  )
+}
+
+// ─── Modal ────────────────────────────────────────────────────────────────────
 function ProjectModal({ project, onClose }) {
   return (
     <motion.div
@@ -173,7 +203,7 @@ function ProjectModal({ project, onClose }) {
                   <X size={20} />
                 </button>
                 {project.images ? (
-                  <img src={project.images[0]} alt={`${project.title} hero`} className="w-full object-cover rounded-t-2xl block" />
+                  <ModalHeroImage src={project.images[0]} alt={`${project.title} hero`} />
                 ) : (
                   <div className={`aspect-video bg-gradient-to-br ${project.color} flex items-center justify-center rounded-t-2xl`}>
                     <span className="text-white/40 text-sm uppercase tracking-widest">Images Coming Soon</span>
