@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowUpRight, X, ExternalLink } from 'lucide-react'
 
@@ -24,12 +24,12 @@ const mediaFeatures = [
 ]
 
 // ── Featured link button ──────────────────────────────────────────────────────
-function FeaturedLink({ name, url, onClick }) {
+function FeaturedLink({ name, url, feature, onClick }) {
   const [hovered, setHovered] = useState(false)
 
   return (
     <button
-      onClick={() => onClick({ name, url })}
+      onClick={() => onClick(feature)}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
@@ -67,6 +67,12 @@ function FeaturedLink({ name, url, onClick }) {
 // ── Article pop-up modal ──────────────────────────────────────────────────────
 function ArticleModal({ feature, onClose }) {
   const [imgLoaded, setImgLoaded] = useState(false)
+  const imgRef = useRef(null)
+
+  // If image is already cached, onLoad won't fire — check on mount
+  useEffect(() => {
+    if (imgRef.current?.complete) setImgLoaded(true)
+  }, [])
 
   return (
     <motion.div
@@ -150,6 +156,7 @@ function ArticleModal({ feature, onClose }) {
             </div>
           )}
           <img
+            ref={imgRef}
             src={feature.image}
             alt={feature.headline}
             onLoad={() => setImgLoaded(true)}
@@ -289,7 +296,7 @@ export default function About() {
 
             <div className="flex flex-col sm:flex-row gap-2 sm:gap-6">
               {mediaFeatures.map((f) => (
-                <FeaturedLink key={f.name} name={f.name} url={f.url} onClick={setActiveFeature} />
+                <FeaturedLink key={f.name} name={f.name} url={f.url} feature={f} onClick={setActiveFeature} />
               ))}
             </div>
           </motion.div>
