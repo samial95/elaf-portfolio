@@ -1,27 +1,53 @@
 import { useEffect, useState } from 'react'
 
 export default function LoadingScreen() {
-  const [visible, setVisible] = useState(true)
-  const [fading, setFading]   = useState(false)
+  const [phase, setPhase]   = useState('visible') // 'visible' | 'fading' | 'gone'
+  const [lineW, setLineW]   = useState(0)          // 0 → 100 (%)
 
   useEffect(() => {
+    // Animate the line from 0 → 100% over ~1.2s
+    let start = null
+    const DURATION = 1200
+
+    const step = (ts) => {
+      if (!start) start = ts
+      const p = Math.min((ts - start) / DURATION, 1)
+      // ease out cubic
+      setLineW(1 - Math.pow(1 - p, 3))
+      if (p < 1) {
+        raf = requestAnimationFrame(step)
+      }
+    }
+    let raf = requestAnimationFrame(step)
+
     const onLoad = () => {
-      setFading(true)
-      setTimeout(() => setVisible(false), 700)
+      // Wait for line to finish (at least 1.4s total) then fade
+      const remaining = Math.max(0, DURATION + 300 - performance.now())
+      setTimeout(() => {
+        setPhase('fading')
+        setTimeout(() => setPhase('gone'), 800)
+      }, remaining)
     }
 
     if (document.readyState === 'complete') {
-      // Already loaded — short minimum display so it doesn't flash
-      setTimeout(onLoad, 600)
+      setTimeout(onLoad, 200)
     } else {
       window.addEventListener('load', onLoad, { once: true })
-      // Safety fallback after 6s
-      const t = setTimeout(onLoad, 6000)
-      return () => { clearTimeout(t); window.removeEventListener('load', onLoad) }
+    }
+
+    const fallback = setTimeout(() => {
+      setPhase('fading')
+      setTimeout(() => setPhase('gone'), 800)
+    }, 6000)
+
+    return () => {
+      cancelAnimationFrame(raf)
+      clearTimeout(fallback)
+      window.removeEventListener('load', onLoad)
     }
   }, [])
 
-  if (!visible) return null
+  if (phase === 'gone') return null
 
   return (
     <div
@@ -34,55 +60,65 @@ export default function LoadingScreen() {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        gap: '32px',
-        opacity: fading ? 0 : 1,
-        transition: 'opacity 0.7s ease',
-        pointerEvents: fading ? 'none' : 'auto',
+        opacity: phase === 'fading' ? 0 : 1,
+        transition: 'opacity 0.8s ease',
+        pointerEvents: phase === 'fading' ? 'none' : 'auto',
       }}
     >
-      {/* Logo / name */}
+      {/* Eyebrow label */}
       <p
         style={{
-          fontFamily: '"OriyaMN", "Playfair Display", Georgia, serif',
-          fontSize: 'clamp(1.1rem, 2vw, 1.4rem)',
-          letterSpacing: '0.22em',
+          fontFamily: '"Inter", system-ui, sans-serif',
+          fontSize: '0.58rem',
+          letterSpacing: '0.38em',
           textTransform: 'uppercase',
-          color: 'rgba(255,255,255,0.85)',
+          color: 'rgba(255,255,255,0.3)',
+          marginBottom: '20px',
           userSelect: 'none',
         }}
       >
-        ELAF ALSALMAN
+        PORTFOLIO
       </p>
 
-      {/* Animated bars — same style as music player */}
-      <div style={{ display: 'flex', alignItems: 'flex-end', gap: '5px', height: '28px' }}>
-        {[
-          { delay: '0ms',   max: '22px', dur: '700ms' },
-          { delay: '150ms', max: '14px', dur: '600ms' },
-          { delay: '300ms', max: '28px', dur: '800ms' },
-          { delay: '100ms', max: '18px', dur: '650ms' },
-          { delay: '250ms', max: '12px', dur: '750ms' },
-        ].map((b, i) => (
-          <span
-            key={i}
-            style={{
-              display: 'block',
-              width: '3px',
-              borderRadius: '2px',
-              background: 'rgba(255,255,255,0.7)',
-              animation: `loading-bar ${b.dur} ${b.delay} ease-in-out infinite`,
-              '--lmax': b.max,
-            }}
-          />
-        ))}
-      </div>
+      {/* Main name */}
+      <h1
+        style={{
+          fontFamily: '"OriyaMN", "Playfair Display", Georgia, serif',
+          fontSize: 'clamp(2rem, 6vw, 4.5rem)',
+          fontWeight: 'bold',
+          letterSpacing: '0.08em',
+          textTransform: 'uppercase',
+          color: '#ffffff',
+          margin: 0,
+          userSelect: 'none',
+          lineHeight: 1,
+        }}
+      >
+        ELAF ALSALMAN
+      </h1>
 
-      <style>{`
-        @keyframes loading-bar {
-          0%, 100% { height: 3px; }
-          50%       { height: var(--lmax, 20px); }
-        }
-      `}</style>
+      {/* Animated line */}
+      <div
+        style={{
+          marginTop: '28px',
+          width: 'clamp(200px, 40vw, 420px)',
+          height: '1px',
+          background: 'rgba(255,255,255,0.1)',
+          position: 'relative',
+          overflow: 'hidden',
+        }}
+      >
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background: 'rgba(255,255,255,0.75)',
+            transformOrigin: 'left center',
+            transform: `scaleX(${lineW})`,
+            transition: 'none',
+          }}
+        />
+      </div>
     </div>
   )
 }
