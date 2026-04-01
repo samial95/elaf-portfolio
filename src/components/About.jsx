@@ -10,7 +10,7 @@ const mediaFeatures = [
     date: 'March 08, 2023',
     headline: 'Saudi women leading tech in the kingdom',
     excerpt: 'Their growing footprint in the tech world is the latest of many achievements. Elaf Alsalman, PwC Lead 3D Creative Technologist, is featured among women shaping the future of technology in Saudi Arabia.',
-    image: '/national-article.png',
+    image: '/The nationl.png',
   },
   {
     name: 'ABOUTHER',
@@ -19,7 +19,7 @@ const mediaFeatures = [
     date: 'March 08, 2023',
     headline: 'Meet The Forward-Thinking Saudi & Arab Women at PwC Middle East in KSA',
     excerpt: 'On IWD, we celebrate the strong female voices in leading corporations today. Elaf Alsalman — PwC Lead 3D Creative Technologist & Riyadh Lab Senior Associate — focuses on creating 3D modules for building prototypes and experiences that demonstrate the potential of new emerging technologies.',
-    image: '/abouther-article.png',
+    image: '/AboutHer.png',
   },
 ]
 
