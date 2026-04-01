@@ -6,10 +6,20 @@ const mediaFeatures = [
   {
     name: 'THE NATIONAL',
     url: 'https://www.thenationalnews.com/gulf-news/2023/03/08/saudi-women-leading-tech-in-the-kingdom/',
+    publication: 'The National',
+    date: 'March 08, 2023',
+    headline: 'Saudi women leading tech in the kingdom',
+    excerpt: 'Their growing footprint in the tech world is the latest of many achievements. Elaf Alsalman, PwC Lead 3D Creative Technologist, is featured among women shaping the future of technology in Saudi Arabia.',
+    image: '/national-article.png',
   },
   {
     name: 'ABOUTHER',
     url: 'https://www.abouther.com/node/57241/people/leading-ladies/meet-forward-thinking-saudi-arab-women-pwc-middle-east-ksa#slide/1',
+    publication: 'AboutHer',
+    date: 'March 08, 2023',
+    headline: 'Meet The Forward-Thinking Saudi & Arab Women at PwC Middle East in KSA',
+    excerpt: 'On IWD, we celebrate the strong female voices in leading corporations today. Elaf Alsalman — PwC Lead 3D Creative Technologist & Riyadh Lab Senior Associate — focuses on creating 3D modules for building prototypes and experiences that demonstrate the potential of new emerging technologies.',
+    image: '/abouther-article.png',
   },
 ]
 
@@ -56,7 +66,7 @@ function FeaturedLink({ name, url, onClick }) {
 
 // ── Article pop-up modal ──────────────────────────────────────────────────────
 function ArticleModal({ feature, onClose }) {
-  const [loaded, setLoaded] = useState(false)
+  const [imgLoaded, setImgLoaded] = useState(false)
 
   return (
     <motion.div
@@ -68,141 +78,135 @@ function ArticleModal({ feature, onClose }) {
         position: 'fixed',
         inset: 0,
         zIndex: 99998,
-        background: 'rgba(0,0,0,0.85)',
-        backdropFilter: 'blur(8px)',
+        background: 'rgba(0,0,0,0.88)',
+        backdropFilter: 'blur(10px)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '16px',
+        padding: '20px',
       }}
     >
       <motion.div
-        initial={{ opacity: 0, y: 24 }}
+        initial={{ opacity: 0, y: 28 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 16 }}
-        transition={{ type: 'spring', damping: 28, stiffness: 280 }}
+        transition={{ type: 'spring', damping: 28, stiffness: 260 }}
         onClick={e => e.stopPropagation()}
         style={{
           position: 'relative',
           width: '100%',
-          maxWidth: '900px',
-          height: '80vh',
-          background: '#0a0a0a',
+          maxWidth: '680px',
+          background: '#0c0c0c',
           border: '1px solid rgba(255,255,255,0.1)',
-          borderRadius: '8px',
+          borderRadius: '4px',
           overflow: 'hidden',
           display: 'flex',
           flexDirection: 'column',
         }}
       >
-        {/* Top bar */}
+        {/* ── Top bar ── */}
         <div style={{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: '14px 20px',
-          borderBottom: '1px solid rgba(255,255,255,0.08)',
+          padding: '16px 24px',
+          borderBottom: '1px solid rgba(255,255,255,0.07)',
           flexShrink: 0,
         }}>
-          <span style={{
-            fontSize: '0.62rem',
-            letterSpacing: '0.22em',
-            textTransform: 'uppercase',
-            color: 'rgba(255,255,255,0.45)',
-          }}>
+          <span style={{ fontSize: '0.6rem', letterSpacing: '0.26em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)' }}>
             FEATURED IN — {feature.name}
           </span>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <a
-              href={feature.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              title="Open original article"
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '6px',
-                fontSize: '0.62rem',
-                letterSpacing: '0.18em',
-                textTransform: 'uppercase',
-                color: 'rgba(255,255,255,0.55)',
-                textDecoration: 'none',
-                transition: 'color 0.2s ease',
-              }}
-              onMouseEnter={e => e.currentTarget.style.color = '#fff'}
-              onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.55)'}
-            >
-              Open original <ExternalLink size={11} strokeWidth={1.5} />
-            </a>
-            <button
-              onClick={onClose}
-              style={{
-                background: 'rgba(255,255,255,0.08)',
-                border: 'none',
-                borderRadius: '50%',
-                width: '30px',
-                height: '30px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: '#fff',
-                cursor: 'pointer',
-              }}
-            >
-              <X size={15} />
-            </button>
-          </div>
-        </div>
-
-        {/* Iframe + loading spinner */}
-        <div style={{ flex: 1, position: 'relative' }}>
-          {/* Spinner while iframe loads */}
-          {!loaded && (
-            <div style={{
-              position: 'absolute',
-              inset: 0,
+          <button
+            onClick={onClose}
+            style={{
+              background: 'transparent',
+              border: '1px solid rgba(255,255,255,0.18)',
+              borderRadius: '50%',
+              width: '28px',
+              height: '28px',
               display: 'flex',
-              flexDirection: 'column',
               alignItems: 'center',
               justifyContent: 'center',
-              gap: '20px',
-              background: '#0a0a0a',
-              zIndex: 2,
-            }}>
-              <div style={{ display: 'flex', alignItems: 'flex-end', gap: '4px', height: '24px' }}>
-                {[
-                  { delay: '0ms', max: '18px', dur: '650ms' },
-                  { delay: '130ms', max: '24px', dur: '700ms' },
-                  { delay: '260ms', max: '14px', dur: '600ms' },
-                  { delay: '80ms', max: '20px', dur: '680ms' },
-                ].map((b, i) => (
-                  <span key={i} style={{
-                    display: 'block',
-                    width: '3px',
-                    borderRadius: '2px',
-                    background: 'rgba(255,255,255,0.6)',
-                    animation: `loading-bar ${b.dur} ${b.delay} ease-in-out infinite`,
-                    '--lmax': b.max,
-                  }} />
+              color: 'rgba(255,255,255,0.6)',
+              cursor: 'pointer',
+              transition: 'border-color 0.2s, color 0.2s',
+            }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.6)'; e.currentTarget.style.color = '#fff' }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.18)'; e.currentTarget.style.color = 'rgba(255,255,255,0.6)' }}
+          >
+            <X size={13} />
+          </button>
+        </div>
+
+        {/* ── Screenshot image ── */}
+        <div style={{ position: 'relative', width: '100%', maxHeight: '380px', overflow: 'hidden', background: '#111' }}>
+          {!imgLoaded && (
+            <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#111', zIndex: 1 }}>
+              <div style={{ display: 'flex', alignItems: 'flex-end', gap: '4px', height: '20px' }}>
+                {[{d:'0ms',m:'16px',t:'650ms'},{d:'130ms',m:'22px',t:'700ms'},{d:'260ms',m:'12px',t:'600ms'},{d:'80ms',m:'18px',t:'680ms'}].map((b,i)=>(
+                  <span key={i} style={{ display:'block', width:'3px', borderRadius:'2px', background:'rgba(255,255,255,0.4)', animation:`loading-bar ${b.t} ${b.d} ease-in-out infinite`, '--lmax': b.m }} />
                 ))}
               </div>
-              <span style={{ fontSize: '0.6rem', letterSpacing: '0.2em', color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase' }}>
-                Loading article…
-              </span>
             </div>
           )}
-          <iframe
-            src={feature.url}
-            title={feature.name}
-            onLoad={() => setLoaded(true)}
+          <img
+            src={feature.image}
+            alt={feature.headline}
+            onLoad={() => setImgLoaded(true)}
             style={{
               width: '100%',
-              height: '100%',
-              border: 'none',
-              opacity: loaded ? 1 : 0,
+              display: 'block',
+              objectFit: 'cover',
+              opacity: imgLoaded ? 1 : 0,
               transition: 'opacity 0.4s ease',
             }}
           />
+        </div>
+
+        {/* ── Article details ── */}
+        <div style={{ padding: '28px 28px 24px' }}>
+          <p style={{ fontSize: '0.58rem', letterSpacing: '0.24em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)', marginBottom: '10px' }}>
+            {feature.publication} · {feature.date}
+          </p>
+          <h3 style={{
+            fontFamily: '"OriyaMN", "Playfair Display", Georgia, serif',
+            fontSize: 'clamp(1rem, 2vw, 1.25rem)',
+            fontWeight: 700,
+            color: '#ffffff',
+            lineHeight: 1.3,
+            marginBottom: '14px',
+          }}>
+            {feature.headline}
+          </h3>
+          <p style={{ fontSize: '0.78rem', lineHeight: 1.75, color: 'rgba(255,255,255,0.5)', letterSpacing: '0.05em', marginBottom: '28px' }}>
+            {feature.excerpt}
+          </p>
+
+          {/* CTA */}
+          <a
+            href={feature.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '10px',
+              padding: '12px 22px',
+              background: '#ffffff',
+              color: '#000000',
+              fontSize: '0.65rem',
+              letterSpacing: '0.22em',
+              textTransform: 'uppercase',
+              textDecoration: 'none',
+              fontWeight: 600,
+              borderRadius: 0,
+              transition: 'background 0.2s ease, color 0.2s ease',
+            }}
+            onMouseEnter={e => { e.currentTarget.style.background = 'rgba(235,235,235,0.85)' }}
+            onMouseLeave={e => { e.currentTarget.style.background = '#ffffff' }}
+          >
+            Read Full Article <ExternalLink size={12} strokeWidth={2} />
+          </a>
         </div>
       </motion.div>
     </motion.div>
