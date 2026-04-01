@@ -18,6 +18,10 @@ const mobileStyles = `
     .hero-ctas {
       flex-direction: row;
     }
+    .hero-spline {
+      left: 32px !important;
+      right: 32px !important;
+    }
   }
 `
 
@@ -163,6 +167,7 @@ export default function Hero() {
 
       {/* ── SPLINE SCENE ──────────────────────────────────────────── */}
       <motion.div
+        className="hero-spline"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5, duration: 1.2 }}
