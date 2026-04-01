@@ -74,6 +74,12 @@ function ArticleModal({ feature, onClose }) {
     if (imgRef.current?.complete) setImgLoaded(true)
   }, [])
 
+  // Lock body scroll while modal is open
+  useEffect(() => {
+    document.body.style.overflow = 'hidden'
+    return () => { document.body.style.overflow = '' }
+  }, [])
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -86,10 +92,8 @@ function ArticleModal({ feature, onClose }) {
         zIndex: 99998,
         background: 'rgba(0,0,0,0.88)',
         backdropFilter: 'blur(10px)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '20px',
+        overflowY: 'auto',
+        padding: '40px 20px',
       }}
     >
       <motion.div
@@ -102,6 +106,7 @@ function ArticleModal({ feature, onClose }) {
           position: 'relative',
           width: '100%',
           maxWidth: '680px',
+          margin: '0 auto',
           background: '#0c0c0c',
           border: '1px solid rgba(255,255,255,0.1)',
           borderRadius: '4px',
@@ -145,7 +150,7 @@ function ArticleModal({ feature, onClose }) {
         </div>
 
         {/* ── Screenshot image ── */}
-        <div style={{ position: 'relative', width: '100%', maxHeight: '380px', overflow: 'hidden', background: '#111' }}>
+        <div style={{ position: 'relative', width: '100%', background: '#111' }}>
           {!imgLoaded && (
             <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#111', zIndex: 1 }}>
               <div style={{ display: 'flex', alignItems: 'flex-end', gap: '4px', height: '20px' }}>
