@@ -150,7 +150,7 @@ function ArticleModal({ feature, onClose }) {
         </div>
 
         {/* ── Screenshot image ── */}
-        <div style={{ position: 'relative', width: '100%', background: '#111' }}>
+        <div style={{ position: 'relative', width: '100%', minHeight: imgLoaded ? 0 : '220px', background: '#111' }}>
           {!imgLoaded && (
             <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#111', zIndex: 1 }}>
               <div style={{ display: 'flex', alignItems: 'flex-end', gap: '4px', height: '20px' }}>

@@ -29,15 +29,9 @@ const projects = [
     title: 'Solvent',
     category: 'Branding',
     color: 'from-amber-900/40 to-yellow-900/20',
-    image: '/solvent.png',
-    images: ['/Solvent-01.jpg', '/Solvent-02.jpg'],
-    brandBackground: `Solvent is an art supply store that supports artists by providing essential materials and organizing art competitions that encourage creativity and self-expression. The brand is built around the idea that every artist leaves a unique mark on the world through their art.
-
-The name Solvent comes from a painting medium used to mix and adjust paint for application on canvas, symbolizing the brand's role as a fundamental part of the creative process.
-
-The logo combines a paintbrush and a thumbprint, representing artistic creation and individuality highlighting the idea that every artist leaves their own imprint. The color palette uses red, blue, and yellow, the primary colors in painting, reflecting the brand's vision of being an essential foundation for artists to create endless possibilities.`,
-    description:
-      'Full brand identity system for Solvent Art Supplies Store — logo design, colour system, typography, stationery, and brand collateral. Crafted a bold visual language that balances artistic expression with commercial clarity.',
+    image: '/Solvent-01.png',
+    images: ['/Solvent-02.png'],
+    hideContent: true,
   },
   {
     title: 'Tajassam',

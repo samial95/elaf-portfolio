@@ -22,6 +22,9 @@ const mobileStyles = `
       left: 32px !important;
       right: 32px !important;
     }
+    .hero-text-block {
+      top: max(88px, calc(38vh - 160px)) !important;
+    }
   }
 `
 
@@ -63,6 +66,7 @@ export default function Hero() {
         >
           {/* ── NAME + SUBTITLE — pinned 65px above the Spline, 26px gap between ── */}
           <motion.div
+            className="hero-text-block"
             initial={{ opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.35, duration: 1.0, ease }}
