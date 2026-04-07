@@ -21,6 +21,7 @@ const mobileStyles = `
     .hero-spline {
       left: 32px !important;
       right: 32px !important;
+      top: calc(33.25vh + 20px) !important;
     }
     .hero-text-block {
       top: max(88px, calc(19vh - 7.5px)) !important;
