@@ -11,7 +11,7 @@ import LoadingScreen from './components/LoadingScreen'
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-black text-sand-100">
+    <div className="min-h-screen bg-black text-sand-100" style={{ overflowX: 'hidden', maxWidth: '100vw' }}>
       <LoadingScreen />
       <CursorTrail />
       <MusicPlayer />

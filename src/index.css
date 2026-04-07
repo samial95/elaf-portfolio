@@ -72,10 +72,12 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
   }
   body {
     background-color: #000000;
     color: var(--color-sand-100);
+    overflow-x: hidden;
   }
 
   ::selection {
