@@ -23,7 +23,7 @@ const mobileStyles = `
       right: 32px !important;
     }
     .hero-text-block {
-      top: max(88px, calc(38vh - 160px)) !important;
+      top: max(88px, calc(19vh - 7.5px)) !important;
     }
   }
 `
