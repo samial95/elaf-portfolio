@@ -9,7 +9,7 @@ const projects = [
     category: 'Ramadan Campaign',
     color: 'from-amber-950/60 to-stone-900/40',
     image: '/3D Qasser - 1.png',
-    images: ['/3D Qasser - 2.png'],
+    images: ['/3D Qasser -02.png'],
     youtubeId: '2PBcFUA_69s',
     hideContent: true,
     description: 'A conceptual Ramadan campaign created for Qasr Al Awani, showcasing their seasonal offers through a cinematic visual narrative. The concept presents each scene as a curated display, highlighting different moments of Ramadan hospitality — from family gatherings to outdoor travel settings.',
