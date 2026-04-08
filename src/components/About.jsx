@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowUpRight, X, ExternalLink } from 'lucide-react'
 
@@ -228,6 +228,19 @@ function ArticleModal({ feature, onClose }) {
 // ── Main About section ────────────────────────────────────────────────────────
 export default function About() {
   const [activeFeature, setActiveFeature] = useState(null)
+  const [splineVisible, setSplineVisible] = useState(false)
+  const splineContainerRef = useRef(null)
+
+  useEffect(() => {
+    const el = splineContainerRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setSplineVisible(true); observer.disconnect() } },
+      { threshold: 0.1 }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
 
   return (
     <section id="about" className="pt-10 pb-24" style={{ background: '#000000' }}>
@@ -250,23 +263,27 @@ export default function About() {
             </h2>
 
             <div
+              ref={splineContainerRef}
               className="mt-8 w-full"
               style={{ position: 'relative', overflow: 'hidden', aspectRatio: '1 / 1', maxWidth: '360px' }}
             >
-              <iframe
-                src="https://my.spline.design/gradientfollowcirclescopycopy-slYhVcmTV1kmCa9Qw38Argiw-UVL/"
-                frameBorder="0"
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: '-5%',
-                  width: '110%',
-                  height: 'calc(100% + 160px)',
-                  border: 'none',
-                  background: 'transparent',
-                }}
-                title="About Elaf 3D"
-              />
+              {splineVisible && (
+                <iframe
+                  src="https://my.spline.design/gradientfollowcirclescopycopy-slYhVcmTV1kmCa9Qw38Argiw-UVL/"
+                  frameBorder="0"
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: '-5%',
+                    width: '110%',
+                    height: 'calc(100% + 160px)',
+                    border: 'none',
+                    background: 'transparent',
+                  }}
+                  title="About Elaf 3D"
+                  loading="lazy"
+                />
+              )}
             </div>
           </motion.div>
 

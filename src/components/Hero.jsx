@@ -191,6 +191,7 @@ export default function Hero() {
           frameBorder="0"
           width="100%"
           height="100%"
+          loading="lazy"
           style={{ display: 'block', border: 'none' }}
         />
         {/* Transparent overlay so scroll events reach the page instead of the iframe */}

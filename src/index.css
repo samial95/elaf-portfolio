@@ -69,6 +69,17 @@
   animation: music-bar-bounce ease-in-out infinite;
 }
 
+/* ── Mobile performance: reduce GPU layers and motion ── */
+@media (max-width: 767px) {
+  *, *::before, *::after {
+    will-change: auto !important;
+  }
+  /* Reduce framer-motion animation overhead on mobile */
+  [data-framer-component-type], [style*="transform"] {
+    backface-visibility: hidden;
+  }
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
