@@ -52,6 +52,7 @@ All visual elements of the portfolio were designed, including layout, typography
     image: '/Sarah cheese-01.jpg',
     images: ['/Sarah cheese-02.jpg'],
     lightModal: true,
+    hideContent: true,
     brandBackground: `Sarah Cheese is a local dessert brand that presents traditional sweets in a modern way.
 
 The logo combines illustration and typography in both Arabic and English, using a consistent style across both languages. A small bite detail in the illustration reflects how the dessert is typically eaten, adding a simple and relevant visual cue.`,
@@ -63,6 +64,7 @@ The logo combines illustration and typography in both Arabic and English, using 
     color: 'from-purple-800/50 to-teal-700/30',
     image: '/ETHARA-01.jpg',
     images: ['/ETHARA-02.jpg'],
+    hideContent: true,
     modalBg: '#eae8ef',
     modalText: '#390084',
     brandBackground: `Project Overview
@@ -80,6 +82,7 @@ The report uses a clean editorial layout with strong visual hierarchy to organiz
     color: 'from-orange-900/40 to-amber-900/20',
     image: '/Revive-01.jpg',
     images: ['/Revive-02.jpg'],
+    hideContent: true,
     modalBg: '#f2ddc7',
     modalText: '#171717',
     brandBackground: `A sustainable design project exploring how ceramic waste from construction can be recycled into urban design elements such as outdoor shading structures, seating, and architectural screens, reducing landfill waste and supporting a circular use of materials.
