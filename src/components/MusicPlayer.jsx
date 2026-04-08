@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 
-const VIDEO_ID = 'EeRfSNx5RhE'
+const VIDEO_ID   = 'EeRfSNx5RhE'
+const TARGET_VOL = 50
+const FADE_MS    = 1200  // fade duration in ms
+const TICK_MS    = 30    // how often we step volume
 
 const BARS = [
   { delay: '0ms',   maxH: 14 },
@@ -11,12 +14,49 @@ const BARS = [
 
 export default function MusicPlayer() {
   const [playing, setPlaying] = useState(false)
-  const playerRef             = useRef(null)
-  const mountRef              = useRef(null)
-  const unmutedRef            = useRef(false) // has the user triggered unmute yet
+  const playerRef   = useRef(null)
+  const mountRef    = useRef(null)
+  const unmutedRef  = useRef(false)
+  const fadeRef     = useRef(null)  // holds the setInterval id
+
+  const clearFade = () => {
+    if (fadeRef.current) { clearInterval(fadeRef.current); fadeRef.current = null }
+  }
+
+  const fadeIn = () => {
+    if (!playerRef.current) return
+    clearFade()
+    let vol = 0
+    playerRef.current.setVolume(0)
+    playerRef.current.unMute()
+    playerRef.current.playVideo()
+    const steps = FADE_MS / TICK_MS
+    const step  = TARGET_VOL / steps
+    fadeRef.current = setInterval(() => {
+      vol = Math.min(vol + step, TARGET_VOL)
+      playerRef.current?.setVolume(Math.round(vol))
+      if (vol >= TARGET_VOL) clearFade()
+    }, TICK_MS)
+  }
+
+  const fadeOut = (cb) => {
+    if (!playerRef.current) return
+    clearFade()
+    let vol = playerRef.current.getVolume?.() ?? TARGET_VOL
+    const steps = FADE_MS / TICK_MS
+    const step  = vol / steps
+    fadeRef.current = setInterval(() => {
+      vol = Math.max(vol - step, 0)
+      playerRef.current?.setVolume(Math.round(vol))
+      if (vol <= 0) {
+        clearFade()
+        playerRef.current?.pauseVideo()
+        cb?.()
+      }
+    }, TICK_MS)
+  }
 
   useEffect(() => {
-    // Load YouTube IFrame API once
     if (!document.getElementById('yt-iframe-api')) {
       const tag = document.createElement('script')
       tag.id  = 'yt-iframe-api'
@@ -29,7 +69,7 @@ export default function MusicPlayer() {
         videoId: VIDEO_ID,
         playerVars: {
           autoplay: 1,
-          mute:     1,   // muted autoplay always allowed by Chrome
+          mute:     1,
           loop:     1,
           playlist: VIDEO_ID,
           controls: 0,
@@ -58,16 +98,13 @@ export default function MusicPlayer() {
       window.onYouTubeIframeAPIReady = initPlayer
     }
 
-    // Chrome requires a real user gesture to allow audio.
-    // On first interaction (scroll / click / key) we unmute once.
     const unmute = () => {
       if (unmutedRef.current || !playerRef.current) return
       unmutedRef.current = true
-      playerRef.current.unMute()
-      playerRef.current.setVolume(40)
-      document.removeEventListener('click',   unmute)
-      document.removeEventListener('scroll',  unmute)
-      document.removeEventListener('keydown', unmute)
+      fadeIn()
+      document.removeEventListener('click',      unmute)
+      document.removeEventListener('scroll',     unmute)
+      document.removeEventListener('keydown',    unmute)
       document.removeEventListener('touchstart', unmute)
     }
 
@@ -77,6 +114,7 @@ export default function MusicPlayer() {
     document.addEventListener('touchstart', unmute, { once: true, passive: true })
 
     return () => {
+      clearFade()
       document.removeEventListener('click',      unmute)
       document.removeEventListener('scroll',     unmute)
       document.removeEventListener('keydown',    unmute)
@@ -87,24 +125,21 @@ export default function MusicPlayer() {
 
   const toggle = () => {
     if (!playerRef.current) return
-    // Also make sure we unmute if the user hasn't yet
-    if (!unmutedRef.current) {
-      unmutedRef.current = true
-      playerRef.current.unMute()
-      playerRef.current.setVolume(40)
+    if (!unmutedRef.current) { unmutedRef.current = true }
+
+    if (playing) {
+      fadeOut()
+    } else {
+      fadeIn()
     }
-    if (playing) playerRef.current.pauseVideo()
-    else         playerRef.current.playVideo()
   }
 
   return (
     <div style={{ position: 'fixed', bottom: '28px', right: '28px', zIndex: 9999 }}>
-      {/* Hidden YouTube mount */}
       <div style={{ position: 'absolute', width: 0, height: 0, overflow: 'hidden', pointerEvents: 'none', opacity: 0 }}>
         <div ref={mountRef} />
       </div>
 
-      {/* Bars button */}
       <button
         onClick={toggle}
         title={playing ? 'Pause music' : 'Play music'}
