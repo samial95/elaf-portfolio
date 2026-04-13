@@ -152,25 +152,26 @@ export default function MusicPlayer() {
           {playing ? 'Pause' : 'Play & Enjoy'}
         </span>
 
-        {/* Equalizer bars */}
-        <div style={{ display: 'flex', alignItems: 'flex-end', gap: '3px', height: '20px' }}>
-          {BARS.map((bar, i) => (
-            <span
-              key={i}
-              className={playing ? 'music-bar' : ''}
-              style={{
-                display: 'block',
-                width: '3px',
-                height: playing ? undefined : '3px',
-                borderRadius: '2px',
-                background: 'rgba(255,255,255,0.9)',
-                animationDelay: bar.delay,
-                animationDuration: `${600 + i * 80}ms`,
-                '--bar-max': `${bar.maxH}px`,
-              }}
-            />
-          ))}
-        </div>
+        {/* Equalizer bars — only shown when playing */}
+        {playing && (
+          <div style={{ display: 'flex', alignItems: 'flex-end', gap: '3px', height: '20px' }}>
+            {BARS.map((bar, i) => (
+              <span
+                key={i}
+                className="music-bar"
+                style={{
+                  display: 'block',
+                  width: '3px',
+                  borderRadius: '2px',
+                  background: 'rgba(255,255,255,0.9)',
+                  animationDelay: bar.delay,
+                  animationDuration: `${600 + i * 80}ms`,
+                  '--bar-max': `${bar.maxH}px`,
+                }}
+              />
+            ))}
+          </div>
+        )}
       </button>
     </div>
   )
