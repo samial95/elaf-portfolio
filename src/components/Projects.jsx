@@ -345,6 +345,7 @@ function ProjectCard({ project, onOpen }) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       className="cursor-pointer"
+      data-hover
     >
       {/* Image box */}
       <div

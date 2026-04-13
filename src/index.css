@@ -41,7 +41,6 @@
   transform: translate(-50%, -50%);
   top: 0;
   left: 0;
-  border-radius: 50%;
 }
 
 #cursor-ring {
@@ -103,8 +102,8 @@ body.modal-open [data-music-player] {
 
 /* ── Music button attention pulse (before first press) ── */
 @keyframes music-btn-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); border-color: rgba(255,255,255,0.15); }
-  50%       { box-shadow: 0 0 22px 6px rgba(255,255,255,0.35), 0 0 40px 10px rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.7); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); border-color: rgba(255,255,255,0.2); }
+  50%       { box-shadow: 0 0 28px 8px rgba(255,255,255,0.5), 0 0 60px 16px rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.9); }
 }
 
 /* ── Music player equalizer bars ── */
