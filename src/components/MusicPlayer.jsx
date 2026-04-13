@@ -129,8 +129,8 @@ export default function MusicPlayer() {
           gap: '10px',
           padding: '9px 14px',
           background: 'rgba(255,255,255,0.06)',
-          border: '1px solid rgba(255,255,255,0.12)',
-          borderRadius: '24px',
+          border: '1px solid rgba(255,255,255,0.15)',
+          borderRadius: '3px',
           cursor: 'pointer',
           opacity: playing ? 1 : 0.7,
           transition: 'opacity 0.3s ease, background 0.3s ease',
@@ -161,13 +161,13 @@ export default function MusicPlayer() {
 
         {/* Label */}
         <span style={{
-          fontSize: '0.58rem',
-          letterSpacing: '0.18em',
+          fontSize: '0.62rem',
+          letterSpacing: '0.2em',
           textTransform: 'uppercase',
-          color: 'rgba(255,255,255,0.85)',
+          color: '#ffffff',
           whiteSpace: 'nowrap',
           fontFamily: 'Inter, system-ui, sans-serif',
-          fontWeight: 500,
+          fontWeight: 400,
         }}>
           {playing ? 'Pause' : 'Play & Enjoy'}
         </span>

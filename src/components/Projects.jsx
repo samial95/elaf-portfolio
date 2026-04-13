@@ -78,31 +78,6 @@ const projects = [
     images: ['/Tajassm-02.jpg'],
     hideContent: true,
   },
-  {
-    title: 'EmTech Labs',
-    category: 'Innovation & Technology',
-    color: 'from-zinc-800 to-neutral-950',
-    description: 'Design and creative direction for an Emerging Technology Lab — translating complex AI, data, and immersive technology concepts into engaging visual narratives.',
-  },
-  {
-    title: '3D Printing',
-    category: 'Creative Technology',
-    color: 'from-zinc-800 to-neutral-900',
-    description: 'Explored and delivered 3D printing projects as part of creative technology prototyping, translating digital designs into physical outputs.',
-  },
-  {
-    title: '3D Concept Design',
-    category: 'CGI & 3D',
-    color: 'from-zinc-800 to-neutral-900',
-    description: 'Founded Tajassm 3D Production Agency, specializing in CGI advertising videos and campaigns.',
-  },
-  {
-    title: 'Digital Design Textbook',
-    subtitle: 'Saudi High School Curriculum',
-    category: 'Education',
-    color: 'from-zinc-800 to-neutral-900',
-    description: 'Authored lessons for the digital design book used in the Saudi high school curriculum.',
-  },
 ]
 
 // ─── Modal hero image with loader ────────────────────────────────────────────
@@ -160,9 +135,9 @@ function NavProjectCard({ project, direction, onClick }) {
     >
       {/* Thumbnail */}
       <div style={{
-        width: '100%',
+        width: '75%',
         aspectRatio: '16/9',
-        borderRadius: '6px',
+        borderRadius: '4px',
         overflow: 'hidden',
         background: '#111',
       }}>
@@ -324,10 +299,11 @@ function ProjectModal({ project, onClose, projects, currentIndex, onNavigate }) 
                 {/* ── Next / Prev navigation ── */}
                 {(prevProject || nextProject) && (
                   <div style={{
-                    borderTop: '1px solid rgba(255,255,255,0.08)',
+                    borderTop: '1px solid rgba(255,255,255,0.1)',
                     padding: '12px 12px 0',
                     display: 'flex',
                     gap: '8px',
+                    background: '#050505',
                   }}>
                     {prevProject ? (
                       <NavProjectCard
