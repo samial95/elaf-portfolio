@@ -114,7 +114,7 @@ export default function MusicPlayer() {
   }
 
   return (
-    <div style={{ position: 'fixed', bottom: '28px', right: '28px', zIndex: 9999 }}>
+    <div data-music-player style={{ position: 'fixed', bottom: '28px', right: '28px', zIndex: 9999 }}>
       {/* Hidden YouTube mount */}
       <div style={{ position: 'absolute', width: 0, height: 0, overflow: 'hidden', pointerEvents: 'none', opacity: 0 }}>
         <div ref={mountRef} />
@@ -139,6 +139,19 @@ export default function MusicPlayer() {
         onMouseEnter={e => (e.currentTarget.style.opacity = '1')}
         onMouseLeave={e => (e.currentTarget.style.opacity = playing ? '1' : '0.7')}
       >
+        {/* Label */}
+        <span style={{
+          fontSize: '0.62rem',
+          letterSpacing: '0.2em',
+          textTransform: 'uppercase',
+          color: '#ffffff',
+          whiteSpace: 'nowrap',
+          fontFamily: 'Inter, system-ui, sans-serif',
+          fontWeight: 400,
+        }}>
+          {playing ? 'Pause' : 'Play & Enjoy'}
+        </span>
+
         {/* Equalizer bars */}
         <div style={{ display: 'flex', alignItems: 'flex-end', gap: '3px', height: '20px' }}>
           {BARS.map((bar, i) => (
@@ -158,19 +171,6 @@ export default function MusicPlayer() {
             />
           ))}
         </div>
-
-        {/* Label */}
-        <span style={{
-          fontSize: '0.62rem',
-          letterSpacing: '0.2em',
-          textTransform: 'uppercase',
-          color: '#ffffff',
-          whiteSpace: 'nowrap',
-          fontFamily: 'Inter, system-ui, sans-serif',
-          fontWeight: 400,
-        }}>
-          {playing ? 'Pause' : 'Play & Enjoy'}
-        </span>
       </button>
     </div>
   )

@@ -1,70 +1,66 @@
-import { useEffect, useRef } from 'react'
-
-const RECT_SIZE = 24
-const LIFETIME  = 700
-const MAX_DIST  = 8
+import { useEffect, useRef, useState } from 'react'
 
 export default function CursorTrail() {
-  const canvasRef = useRef(null)
+  const dotRef  = useRef(null)
+  const ringRef = useRef(null)
 
   useEffect(() => {
-    // Don't run on touch/mobile — wastes CPU and heats the device
+    // Don't run on touch/mobile
     if (window.matchMedia('(hover: none)').matches) return
 
-    const canvas = canvasRef.current
-    const ctx    = canvas.getContext('2d')
-    let rects    = []
-    let lastX    = -999, lastY = -999
-    let raf      = null
-    let idle     = false   // stop RAF when no rects remain
+    const dot  = dotRef.current
+    const ring = ringRef.current
+    if (!dot || !ring) return
 
-    const resize = () => {
-      canvas.width  = window.innerWidth
-      canvas.height = window.innerHeight
-    }
-    resize()
-    window.addEventListener('resize', resize, { passive: true })
+    let mx = 0, my = 0
+    let rx = 0, ry = 0
+    let raf = null
 
     const onMove = (e) => {
-      const dx = e.clientX - lastX
-      const dy = e.clientY - lastY
-      if (Math.sqrt(dx * dx + dy * dy) < MAX_DIST) return
-      lastX = e.clientX
-      lastY = e.clientY
-      rects.push({ x: e.clientX - RECT_SIZE / 2, y: e.clientY - RECT_SIZE / 2, born: performance.now() })
-      if (idle) { idle = false; raf = requestAnimationFrame(draw) }
+      mx = e.clientX
+      my = e.clientY
     }
+    document.addEventListener('mousemove', onMove, { passive: true })
 
-    const draw = (now) => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
-      rects = rects.filter(r => now - r.born < LIFETIME)
+    const animate = () => {
+      rx += (mx - rx) * 0.1
+      ry += (my - ry) * 0.1
 
-      for (const r of rects) {
-        const alpha = 1 - (now - r.born) / LIFETIME
-        ctx.strokeStyle = `rgba(255,255,255,${(alpha * 0.45).toFixed(3)})`
-        ctx.lineWidth   = 0.8
-        ctx.strokeRect(r.x, r.y, RECT_SIZE, RECT_SIZE)
+      dot.style.left  = mx + 'px'
+      dot.style.top   = my + 'px'
+      ring.style.left = rx + 'px'
+      ring.style.top  = ry + 'px'
+
+      raf = requestAnimationFrame(animate)
+    }
+    raf = requestAnimationFrame(animate)
+
+    // Expand ring on hover using event delegation
+    const onOver = (e) => {
+      if (e.target.closest('a, button, [data-hover]')) {
+        ring.classList.add('hovering')
       }
-
-      if (rects.length === 0) { idle = true; return }  // stop RAF when nothing to draw
-      raf = requestAnimationFrame(draw)
     }
-
-    window.addEventListener('mousemove', onMove, { passive: true })
-    // Don't start RAF until first movement
-    idle = true
+    const onOut = (e) => {
+      if (e.target.closest('a, button, [data-hover]')) {
+        ring.classList.remove('hovering')
+      }
+    }
+    document.addEventListener('mouseover',  onOver)
+    document.addEventListener('mouseout',   onOut)
 
     return () => {
-      window.removeEventListener('mousemove', onMove)
-      window.removeEventListener('resize',    resize)
+      document.removeEventListener('mousemove', onMove)
+      document.removeEventListener('mouseover', onOver)
+      document.removeEventListener('mouseout',  onOut)
       cancelAnimationFrame(raf)
     }
   }, [])
 
   return (
-    <canvas
-      ref={canvasRef}
-      style={{ position: 'fixed', top: 0, left: 0, pointerEvents: 'none', zIndex: 9999 }}
-    />
+    <>
+      <div id="cursor-dot"  ref={dotRef}  />
+      <div id="cursor-ring" ref={ringRef} />
+    </>
   )
 }

@@ -438,10 +438,12 @@ export default function Projects() {
     const idx = projects.indexOf(project)
     setSelectedIndex(idx)
     document.body.style.overflow = 'hidden'
+    document.body.classList.add('modal-open')
   }
   const closeModal = () => {
     setSelectedIndex(null)
     document.body.style.overflow = ''
+    document.body.classList.remove('modal-open')
   }
   const navigate = (idx) => {
     setSelectedIndex(idx)
