@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 
 const VIDEO_ID   = 'EeRfSNx5RhE'
 const TARGET_VOL = 50
-const FADE_MS    = 1200  // fade duration in ms
-const TICK_MS    = 30    // how often we step volume
+const FADE_MS    = 1200
+const TICK_MS    = 30
 
 const BARS = [
   { delay: '0ms',   maxH: 14 },
@@ -13,11 +13,11 @@ const BARS = [
 ]
 
 export default function MusicPlayer() {
-  const [playing, setPlaying] = useState(false)
-  const playerRef   = useRef(null)
-  const mountRef    = useRef(null)
-  const unmutedRef  = useRef(false)
-  const fadeRef     = useRef(null)  // holds the setInterval id
+  const [playing, setPlaying]           = useState(false)
+  const [hasBeenPressed, setHasBeenPressed] = useState(false)
+  const playerRef  = useRef(null)
+  const mountRef   = useRef(null)
+  const fadeRef    = useRef(null)
 
   const clearFade = () => {
     if (fadeRef.current) { clearInterval(fadeRef.current); fadeRef.current = null }
@@ -68,7 +68,7 @@ export default function MusicPlayer() {
       playerRef.current = new window.YT.Player(mountRef.current, {
         videoId: VIDEO_ID,
         playerVars: {
-          autoplay: 1,
+          autoplay: 0,
           mute:     1,
           loop:     1,
           playlist: VIDEO_ID,
@@ -81,7 +81,6 @@ export default function MusicPlayer() {
         events: {
           onReady(e) {
             e.target.mute()
-            e.target.playVideo()
           },
           onStateChange(e) {
             const s = e.data
@@ -98,35 +97,15 @@ export default function MusicPlayer() {
       window.onYouTubeIframeAPIReady = initPlayer
     }
 
-    const unmute = () => {
-      if (unmutedRef.current || !playerRef.current) return
-      unmutedRef.current = true
-      fadeIn()
-      document.removeEventListener('click',      unmute)
-      document.removeEventListener('scroll',     unmute)
-      document.removeEventListener('keydown',    unmute)
-      document.removeEventListener('touchstart', unmute)
-    }
-
-    document.addEventListener('click',      unmute, { once: true, passive: true })
-    document.addEventListener('scroll',     unmute, { once: true, passive: true })
-    document.addEventListener('keydown',    unmute, { once: true, passive: true })
-    document.addEventListener('touchstart', unmute, { once: true, passive: true })
-
     return () => {
       clearFade()
-      document.removeEventListener('click',      unmute)
-      document.removeEventListener('scroll',     unmute)
-      document.removeEventListener('keydown',    unmute)
-      document.removeEventListener('touchstart', unmute)
       if (playerRef.current?.destroy) playerRef.current.destroy()
     }
   }, [])
 
   const toggle = () => {
     if (!playerRef.current) return
-    if (!unmutedRef.current) { unmutedRef.current = true }
-
+    if (!hasBeenPressed) setHasBeenPressed(true)
     if (playing) {
       fadeOut()
     } else {
@@ -136,6 +115,7 @@ export default function MusicPlayer() {
 
   return (
     <div style={{ position: 'fixed', bottom: '28px', right: '28px', zIndex: 9999 }}>
+      {/* Hidden YouTube mount */}
       <div style={{ position: 'absolute', width: 0, height: 0, overflow: 'hidden', pointerEvents: 'none', opacity: 0 }}>
         <div ref={mountRef} />
       </div>
@@ -145,35 +125,52 @@ export default function MusicPlayer() {
         title={playing ? 'Pause music' : 'Play music'}
         style={{
           display: 'flex',
-          alignItems: 'flex-end',
-          gap: '3px',
-          height: '20px',
-          padding: 0,
-          background: 'transparent',
-          border: 'none',
+          alignItems: 'center',
+          gap: '10px',
+          padding: '9px 14px',
+          background: 'rgba(255,255,255,0.06)',
+          border: '1px solid rgba(255,255,255,0.12)',
+          borderRadius: '24px',
           cursor: 'pointer',
-          opacity: playing ? 1 : 0.45,
-          transition: 'opacity 0.3s ease',
+          opacity: playing ? 1 : 0.7,
+          transition: 'opacity 0.3s ease, background 0.3s ease',
+          animation: !hasBeenPressed ? 'music-btn-pulse 2.4s ease-in-out infinite' : 'none',
         }}
         onMouseEnter={e => (e.currentTarget.style.opacity = '1')}
-        onMouseLeave={e => (e.currentTarget.style.opacity = playing ? '1' : '0.45')}
+        onMouseLeave={e => (e.currentTarget.style.opacity = playing ? '1' : '0.7')}
       >
-        {BARS.map((bar, i) => (
-          <span
-            key={i}
-            className={playing ? 'music-bar' : ''}
-            style={{
-              display: 'block',
-              width: '3px',
-              height: playing ? undefined : '3px',
-              borderRadius: '2px',
-              background: 'rgba(255,255,255,0.9)',
-              animationDelay: bar.delay,
-              animationDuration: `${600 + i * 80}ms`,
-              '--bar-max': `${bar.maxH}px`,
-            }}
-          />
-        ))}
+        {/* Equalizer bars */}
+        <div style={{ display: 'flex', alignItems: 'flex-end', gap: '3px', height: '20px' }}>
+          {BARS.map((bar, i) => (
+            <span
+              key={i}
+              className={playing ? 'music-bar' : ''}
+              style={{
+                display: 'block',
+                width: '3px',
+                height: playing ? undefined : '3px',
+                borderRadius: '2px',
+                background: 'rgba(255,255,255,0.9)',
+                animationDelay: bar.delay,
+                animationDuration: `${600 + i * 80}ms`,
+                '--bar-max': `${bar.maxH}px`,
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Label */}
+        <span style={{
+          fontSize: '0.58rem',
+          letterSpacing: '0.18em',
+          textTransform: 'uppercase',
+          color: 'rgba(255,255,255,0.85)',
+          whiteSpace: 'nowrap',
+          fontFamily: 'Inter, system-ui, sans-serif',
+          fontWeight: 500,
+        }}>
+          {playing ? 'Pause' : 'Play & Enjoy'}
+        </span>
       </button>
     </div>
   )

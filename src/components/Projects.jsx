@@ -1,18 +1,44 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, ArrowUpRight } from 'lucide-react'
+import { X, ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react'
 import { playClick } from '../utils/clickSound'
 
 const projects = [
   {
     title: 'Qasr Al Awani',
-    category: 'Ramadan Campaign',
+    category: '3D Videography',
     color: 'from-amber-950/60 to-stone-900/40',
     image: '/3D Qasser -1 .jpg',
     images: ['/3D Qasser -2.jpg'],
     youtubeId: '2PBcFUA_69s',
     hideContent: true,
-    description: 'A conceptual Ramadan campaign created for Qasr Al Awani, showcasing their seasonal offers through a cinematic visual narrative. The concept presents each scene as a curated display, highlighting different moments of Ramadan hospitality — from family gatherings to outdoor travel settings.',
+    description: 'A conceptual Ramadan campaign created for Qasr Al Awani, showcasing their seasonal offers through a cinematic visual narrative.',
+  },
+  {
+    title: 'EmTech Labs',
+    category: 'Interior Design',
+    color: 'from-zinc-800 to-neutral-950',
+    image: '/3D Labs -01.jpg',
+    images: ['/3D Labs -02.jpg'],
+    hideContent: true,
+  },
+  {
+    title: 'Solvent',
+    category: 'Identity Design',
+    color: 'from-amber-900/40 to-yellow-900/20',
+    image: '/Solvent-01.jpg',
+    images: ['/Solvent-02.jpg'],
+    hideContent: true,
+  },
+  {
+    title: 'Ethara',
+    category: 'Report Design',
+    color: 'from-purple-800/50 to-teal-700/30',
+    image: '/ETHARA-01.jpg',
+    images: ['/ETHARA-02.jpg'],
+    hideContent: true,
+    modalBg: '#eae8ef',
+    modalText: '#390084',
   },
   {
     title: 'Saudi FIFA 2034',
@@ -26,51 +52,13 @@ const projects = [
     description: 'UI/UX design concept for the Saudi FIFA 2034 World Cup app.',
   },
   {
-    title: 'Solvent',
-    category: 'Branding',
-    color: 'from-amber-900/40 to-yellow-900/20',
-    image: '/Solvent-01.jpg',
-    images: ['/Solvent-02.jpg'],
-    hideContent: true,
-  },
-  {
-    title: 'Tajassam',
-    category: 'Branding',
-    color: 'from-teal-900/40 to-cyan-950/20',
-    image: '/Tajassm-01.jpg',
-    images: ['/Tajassm-02.jpg'],
-    hideContent: true,
-  },
-  {
     title: 'Sara Cheese',
-    category: 'Branding',
+    category: 'Identity Design',
     color: 'from-teal-700/40 to-amber-800/20',
     image: '/Sarah cheese-01.jpg',
     images: ['/Sarah cheese-02.jpg'],
     lightModal: true,
     hideContent: true,
-    brandBackground: `Sarah Cheese is a local dessert brand that presents traditional sweets in a modern way.
-
-The logo combines illustration and typography in both Arabic and English, using a consistent style across both languages. A small bite detail in the illustration reflects how the dessert is typically eaten, adding a simple and relevant visual cue.`,
-    description: 'Complete visual identity for Sara Cheese — a local dessert brand blending traditional sweets with a modern aesthetic. Logo design in Arabic and English, colour system, and brand collateral.',
-  },
-  {
-    title: 'Ethara',
-    category: 'Report Design',
-    color: 'from-purple-800/50 to-teal-700/30',
-    image: '/ETHARA-01.jpg',
-    images: ['/ETHARA-02.jpg'],
-    hideContent: true,
-    modalBg: '#eae8ef',
-    modalText: '#390084',
-    brandBackground: `Project Overview
-
-A Change Management report analyzing the challenges facing a large events and entertainment organization and proposing a shift toward a knowledge-driven innovation model. The report introduces an Emerging Technology Lab (ETL) to develop internal capabilities in areas such as AI, data, and immersive technologies, and outlines an implementation approach using Kotter's 8-Step Change Model.
-
-Graphic Design Overview
-
-The report uses a clean editorial layout with strong visual hierarchy to organize complex information clearly. Color, typography, imagery, and structured grids are used to guide the reader through sections such as challenges, solutions, and implementation, creating a professional and visually engaging document.`,
-    description: 'Change management report design for Ethara — a large-scale events and entertainment organization. Editorial layout system combining strong typography, structured grids, and visual hierarchy to communicate complex strategic content.',
   },
   {
     title: 'Revive',
@@ -81,35 +69,39 @@ The report uses a clean editorial layout with strong visual hierarchy to organiz
     hideContent: true,
     modalBg: '#f2ddc7',
     modalText: '#171717',
-    brandBackground: `A sustainable design project exploring how ceramic waste from construction can be recycled into urban design elements such as outdoor shading structures, seating, and architectural screens, reducing landfill waste and supporting a circular use of materials.
-
-I handled all visual design elements, including the infographic, layout, icons, and logo design. I named the project Revive, representing the idea of restoring ceramic waste back to life by repurposing it into new functional products that can be reused repeatedly. The colour palette is inspired by natural ceramic tones, and the design uses clear hierarchy and infographics to communicate the research and solution visually.`,
-    description: 'Sustainable design project exploring how ceramic construction waste can be recycled into urban design elements. Full visual identity, infographic system, and editorial layout — all designed to communicate research and solutions with clarity.',
+  },
+  {
+    title: 'Tajassam',
+    category: 'Identity Design',
+    color: 'from-teal-900/40 to-cyan-950/20',
+    image: '/Tajassm-01.jpg',
+    images: ['/Tajassm-02.jpg'],
+    hideContent: true,
   },
   {
     title: 'EmTech Labs',
     category: 'Innovation & Technology',
     color: 'from-zinc-800 to-neutral-950',
-    description: 'Design and creative direction for an Emerging Technology Lab — translating complex AI, data, and immersive technology concepts into engaging visual narratives and interactive experiences.',
+    description: 'Design and creative direction for an Emerging Technology Lab — translating complex AI, data, and immersive technology concepts into engaging visual narratives.',
   },
   {
     title: '3D Printing',
     category: 'Creative Technology',
     color: 'from-zinc-800 to-neutral-900',
-    description: 'Explored and delivered 3D printing projects as part of creative technology prototyping, translating digital designs into physical outputs for client demonstrations and innovation showcases.',
+    description: 'Explored and delivered 3D printing projects as part of creative technology prototyping, translating digital designs into physical outputs.',
   },
   {
     title: '3D Concept Design',
     category: 'CGI & 3D',
     color: 'from-zinc-800 to-neutral-900',
-    description: 'Founded Tajassm 3D Production Agency, specializing in CGI advertising videos and campaigns. Served notable clients including PNU, ZAN, and various government entities with high-quality 3D concept work.',
+    description: 'Founded Tajassm 3D Production Agency, specializing in CGI advertising videos and campaigns.',
   },
   {
     title: 'Digital Design Textbook',
     subtitle: 'Saudi High School Curriculum',
     category: 'Education',
     color: 'from-zinc-800 to-neutral-900',
-    description: 'Authored lessons for the digital design book used in the Saudi high school curriculum, covering essential topics such as 3D modeling, advertising, motion graphics, and digital photography. Led workshops for Ministry of Education employees and teachers.',
+    description: 'Authored lessons for the digital design book used in the Saudi high school curriculum.',
   },
 ]
 
@@ -143,10 +135,103 @@ function ModalHeroImage({ src, alt }) {
   )
 }
 
+// ─── Nav project card ─────────────────────────────────────────────────────────
+function NavProjectCard({ project, direction, onClick }) {
+  const [hovered, setHovered] = useState(false)
+  const isLeft = direction === 'prev'
+
+  return (
+    <div
+      onClick={onClick}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        flex: 1,
+        cursor: 'pointer',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '10px',
+        padding: '16px',
+        borderRadius: '8px',
+        background: hovered ? 'rgba(255,255,255,0.05)' : 'transparent',
+        transition: 'background 0.25s ease',
+        alignItems: isLeft ? 'flex-start' : 'flex-end',
+      }}
+    >
+      {/* Thumbnail */}
+      <div style={{
+        width: '100%',
+        aspectRatio: '16/9',
+        borderRadius: '6px',
+        overflow: 'hidden',
+        background: '#111',
+      }}>
+        {project.image ? (
+          <img
+            src={project.image}
+            alt={project.title}
+            style={{
+              width: '100%', height: '100%', objectFit: 'cover',
+              transform: hovered ? 'scale(1.06)' : 'scale(1)',
+              transition: 'transform 0.4s ease',
+              opacity: hovered ? 1 : 0.7,
+            }}
+          />
+        ) : (
+          <div style={{ width: '100%', height: '100%', background: `linear-gradient(135deg, #1a1a1a, #0a0a0a)` }} />
+        )}
+      </div>
+
+      {/* Label + name */}
+      <div style={{ textAlign: isLeft ? 'left' : 'right' }}>
+        <p style={{
+          margin: '0 0 4px',
+          fontSize: '0.55rem',
+          letterSpacing: '0.22em',
+          textTransform: 'uppercase',
+          color: 'rgba(255,255,255,0.3)',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '4px',
+          justifyContent: isLeft ? 'flex-start' : 'flex-end',
+        }}>
+          {isLeft && <ChevronLeft size={10} strokeWidth={2} />}
+          {isLeft ? 'Previous' : 'Next'}
+          {!isLeft && <ChevronRight size={10} strokeWidth={2} />}
+        </p>
+        <p style={{
+          margin: 0,
+          fontSize: '0.78rem',
+          fontWeight: 600,
+          letterSpacing: '0.04em',
+          textTransform: 'uppercase',
+          color: hovered ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0.65)',
+          transition: 'color 0.25s ease',
+        }}>
+          {project.title}
+        </p>
+      </div>
+    </div>
+  )
+}
+
 // ─── Modal ────────────────────────────────────────────────────────────────────
-function ProjectModal({ project, onClose }) {
+function ProjectModal({ project, onClose, projects, currentIndex, onNavigate }) {
+  const overlayRef = useRef(null)
+
+  // Scroll to top on project change
+  useEffect(() => {
+    if (overlayRef.current) overlayRef.current.scrollTop = 0
+  }, [project])
+
+  const prevIndex = currentIndex > 0 ? currentIndex - 1 : null
+  const nextIndex = currentIndex < projects.length - 1 ? currentIndex + 1 : null
+  const prevProject = prevIndex !== null ? projects[prevIndex] : null
+  const nextProject = nextIndex !== null ? projects[nextIndex] : null
+
   return (
     <motion.div
+      ref={overlayRef}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -235,6 +320,31 @@ function ProjectModal({ project, onClose }) {
                     </div>
                   </div>
                 )}
+
+                {/* ── Next / Prev navigation ── */}
+                {(prevProject || nextProject) && (
+                  <div style={{
+                    borderTop: '1px solid rgba(255,255,255,0.08)',
+                    padding: '12px 12px 0',
+                    display: 'flex',
+                    gap: '8px',
+                  }}>
+                    {prevProject ? (
+                      <NavProjectCard
+                        project={prevProject}
+                        direction="prev"
+                        onClick={() => onNavigate(prevIndex)}
+                      />
+                    ) : <div style={{ flex: 1 }} />}
+                    {nextProject ? (
+                      <NavProjectCard
+                        project={nextProject}
+                        direction="next"
+                        onClick={() => onNavigate(nextIndex)}
+                      />
+                    ) : <div style={{ flex: 1 }} />}
+                  </div>
+                )}
               </>
             )
           })()}
@@ -301,7 +411,7 @@ function ProjectCard({ project, onOpen }) {
         {project.category}
       </p>
 
-      {/* Title bar — slides into padded position on hover */}
+      {/* Title bar */}
       <div
         className="flex items-center justify-between"
         style={{
@@ -325,7 +435,6 @@ function ProjectCard({ project, onOpen }) {
           {project.title}
         </h3>
 
-        {/* Single arrow — rotates from ↗ to → on hover */}
         <ArrowUpRight
           size={16}
           strokeWidth={1.5}
@@ -347,15 +456,19 @@ const INITIAL_COUNT = 6
 
 export default function Projects() {
   const [showAll, setShowAll] = useState(false)
-  const [selected, setSelected] = useState(null)
+  const [selectedIndex, setSelectedIndex] = useState(null)
 
   const openModal = (project) => {
-    setSelected(project)
+    const idx = projects.indexOf(project)
+    setSelectedIndex(idx)
     document.body.style.overflow = 'hidden'
   }
   const closeModal = () => {
-    setSelected(null)
+    setSelectedIndex(null)
     document.body.style.overflow = ''
+  }
+  const navigate = (idx) => {
+    setSelectedIndex(idx)
   }
 
   const visible = showAll ? projects : projects.slice(0, INITIAL_COUNT)
@@ -384,7 +497,7 @@ export default function Projects() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-12">
           {visible.map((project, i) => (
             <ProjectCard
-              key={project.title}
+              key={project.title + i}
               project={project}
               index={i}
               onOpen={openModal}
@@ -413,7 +526,15 @@ export default function Projects() {
 
       {/* Modal */}
       <AnimatePresence>
-        {selected && <ProjectModal project={selected} onClose={closeModal} />}
+        {selectedIndex !== null && (
+          <ProjectModal
+            project={projects[selectedIndex]}
+            onClose={closeModal}
+            projects={projects}
+            currentIndex={selectedIndex}
+            onNavigate={navigate}
+          />
+        )}
       </AnimatePresence>
     </section>
   )
